@@ -4,7 +4,7 @@ title: About Me
 permalink: /about/
 ---
 
-<img align="right" src={{site.baseurl}}/images/me4.jpg>
+<img align="right" src="{{site.baseurl}}/images/me4.jpg">
 
 I'm currently a machine learning R & D engineer at [vTime Limited](https://vtime.net/).
 
