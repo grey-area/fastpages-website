@@ -1,0 +1,842 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>qcircuits.operators module &mdash; QCircuits 0.5.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> QCircuits
+          
+
+          
+            
+            <img src="_static/logo_180px.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">qcircuits.operators module</a></li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">QCircuits</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>qcircuits.operators module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/qcircuits.operators.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-qcircuits.operators">
+<span id="qcircuits-operators-module"></span><span id="operators-module"></span><h1>qcircuits.operators module<a class="headerlink" href="#module-qcircuits.operators" title="Permalink to this headline">¶</a></h1>
+<p>The operators module contains the Operator class, instances of which
+represent unitary operators on vector spaces for multi-qubit systems, and
+factory functions for creating specific operators.</p>
+<p>The Operator class inherits from the OperatorBase class, which contains
+functionality common to unitary operators and the
+<a class="reference internal" href="qcircuits.density_operator.html#qcircuits.density_operator.DensityOperator" title="qcircuits.density_operator.DensityOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DensityOperator</span></code></a> class.</p>
+<p>The Operator class and the factory functions used to create operators are
+aliased at the top-level module, so that, for example, one can call
+<code class="docutils literal notranslate"><span class="pre">qcircuits.Hadamard()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">qcircuits.state.Hadamard()</span></code>.</p>
+<dl class="function">
+<dt id="qcircuits.operators.CNOT">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">CNOT</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.CNOT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the two-qubit CNOT operator, which flips the second bit
+if the first bit is set.
+Maps |00⟩ -&gt; |00⟩, |01⟩ -&gt; |01⟩, |10⟩ -&gt; |01⟩, |11⟩ -&gt; |10⟩.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A rank 4 tensor describing the operator.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.ControlledU">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">ControlledU</code><span class="sig-paren">(</span><em>U</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.ControlledU" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a Controlled-U operator, an operator for a <cite>d</cite> + 1 qubit
+system where the supplied U is an operator for a <cite>d</cite> qubit system.
+If the first bit is set, apply U to the state for the remaining
+bits.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>U</strong> (<a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator"><em>Operator</em></a>) – The operator to be conditionally applied.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A tensor whose rank is the rank of U plus 2,
+describing the operator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.Hadamard">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">Hadamard</code><span class="sig-paren">(</span><em>d=1</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.Hadamard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the <cite>d</cite>-qubit Hadamard operator <span class="math notranslate nohighlight">\(H^{\otimes d}\)</span>.
+Maps: |0⟩ -&gt; <span class="math notranslate nohighlight">\(\frac{1}{\sqrt{2}}\)</span> (|0⟩+|1⟩) = |+⟩,
+|1⟩ -&gt; <span class="math notranslate nohighlight">\(\frac{1}{\sqrt{2}}\)</span> (|0⟩-|1⟩) = |-⟩.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>int</em>) – The number of qubits described by the state vector on which
+the produced operator will act.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A rank <cite>2d</cite> tensor describing the operator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.Identity">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">Identity</code><span class="sig-paren">(</span><em>d=1</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.Identity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the <cite>d</cite>-qubit identity operator <span class="math notranslate nohighlight">\(I^{\otimes d}\)</span>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>int</em>) – The number of qubits described by the state vector on which
+the produced operator will act.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A rank <cite>2d</cite> tensor describing the operator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="qcircuits.operators.Operator">
+<em class="property">class </em><code class="descclassname">qcircuits.operators.</code><code class="descname">Operator</code><span class="sig-paren">(</span><em>tensor</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.Operator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#qcircuits.operators.OperatorBase" title="qcircuits.operators.OperatorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">qcircuits.operators.OperatorBase</span></code></a></p>
+<p>A container class for a tensor representing an operator on a vector
+space for a quantum system, and associated methods.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tensor</strong> (<em>numpy complex128 multidimensional array</em>) – The tensor representing the operator.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="qcircuits.operators.Operator.__call__">
+<code class="descname">__call__</code><span class="sig-paren">(</span><em>arg</em>, <em>qubit_indices=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.Operator.__call__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies this Operator to another Operator, as in operator
+composition A(B), or to a <a class="reference internal" href="qcircuits.state.html#qcircuits.state.State" title="qcircuits.state.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">State</span></code></a> or <a class="reference internal" href="qcircuits.density_operator.html#qcircuits.density_operator.DensityOperator" title="qcircuits.density_operator.DensityOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">DensityOperator</span></code></a>,
+as in A(v). Via operator composition,
+if two operators A and B will be applied to state v in sequence,
+either B(A(v)) or (B(A))(v) are valid.</p>
+<p>A d-qubit operator may be applied to an n-qubit system with <span class="math notranslate nohighlight">\(n&gt;d\)</span>
+if the qubits to which it is to be applied are specified in the
+<cite>qubit_indices</cite> parameter.</p>
+<p>If x represents state <span class="math notranslate nohighlight">\(|\phi⟩\)</span> and A an operator,
+A(x) represents the state <span class="math notranslate nohighlight">\(A |\phi⟩\)</span>.
+If x represents density operator (mixed state)
+<span class="math notranslate nohighlight">\(\rho\)</span>, then A(x) represents the state
+<span class="math notranslate nohighlight">\(A \rho A^{\dagger}.\)</span></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>arg</strong> (<a class="reference internal" href="qcircuits.state.html#qcircuits.state.State" title="qcircuits.state.State"><em>State</em></a><em>, </em><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator"><em>Operator</em></a><em>, or </em><a class="reference internal" href="qcircuits.density_operator.html#qcircuits.density_operator.DensityOperator" title="qcircuits.density_operator.DensityOperator"><em>DensityOperator</em></a>) – The state that the operator is applied to, or the operator
+with which the operator is composed.</li>
+<li><strong>qubit_indices</strong> (<em>list of int</em>) – If the operator is applied to a larger
+quantum system, the user must supply a list of the indices
+of the qubits to which the operator is to be applied.
+These can also be used to apply the operator to the qubits
+in arbitrary order.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The state vector or operator resulting in applying the
+operator to the argument.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="qcircuits.state.html#qcircuits.state.State" title="qcircuits.state.State">State</a>, <a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a>, or <a class="reference internal" href="qcircuits.density_operator.html#qcircuits.density_operator.DensityOperator" title="qcircuits.density_operator.DensityOperator">DensityOperator</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="qcircuits.operators.OperatorBase">
+<em class="property">class </em><code class="descclassname">qcircuits.operators.</code><code class="descname">OperatorBase</code><span class="sig-paren">(</span><em>tensor</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.OperatorBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="qcircuits.tensors.html#qcircuits.tensors.Tensor" title="qcircuits.tensors.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">qcircuits.tensors.Tensor</span></code></a></p>
+<p>A base class for operators and density operators.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tensor</strong> (<em>numpy complex128 multidimensional array</em>) – The tensor representing the operator.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="qcircuits.operators.OperatorBase.adj">
+<code class="descname">adj</code><a class="headerlink" href="#qcircuits.operators.OperatorBase.adj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the adjoint of this operator,
+<span class="math notranslate nohighlight">\(A^{\dagger} = (A^{*})^{T}\)</span>.
+If the operator is unitary,
+<span class="math notranslate nohighlight">\(A A^{\dagger} = I\)</span>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The adjoint operator.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="qcircuits.operators.OperatorBase.from_matrix">
+<em class="property">static </em><code class="descname">from_matrix</code><span class="sig-paren">(</span><em>M</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.OperatorBase.from_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>QCircuits represents operators for d-qubit systems with type (d, d) tensors.
+This function constructs an operator from the more common matrix
+Kronecker-product representation of the operator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>complex128 multidimensional array</strong> (<em>numpy</em>) – The matrix representation of the operator.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A d-qubit operator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="qcircuits.operators.OperatorBase.permute_qubits">
+<code class="descname">permute_qubits</code><span class="sig-paren">(</span><em>axes</em>, <em>inverse=False</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.OperatorBase.permute_qubits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Permute the qubits (i.e., both the incoming and outgoing wires)
+of the operator. This method modifies the operator in-place,
+but also returns the resulting operator to allow chaining of
+operations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>axes</strong> (<em>list of int</em>) – Permute the qubits according to the values given.</li>
+<li><strong>inverse</strong> (<em>bool</em>) – If true, perform the inverse permutation of the qubits.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The resulting operator.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="qcircuits.operators.OperatorBase.swap_qubits">
+<code class="descname">swap_qubits</code><span class="sig-paren">(</span><em>axis1</em>, <em>axis2</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.OperatorBase.swap_qubits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Swap two qubits (i.e., both the incoming and outgoing wires)
+of the operator. This method modifies the operator in-place,
+but also returns the resulting operator to allow chaining of
+operations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>axis1</strong> (<em>int</em>) – First axis.</li>
+<li><strong>axis2</strong> (<em>int</em>) – Second axis.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The resulting operator.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="qcircuits.operators.OperatorBase.to_matrix">
+<code class="descname">to_matrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.OperatorBase.to_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>QCircuits represents operators for d-qubit systems with type (d, d) tensors.
+This function returns the more common matrix Kronecker-product
+representation of the operator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The matrix representation of the operator.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy complex128 multidimensional array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.PauliX">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">PauliX</code><span class="sig-paren">(</span><em>d=1</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.PauliX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the <cite>d</cite>-qubit Pauli X operator <span class="math notranslate nohighlight">\(X^{\otimes d}\)</span>,
+or <cite>not</cite> gate.
+Maps: |0⟩ -&gt; |1⟩, |1⟩ -&gt; |0⟩.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>int</em>) – The number of qubits described by the state vector on which
+the produced operator will act.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A rank <cite>2d</cite> tensor describing the operator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.PauliY">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">PauliY</code><span class="sig-paren">(</span><em>d=1</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.PauliY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the <cite>d</cite>-qubit Pauli Y operator <span class="math notranslate nohighlight">\(Y^{\otimes d}\)</span>.
+Maps: |0⟩ -&gt; <cite>i</cite> |1⟩, |1⟩ -&gt; -<cite>i</cite> |0⟩.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>int</em>) – The number of qubits described by the state vector on which
+the produced operator will act.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A rank <cite>2d</cite> tensor describing the operator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.PauliZ">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">PauliZ</code><span class="sig-paren">(</span><em>d=1</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.PauliZ" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the <cite>d</cite>-qubit Pauli Z operator <span class="math notranslate nohighlight">\(Z^{\otimes d}\)</span>,
+or phase inverter.
+Maps: |0⟩ -&gt; |0⟩, |1⟩ -&gt; -|1⟩.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>int</em>) – The number of qubits described by the state vector on which
+the produced operator will act.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A rank <cite>2d</cite> tensor describing the operator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.Phase">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">Phase</code><span class="sig-paren">(</span><em>d=1</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.Phase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the <cite>d</cite>-qubit Phase operator S.
+Maps: |0⟩ -&gt; |0⟩, |1⟩ -&gt; i|1⟩.
+Note that <span class="math notranslate nohighlight">\(S^2 = Z\)</span>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>int</em>) – The number of qubits described by the state vector on which
+the produced operator will act.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A rank <cite>2d</cite> tensor describing the operator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.PiBy8">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">PiBy8</code><span class="sig-paren">(</span><em>d=1</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.PiBy8" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the <cite>d</cite>-qubit <span class="math notranslate nohighlight">\(\pi/8\)</span> operator T.
+Maps: |0⟩ -&gt; |0⟩, |1⟩ -&gt; <span class="math notranslate nohighlight">\(e^{i\pi/4}\)</span> |1⟩.
+Note that <span class="math notranslate nohighlight">\(T^2 = S\)</span>, where S is the phase gate,
+and <span class="math notranslate nohighlight">\(T^4 = Z\)</span>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>int</em>) – The number of qubits described by the state vector on which
+the produced operator will act.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A rank <cite>2d</cite> tensor describing the operator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.Rotation">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">Rotation</code><span class="sig-paren">(</span><em>v</em>, <em>theta</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.Rotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the single-qubit rotation operator.
+In terms of the Bloch sphere picture of the qubit state, the
+operator rotates a state through angle :math:`      heta` around vector v.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>v</strong> (<em>list of float</em>) – A real 3D unit vector around which the qubit’s Bloch vector is to be rotated.</li>
+<li><strong>theta</strong> (<em>float</em>) – The angle through which the qubit’s Bloch vector is to be rotated.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A rank 2 tensor describing the operator.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.RotationX">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">RotationX</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.RotationX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the single-qubit X-rotation operator.
+In terms of the Bloch sphere picture of the qubit state, the
+operator rotates a state through angle theta around the x-axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>theta</strong> (<em>float</em>) – The angle through which the qubit’s Bloch vector is to be rotated.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A rank 2 tensor describing the operator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.RotationY">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">RotationY</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.RotationY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the single-qubit Y-rotation operator.
+In terms of the Bloch sphere picture of the qubit state, the
+operator rotates a state through angle theta around the y-axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>theta</strong> (<em>float</em>) – The angle through which the qubit’s Bloch vector is to be rotated.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A rank 2 tensor describing the operator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.RotationZ">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">RotationZ</code><span class="sig-paren">(</span><em>theta</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.RotationZ" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the single-qubit Z-rotation operator.
+In terms of the Bloch sphere picture of the qubit state, the
+operator rotates a state through angle theta around the z-axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>theta</strong> (<em>float</em>) – The angle through which the qubit’s Bloch vector is to be rotated.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A rank 2 tensor describing the operator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.SqrtNot">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">SqrtNot</code><span class="sig-paren">(</span><em>d=1</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.SqrtNot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the <cite>d</cite>-qubit operator that is the square root of the
+<cite>d</cite>-qubit NOT or <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a> operator, i.e.,
+<span class="math notranslate nohighlight">\(\sqrt{\texttt{NOT}}(\sqrt{\texttt{NOT}}) = X\)</span>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>int</em>) – The number of qubits described by the state vector on which
+the produced operator will act.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A rank <cite>2d</cite> tensor describing the operator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.SqrtSwap">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">SqrtSwap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.SqrtSwap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the two-qubit operator that is the square root of the
+<a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a> operator, i.e.,
+<span class="math notranslate nohighlight">\(\sqrt{\texttt{SWAP}}(\sqrt{\texttt{SWAP}}) = \texttt{SWAP}\)</span>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A rank 4 tensor describing the operator.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.Swap">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">Swap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.Swap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the two-qubit SWAP operator, which swaps two bits.
+Maps |00⟩ -&gt; |00⟩, |01⟩ -&gt; |10⟩, |10⟩ -&gt; |01⟩, |11⟩ -&gt; |11⟩.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A rank 4 tensor describing the operator.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.Toffoli">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">Toffoli</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.Toffoli" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the three-qubit Toffoli operator, which flips the third bit
+if the first two bits are set.
+Maps |110⟩ -&gt; |111⟩, |111⟩ -&gt; |110⟩, and otherwise acts as the
+identity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A rank 6 tensor describing the operator.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.operators.U_f">
+<code class="descclassname">qcircuits.operators.</code><code class="descname">U_f</code><span class="sig-paren">(</span><em>f</em>, <em>d</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.operators.U_f" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a U_f operator, an operator for a <cite>d</cite> qubit
+system that flips the last bit based on the outcome of a supplied
+boolean function <span class="math notranslate nohighlight">\(f: [0, 1]^{d-1} \to [0, 1]\)</span> applied to the
+first <cite>d</cite> - 1 bits.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>f</strong> (<em>function</em>) – The boolean function used to conditionally flip the last bit.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A rank <cite>2d</cite> tensor describing the operator.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.operators.Operator" title="qcircuits.operators.Operator">Operator</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.operators.Identity" title="qcircuits.operators.Identity"><code class="xref py py-func docutils literal notranslate"><span class="pre">Identity()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Phase" title="qcircuits.operators.Phase"><code class="xref py py-func docutils literal notranslate"><span class="pre">Phase()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.PiBy8" title="qcircuits.operators.PiBy8"><code class="xref py py-func docutils literal notranslate"><span class="pre">PiBy8()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Rotation" title="qcircuits.operators.Rotation"><code class="xref py py-func docutils literal notranslate"><span class="pre">Rotation()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationX" title="qcircuits.operators.RotationX"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationX()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationY" title="qcircuits.operators.RotationY"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationY()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.RotationZ" title="qcircuits.operators.RotationZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">RotationZ()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtNot" title="qcircuits.operators.SqrtNot"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtNot()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Toffoli" title="qcircuits.operators.Toffoli"><code class="xref py py-func docutils literal notranslate"><span class="pre">Toffoli()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.Swap" title="qcircuits.operators.Swap"><code class="xref py py-func docutils literal notranslate"><span class="pre">Swap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.SqrtSwap" title="qcircuits.operators.SqrtSwap"><code class="xref py py-func docutils literal notranslate"><span class="pre">SqrtSwap()</span></code></a>, <a class="reference internal" href="#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a></p>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Andrew Michael Webb
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21765629-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

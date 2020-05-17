@@ -29,7 +29,7 @@
   
       ,"page1": {
           "title": "About Me",
-          "content": "This is where you put the contents of your About page. Like all your pages, it’s in Markdown format. . This website is powered by fastpages 1. . a blogging platform that natively supports Jupyter notebooks in addition to other formats. &#8617; . |",
+          "content": "I’m currently a machine learning R &amp; D engineer at vTime Limited. . Previously, I was a research associate at the University of Manchester, working on the LAMBDA project under Gavin Brown, studying methods of training deep neural network ensembles for regression and classification that reward model diversity. I also worked on the PAMELA project, working on the efficient integration of semantic segmentation into state-of-the-art SLAM (simultaneous localisation and mapping) systems. . I use my Twitter account to share maths and science animations and visualizations. . I maintain QCircuits (), a Python package for simulating the execution of algorithms on small-scale quantum computers. . Around the Web . Google Scholar . LinkedIn . Github . Twitter .",
           "url": "https://grey-area.github.io/fastpages-website/about/",
           "relUrl": "/about/",
           "date": ""
@@ -40,22 +40,6 @@
   
 
   
-      ,"page3": {
-          "title": "This is a Test",
-          "content": "This is where you put the contents of your About page. Like all your pages, it’s in Markdown format. . This website is powered by fastpages 1. . a blogging platform that natively supports Jupyter notebooks in addition to other formats. &#8617; . |",
-          "url": "https://grey-area.github.io/fastpages-website/a_testing/",
-          "relUrl": "/a_testing/",
-          "date": ""
-      }
-      
-  
-
-  
-  
-
-  
-
-  
   
 
   
@@ -70,7 +54,10 @@
   
 
   
-      ,"page11": {
+  
+
+  
+      ,"page9": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://grey-area.github.io/fastpages-website/robots.txt",

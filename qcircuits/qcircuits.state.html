@@ -1,0 +1,610 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>qcircuits.state module &mdash; QCircuits 0.5.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> QCircuits
+          
+
+          
+            
+            <img src="_static/logo_180px.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">qcircuits.state module</a></li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">QCircuits</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>qcircuits.state module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/qcircuits.state.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-qcircuits.state">
+<span id="qcircuits-state-module"></span><span id="state-module"></span><h1>qcircuits.state module<a class="headerlink" href="#module-qcircuits.state" title="Permalink to this headline">¶</a></h1>
+<p>The state module contains the State class, instances of which represent
+quantum states of multi-qubit systems, and factory functions for creating
+specific quantum states.</p>
+<p>The State class and each of the factory functions used to create states are aliased
+at the top-level module, so that, for example, one can call <code class="docutils literal notranslate"><span class="pre">qcircuits.zeros()</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">qcircuits.state.zeros()</span></code>.</p>
+<dl class="class">
+<dt id="qcircuits.state.State">
+<em class="property">class </em><code class="descclassname">qcircuits.state.</code><code class="descname">State</code><span class="sig-paren">(</span><em>tensor</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.State" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="qcircuits.tensors.html#qcircuits.tensors.Tensor" title="qcircuits.tensors.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">qcircuits.tensors.Tensor</span></code></a></p>
+<p>A container class for a tensor representing the state of a
+quantum system, and associated methods.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tensor</strong> (<em>numpy complex128 multidimensional array</em>) – The tensor representing the quantum state, giving the
+probability amplitudes.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="qcircuits.state.State.amplitudes">
+<code class="descname">amplitudes</code><a class="headerlink" href="#qcircuits.state.State.amplitudes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the state tensor, i.e., the probability amplitudes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The probability amplitudes of the state.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy complex128 multidimensional array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="qcircuits.state.State.dot">
+<code class="descname">dot</code><span class="sig-paren">(</span><em>arg</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.State.dot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give the dot product between this and another State.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>arg</strong> (<a class="reference internal" href="#qcircuits.state.State" title="qcircuits.state.State"><em>State</em></a>) – The state with which we take the dot product.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The dot product with State arg.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">complex</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="qcircuits.state.State.from_column_vector">
+<em class="property">static </em><code class="descname">from_column_vector</code><span class="sig-paren">(</span><em>v</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.State.from_column_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>QCircuits represents d-qubit states by type (d, 0) tensors.
+This function constructs a state from the more common column
+vector Kronecker-product representation of the state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>complex128 multidimensional array</strong> (<em>numpy</em>) – The column vector representation of the state,
+of size 2**d.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A d-qubit state.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.state.State" title="qcircuits.state.State">State</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="qcircuits.state.State.measure">
+<code class="descname">measure</code><span class="sig-paren">(</span><em>qubit_indices=None</em>, <em>remove=False</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.State.measure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Measure the state with respect to the computational bases
+of the qubits indicated by <cite>qubit_indices</cite>.
+Measuring a state will modify the state in-place.
+If no indices are indicated, the whole state is measured.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>qubit_indices</strong> (<em>int</em><em> or </em><em>iterable</em>) – An index or indices indicating the qubit(s) whose
+computational bases the measurement of the state will be
+made with respect to. If no <cite>qubit_indices</cite> are given,
+the whole state is measured.</li>
+<li><strong>remove</strong> (<em>bool</em>) – Indicates whether the measured qubits should be removed from
+the state vector.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The measurement outcomes for the measured qubit(s).
+If the <cite>qubit_indices</cite> parameter is supplied as an int,
+an int is returned, otherwise a tuple.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int or tuple of int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="qcircuits.state.State.permute_qubits">
+<code class="descname">permute_qubits</code><span class="sig-paren">(</span><em>axes</em>, <em>inverse=False</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.State.permute_qubits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Permute the qubits in the state. Equivalent to crossing
+wires in a circuit. This method modifies the state in-place,
+but also returns the resulting state to allow chaining of
+operations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>axes</strong> (<em>list of int</em>) – Permute the qubits according to the values given.</li>
+<li><strong>inverse</strong> (<em>bool</em>) – If true, perform the inverse permutation of the qubits.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The resulting state.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#qcircuits.state.State" title="qcircuits.state.State">State</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qcircuits.state.State.probabilities">
+<code class="descname">probabilities</code><a class="headerlink" href="#qcircuits.state.State.probabilities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the probability of observing each computational basis
+vector upon making a measurement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The probability associated with each computational basis
+vector.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy float64 multidimensional array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="qcircuits.state.State.renormalize_">
+<code class="descname">renormalize_</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.State.renormalize_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renormalize the state so that the sum of squared amplitude
+magnitudes is 1.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qcircuits.state.State.schmidt_number">
+<code class="descname">schmidt_number</code><span class="sig-paren">(</span><em>indices</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.State.schmidt_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>For a d-qubit state (d&gt;1) in vector space <cite>Aotimes B</cite>,
+get the Schmidt number, a measure of entanglement,
+for the Schmidt decomposition of that
+state for the subsystems A and B.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>indices</strong> (<em>list of int</em>) – The qubit indices for one of the subsystems.
+This should include at least one qubit index
+and also exclude at least one index.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Schmidt number.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="qcircuits.state.State.swap_qubits">
+<code class="descname">swap_qubits</code><span class="sig-paren">(</span><em>axis1</em>, <em>axis2</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.State.swap_qubits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Swap two qubits in the state. Equivalent to crossing
+wires in a circuit. This method modifies the state in-place,
+but also returns the resulting state to allow chaining of
+operations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>axis1</strong> (<em>int</em>) – First axis.</li>
+<li><strong>axis2</strong> (<em>int</em>) – Second axis.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The resulting state.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#qcircuits.state.State" title="qcircuits.state.State">State</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="qcircuits.state.State.to_column_vector">
+<code class="descname">to_column_vector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.State.to_column_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>QCircuits represents d-qubit states by type (d, 0) tensors.
+This function returns the more common column vector Kronecker-product
+representation of the state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The column vector representation of the state.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy complex128 multidimensional array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.state.bell_state">
+<code class="descclassname">qcircuits.state.</code><code class="descname">bell_state</code><span class="sig-paren">(</span><em>a=0</em>, <em>b=0</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.bell_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce one of the four Bell states for a two-qubit system,
+<span class="math notranslate nohighlight">\(|\beta_{ab}⟩\)</span>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>a</strong> (<em>{0</em><em>, </em><em>1}</em>) – The computational basis state of the first qubit before
+entanglement.</li>
+<li><strong>b</strong> (<em>{0</em><em>, </em><em>1}</em>) – The computational basis state of the second qubit before
+entanglement.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A rank 2 tensor describing one of the four two-qubit Bell
+states. E.g.,
+<span class="math notranslate nohighlight">\(|\beta_{00}⟩ = \frac{1}{\sqrt{2}} (|00⟩ + |11⟩)\)</span></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#qcircuits.state.State" title="qcircuits.state.State">State</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.state.qubit" title="qcircuits.state.qubit"><code class="xref py py-func docutils literal notranslate"><span class="pre">qubit()</span></code></a>, <a class="reference internal" href="#qcircuits.state.zeros" title="qcircuits.state.zeros"><code class="xref py py-func docutils literal notranslate"><span class="pre">zeros()</span></code></a>, <a class="reference internal" href="#qcircuits.state.ones" title="qcircuits.state.ones"><code class="xref py py-func docutils literal notranslate"><span class="pre">ones()</span></code></a>, <a class="reference internal" href="#qcircuits.state.bitstring" title="qcircuits.state.bitstring"><code class="xref py py-func docutils literal notranslate"><span class="pre">bitstring()</span></code></a>, <a class="reference internal" href="#qcircuits.state.positive_superposition" title="qcircuits.state.positive_superposition"><code class="xref py py-func docutils literal notranslate"><span class="pre">positive_superposition()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.state.bitstring">
+<code class="descclassname">qcircuits.state.</code><code class="descname">bitstring</code><span class="sig-paren">(</span><em>*bits</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.bitstring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a computational basis state from a given bit sequence.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bits</strong> – A variable number of arguments each in {0, 1}.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">If <cite>d</cite> arguments are supplied, returns a rank <cite>d</cite> tensor
+describing the computational basis state given by the sequence
+of input bits.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.state.State" title="qcircuits.state.State">State</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.state.qubit" title="qcircuits.state.qubit"><code class="xref py py-func docutils literal notranslate"><span class="pre">qubit()</span></code></a>, <a class="reference internal" href="#qcircuits.state.zeros" title="qcircuits.state.zeros"><code class="xref py py-func docutils literal notranslate"><span class="pre">zeros()</span></code></a>, <a class="reference internal" href="#qcircuits.state.ones" title="qcircuits.state.ones"><code class="xref py py-func docutils literal notranslate"><span class="pre">ones()</span></code></a>, <a class="reference internal" href="#qcircuits.state.positive_superposition" title="qcircuits.state.positive_superposition"><code class="xref py py-func docutils literal notranslate"><span class="pre">positive_superposition()</span></code></a>, <a class="reference internal" href="#qcircuits.state.bell_state" title="qcircuits.state.bell_state"><code class="xref py py-func docutils literal notranslate"><span class="pre">bell_state()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.state.ones">
+<code class="descclassname">qcircuits.state.</code><code class="descname">ones</code><span class="sig-paren">(</span><em>d=1</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.ones" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the all-one computational basis vector for <cite>d</cite> qubits.
+I.e., produces <span class="math notranslate nohighlight">\(|1⟩^{\otimes d}\)</span>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>int</em>) – The number of qubits <cite>d</cite> for which we produce a computational
+basis vector, and the rank of the produced tensor.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A <cite>d</cite>-rank tensor describing the all-one <cite>d</cite>-qubit
+computational basis vector, <span class="math notranslate nohighlight">\(|1⟩^{\otimes d}\)</span></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.state.State" title="qcircuits.state.State">State</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.state.qubit" title="qcircuits.state.qubit"><code class="xref py py-func docutils literal notranslate"><span class="pre">qubit()</span></code></a>, <a class="reference internal" href="#qcircuits.state.zeros" title="qcircuits.state.zeros"><code class="xref py py-func docutils literal notranslate"><span class="pre">zeros()</span></code></a>, <a class="reference internal" href="#qcircuits.state.bitstring" title="qcircuits.state.bitstring"><code class="xref py py-func docutils literal notranslate"><span class="pre">bitstring()</span></code></a>, <a class="reference internal" href="#qcircuits.state.positive_superposition" title="qcircuits.state.positive_superposition"><code class="xref py py-func docutils literal notranslate"><span class="pre">positive_superposition()</span></code></a>, <a class="reference internal" href="#qcircuits.state.bell_state" title="qcircuits.state.bell_state"><code class="xref py py-func docutils literal notranslate"><span class="pre">bell_state()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.state.positive_superposition">
+<code class="descclassname">qcircuits.state.</code><code class="descname">positive_superposition</code><span class="sig-paren">(</span><em>d=1</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.positive_superposition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the positive superposition for a <cite>d</cite> qubit system, i.e.,
+the state resulting from applying the
+<a class="reference internal" href="qcircuits.operators.html#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a> gate to each of <cite>d</cite> |0⟩
+computational basis states,
+<span class="math notranslate nohighlight">\(H^{\otimes d}(|0⟩^{\otimes d}) = |+⟩^{\otimes d}.\)</span></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>int</em>) – The number of qubits <cite>d</cite> for the state.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A <cite>d</cite>-rank tensor describing the positive superposition for
+a <cite>d</cite>-qubit system, <span class="math notranslate nohighlight">\(|+⟩^{\otimes d}.\)</span></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.state.State" title="qcircuits.state.State">State</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.state.qubit" title="qcircuits.state.qubit"><code class="xref py py-func docutils literal notranslate"><span class="pre">qubit()</span></code></a>, <a class="reference internal" href="#qcircuits.state.zeros" title="qcircuits.state.zeros"><code class="xref py py-func docutils literal notranslate"><span class="pre">zeros()</span></code></a>, <a class="reference internal" href="#qcircuits.state.ones" title="qcircuits.state.ones"><code class="xref py py-func docutils literal notranslate"><span class="pre">ones()</span></code></a>, <a class="reference internal" href="#qcircuits.state.bitstring" title="qcircuits.state.bitstring"><code class="xref py py-func docutils literal notranslate"><span class="pre">bitstring()</span></code></a>, <a class="reference internal" href="#qcircuits.state.bell_state" title="qcircuits.state.bell_state"><code class="xref py py-func docutils literal notranslate"><span class="pre">bell_state()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.state.qubit">
+<code class="descclassname">qcircuits.state.</code><code class="descname">qubit</code><span class="sig-paren">(</span><em>*</em>, <em>alpha=None</em>, <em>beta=None</em>, <em>theta=None</em>, <em>phi=None</em>, <em>global_phase=0.0</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.qubit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a given state for a single qubit.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>alpha</strong> (<em>float</em>) – The probability amplitude for the |0⟩ basis vector.
+Should not be specified in conjunction with theta or phi.</li>
+<li><strong>beta</strong> (<em>float</em>) – The probability amplitude for the |1⟩ basis vector.
+Should not be specified in conjunction with theta or phi.</li>
+<li><strong>theta</strong> (<em>float</em>) – The angle of the state between |0⟩ and |1⟩ on the Bloch sphere.
+Should not be specified in conjunction with alpha or beta.</li>
+<li><strong>phi</strong> (<em>float</em>) – The phase of the |1⟩ component.
+Should not be specified in conjunction with alpha or beta.</li>
+<li><strong>global_phase</strong> (<em>float</em>) – A global phase applied to the state.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A rank 1 tensor describing the state of a single qubit.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#qcircuits.state.State" title="qcircuits.state.State">State</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.state.zeros" title="qcircuits.state.zeros"><code class="xref py py-func docutils literal notranslate"><span class="pre">zeros()</span></code></a>, <a class="reference internal" href="#qcircuits.state.ones" title="qcircuits.state.ones"><code class="xref py py-func docutils literal notranslate"><span class="pre">ones()</span></code></a>, <a class="reference internal" href="#qcircuits.state.bitstring" title="qcircuits.state.bitstring"><code class="xref py py-func docutils literal notranslate"><span class="pre">bitstring()</span></code></a>, <a class="reference internal" href="#qcircuits.state.positive_superposition" title="qcircuits.state.positive_superposition"><code class="xref py py-func docutils literal notranslate"><span class="pre">positive_superposition()</span></code></a>, <a class="reference internal" href="#qcircuits.state.bell_state" title="qcircuits.state.bell_state"><code class="xref py py-func docutils literal notranslate"><span class="pre">bell_state()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="qcircuits.state.zeros">
+<code class="descclassname">qcircuits.state.</code><code class="descname">zeros</code><span class="sig-paren">(</span><em>d=1</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.zeros" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce the all-zero computational basis vector for <cite>d</cite> qubits.
+I.e., produces <span class="math notranslate nohighlight">\(|0⟩^{\otimes d}\)</span>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>int</em>) – The number of qubits <cite>d</cite> for which we produce a computational
+basis vector, and the rank of the produced tensor.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A <cite>d</cite>-rank tensor describing the all-zero <cite>d</cite>-qubit
+computational basis vector, <span class="math notranslate nohighlight">\(|0⟩^{\otimes d}\)</span></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.state.State" title="qcircuits.state.State">State</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#qcircuits.state.qubit" title="qcircuits.state.qubit"><code class="xref py py-func docutils literal notranslate"><span class="pre">qubit()</span></code></a>, <a class="reference internal" href="#qcircuits.state.ones" title="qcircuits.state.ones"><code class="xref py py-func docutils literal notranslate"><span class="pre">ones()</span></code></a>, <a class="reference internal" href="#qcircuits.state.bitstring" title="qcircuits.state.bitstring"><code class="xref py py-func docutils literal notranslate"><span class="pre">bitstring()</span></code></a>, <a class="reference internal" href="#qcircuits.state.positive_superposition" title="qcircuits.state.positive_superposition"><code class="xref py py-func docutils literal notranslate"><span class="pre">positive_superposition()</span></code></a>, <a class="reference internal" href="#qcircuits.state.bell_state" title="qcircuits.state.bell_state"><code class="xref py py-func docutils literal notranslate"><span class="pre">bell_state()</span></code></a></p>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Andrew Michael Webb
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21765629-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>
