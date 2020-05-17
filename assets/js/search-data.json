@@ -38,6 +38,17 @@
   
 
   
+      ,"page2": {
+          "title": "CV",
+          "content": "This browser does not support PDFs. Please download the PDF to view it: Download PDF. . &lt;/embed&gt;",
+          "url": "https://grey-area.github.io/fastpages-website/cv/",
+          "relUrl": "/cv/",
+          "date": ""
+      }
+      
+  
+
+  
 
   
   
@@ -57,7 +68,7 @@
   
 
   
-      ,"page9": {
+      ,"page10": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://grey-area.github.io/fastpages-website/robots.txt",
