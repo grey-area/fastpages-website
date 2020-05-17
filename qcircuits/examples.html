@@ -1,0 +1,692 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Examples &mdash; QCircuits 0.5.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> QCircuits
+          
+
+          
+            
+            <img src="_static/logo_180px.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Examples</a></li>
+<li><a class="reference internal" href="#producing-bell-states">Producing Bell States</a></li>
+<li><a class="reference internal" href="#quantum-teleportation">Quantum Teleportation</a></li>
+<li><a class="reference internal" href="#quantum-parallelism">Quantum Parallelism</a></li>
+<li><a class="reference internal" href="#deutsch-s-algorithm">Deutsch’s Algorithm</a></li>
+<li><a class="reference internal" href="#the-deutsch-jozsa-algorithm">The Deutsch-Jozsa Algorithm</a></li>
+<li><a class="reference internal" href="#superdense-coding">Superdense Coding</a></li>
+<li><a class="reference internal" href="#phase-estimation">Phase Estimation</a></li>
+<li><a class="reference internal" href="#grover-s-algorithm">Grover’s Algorithm</a></li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">QCircuits</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Examples</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/examples.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="examples">
+<span id="examples-page"></span><h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<p>This page demonstrates how QCircuits can be used to simulate example
+quantum algorithms.</p>
+</div>
+<div class="section" id="producing-bell-states">
+<h1>Producing Bell States<a class="headerlink" href="#producing-bell-states" title="Permalink to this headline">¶</a></h1>
+<p>Example code producing each of the four entangled Bell states for a two-qubit system.</p>
+<p>The circuit diagram is</p>
+<a class="reference internal image-reference" href="_images/bell.png"><img alt="_images/bell.png" src="_images/bell.png" style="width: 70%;" /></a>
+<p>where |x⟩ and |y⟩ are each one of the computational basis states, |0⟩ or |1⟩.</p>
+<p>E.g., <span class="math notranslate nohighlight">\(|\beta_{00}⟩ = \frac{1}{\sqrt{2}} (|00⟩ + |11⟩)\)</span>.</p>
+<p><strong>Code</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qcircuits</span> <span class="k">as</span> <span class="nn">qc</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">product</span>
+
+
+<span class="c1"># Creates each of the four Bell states</span>
+
+
+<span class="k">def</span> <span class="nf">bell_state</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>
+    <span class="n">CNOT</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">CNOT</span><span class="p">()</span>
+
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">CNOT</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">product</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Input: </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bell state:&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">bell_state</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="quantum-teleportation">
+<h1>Quantum Teleportation<a class="headerlink" href="#quantum-teleportation" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="_images/teleport.png"><img alt="_images/teleport.png" src="_images/teleport.png" style="width: 100%;" /></a>
+<p><strong>Code</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qcircuits</span> <span class="k">as</span> <span class="nn">qc</span>
+
+
+<span class="c1"># Quantum Teleportation: transmitting two classical bits to transport a qubit state</span>
+<span class="c1"># Alice has a qubit in a given quantum state.</span>
+<span class="c1"># Alice and Bob have previously prepared a Bell state, and have since</span>
+<span class="c1"># physically separated the qubits.</span>
+<span class="c1"># Alice manipulates her hidden qubit and her half of the Bell state, and then</span>
+<span class="c1"># measures both qubits.</span>
+<span class="c1"># She sends the result (two classical bits) to Bob, who is able to reconstruct</span>
+<span class="c1"># Alice&#39;s state by applying operators based on the measurement outcomes.</span>
+
+
+<span class="k">def</span> <span class="nf">quantum_teleportation</span><span class="p">(</span><span class="n">alice_state</span><span class="p">):</span>
+    <span class="c1"># Get operators we will need</span>
+    <span class="n">CNOT</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">CNOT</span><span class="p">()</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">PauliX</span><span class="p">()</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">PauliZ</span><span class="p">()</span>
+
+    <span class="c1"># The prepared, shared Bell state</span>
+    <span class="n">bell</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># The whole state vector</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">alice_state</span> <span class="o">*</span> <span class="n">bell</span>
+
+    <span class="c1"># Apply CNOT and Hadamard gate</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">CNOT</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># Measure the first two bits</span>
+    <span class="c1"># The only uncollapsed part of the state vector is Bob&#39;s</span>
+    <span class="n">M1</span><span class="p">,</span> <span class="n">M2</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">remove</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Apply X and/or Z gates to third qubit depending on measurements</span>
+    <span class="k">if</span> <span class="n">M2</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">X</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">M1</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">Z</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">state</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># Alice&#39;s original state to be teleported to Bob</span>
+    <span class="n">alice</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">qubit</span><span class="p">(</span><span class="n">theta</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">global_phase</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+    <span class="c1"># Bob&#39;s state after quantum teleportation</span>
+    <span class="n">bob</span> <span class="o">=</span> <span class="n">quantum_teleportation</span><span class="p">(</span><span class="n">alice</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original state:&#39;</span><span class="p">,</span> <span class="n">alice</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Teleported state:&#39;</span><span class="p">,</span> <span class="n">bob</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="quantum-parallelism">
+<h1>Quantum Parallelism<a class="headerlink" href="#quantum-parallelism" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="_images/parallel.png"><img alt="_images/parallel.png" src="_images/parallel.png" style="width: 100%;" /></a>
+<p><strong>Code</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qcircuits</span> <span class="k">as</span> <span class="nn">qc</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="c1"># Example of quantum parallelism</span>
+
+
+<span class="c1"># Construct a Boolean function</span>
+<span class="k">def</span> <span class="nf">construct_problem</span><span class="p">():</span>
+    <span class="n">answers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">bit</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">answers</span><span class="p">[</span><span class="n">bit</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">f</span>
+
+
+<span class="k">def</span> <span class="nf">quantum_parallelism</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="n">U_f</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">U_f</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>
+
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">U_f</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">construct_problem</span><span class="p">()</span>
+
+    <span class="n">quantum_parallelism</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deutsch-s-algorithm">
+<h1>Deutsch’s Algorithm<a class="headerlink" href="#deutsch-s-algorithm" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="_images/deutsch.png"><img alt="_images/deutsch.png" src="_images/deutsch.png" style="width: 100%;" /></a>
+<p><strong>Code</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qcircuits</span> <span class="k">as</span> <span class="nn">qc</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="c1"># Deutsch&#39;s Algorithhm:</span>
+<span class="c1"># We use interference to determine if f(0) = f(1) using a single function evaluation.</span>
+
+
+<span class="c1"># Construct a Boolean function that is constant or balanced</span>
+<span class="k">def</span> <span class="nf">construct_problem</span><span class="p">():</span>
+    <span class="n">answers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">bit</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">answers</span><span class="p">[</span><span class="n">bit</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">f</span>
+
+
+<span class="k">def</span> <span class="nf">deutsch_algorithm</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="n">U_f</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">U_f</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>
+
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">())</span> <span class="o">*</span> <span class="n">H</span><span class="p">(</span><span class="n">qc</span><span class="o">.</span><span class="n">ones</span><span class="p">())</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">U_f</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">measurement</span> <span class="o">=</span> <span class="n">phi</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">qubit_indices</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">measurement</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">construct_problem</span><span class="p">()</span>
+    <span class="n">parity</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">measurement</span> <span class="o">=</span> <span class="n">deutsch_algorithm</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;f(0): </span><span class="si">{}</span><span class="s1">, f(1): </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;f(0) == f(1): </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parity</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Measurement: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">measurement</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-deutsch-jozsa-algorithm">
+<h1>The Deutsch-Jozsa Algorithm<a class="headerlink" href="#the-deutsch-jozsa-algorithm" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="_images/deutsch_jozsa.png"><img alt="_images/deutsch_jozsa.png" src="_images/deutsch_jozsa.png" style="width: 100%;" /></a>
+<p><strong>Code</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qcircuits</span> <span class="k">as</span> <span class="nn">qc</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+
+<span class="c1"># Deutsch-Jozsa Algorithhm:</span>
+<span class="c1"># We are presented with a Boolean function that is either constant or</span>
+<span class="c1"># balanced (i.e., 0 for half of inputs, 1 for the other half).</span>
+<span class="c1"># We make use of interference to determine whether the function is constant</span>
+<span class="c1"># or balanced in a single function evaluation.</span>
+
+
+<span class="c1"># Construct a Boolean function that is constant or balanced</span>
+<span class="k">def</span> <span class="nf">construct_problem</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">problem_type</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">):</span>
+    <span class="n">num_inputs</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="n">d</span>
+    <span class="n">answers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_inputs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">problem_type</span> <span class="o">==</span> <span class="s1">&#39;constant&#39;</span><span class="p">:</span>
+        <span class="n">answers</span><span class="p">[:]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># function is balanced</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">num_inputs</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_inputs</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">answers</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="o">*</span><span class="n">bits</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">v</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bits</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">answers</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">f</span>
+
+
+<span class="k">def</span> <span class="nf">deutsch_jozsa_algorithm</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+    <span class="c1"># The operators we will need</span>
+    <span class="n">U_f</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">U_f</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">H_d</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>
+
+    <span class="n">state</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">*</span> <span class="n">qc</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="p">(</span><span class="n">H_d</span> <span class="o">*</span> <span class="n">H</span><span class="p">)(</span><span class="n">state</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">U_f</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">H_d</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+
+    <span class="n">measurements</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">qubit_indices</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">measurements</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">problem_type</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="s1">&#39;balanced&#39;</span><span class="p">])</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="n">construct_problem</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">problem_type</span><span class="p">)</span>
+    <span class="n">measurements</span> <span class="o">=</span> <span class="n">deutsch_jozsa_algorithm</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Problem type: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">problem_type</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Measurement: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">measurements</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Observed all zeros: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">measurements</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="superdense-coding">
+<h1>Superdense Coding<a class="headerlink" href="#superdense-coding" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="_images/superdense.png"><img alt="_images/superdense.png" src="_images/superdense.png" style="width: 100%;" /></a>
+<p><strong>Code</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qcircuits</span> <span class="k">as</span> <span class="nn">qc</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="c1"># Superdense Coding: transmitting a qubit to transport two classical bits</span>
+<span class="c1"># Alice and Bob have previously prepared a Bell state, and have since</span>
+<span class="c1"># physically separated the qubits.</span>
+<span class="c1"># Alice has two classical bits she wants to transmit to Bob.</span>
+<span class="c1"># She manipulates her half of the Bell state depending on the values of those bits,</span>
+<span class="c1"># then transmits her qubit to Bob, who then measures the system.</span>
+
+
+<span class="k">def</span> <span class="nf">superdense_coding</span><span class="p">(</span><span class="n">bit_1</span><span class="p">,</span> <span class="n">bit_2</span><span class="p">):</span>
+    <span class="c1"># Get operators we will need</span>
+    <span class="n">CNOT</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">CNOT</span><span class="p">()</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">PauliX</span><span class="p">()</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">PauliZ</span><span class="p">()</span>
+
+    <span class="c1"># The prepared, shared Bell state</span>
+    <span class="c1"># Initially, half is in Alice&#39;s possession, and half in Bob&#39;s</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Alice manipulates her qubit</span>
+    <span class="k">if</span> <span class="n">bit_2</span><span class="p">:</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">X</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">bit_1</span><span class="p">:</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">Z</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># Bob decodes the two bits</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">CNOT</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">measurements</span> <span class="o">=</span> <span class="n">phi</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">measurements</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># Alice&#39;s classical bits she wants to transmit</span>
+    <span class="n">bit_1</span><span class="p">,</span> <span class="n">bit_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    
+    <span class="c1"># Bob&#39;s measurements</span>
+    <span class="n">measurements</span> <span class="o">=</span> <span class="n">superdense_coding</span><span class="p">(</span><span class="n">bit_1</span><span class="p">,</span> <span class="n">bit_2</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Alice&#39;s initial bits:</span><span class="se">\t</span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bit_1</span><span class="p">,</span> <span class="n">bit_2</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bob&#39;s measurements:</span><span class="se">\t</span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">measurements</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">measurements</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="phase-estimation">
+<h1>Phase Estimation<a class="headerlink" href="#phase-estimation" title="Permalink to this headline">¶</a></h1>
+<p>We are give a black-box d-qubit operator U and one of its eigenstates.
+The task is to estimate the phase of the corresponding eigenvalue,
+storing the result in a t-qubit register.</p>
+<p><strong>Code</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qcircuits</span> <span class="k">as</span> <span class="nn">qc</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">unitary_group</span>
+
+
+<span class="c1"># Phase estimation</span>
+<span class="c1"># We are given a black-box unitary operator, and one of its eigenstates.</span>
+<span class="c1"># The task is to estimate the phase of the corresponding eigenvalue.</span>
+<span class="c1"># This is done making use of the efficient inverse quantum Fourier transform.</span>
+
+
+<span class="c1"># Prepares a state that when the inverse Fourier transform is applied,</span>
+<span class="c1"># unpacks the binary fractional expansion of the phase into the</span>
+<span class="c1"># first t-qubit register.</span>
+<span class="k">def</span> <span class="nf">stage_1</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="n">t</span><span class="p">)(</span><span class="n">state</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+
+    <span class="c1"># For each qubit in reverse order, apply the Hadamard gate,</span>
+    <span class="c1"># then apply U^(2^i) to the d-qubit register</span>
+    <span class="c1"># conditional on the state of the t-i qubit in the</span>
+    <span class="c1"># t-qubit register.</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">t_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)):</span>
+        <span class="n">U_2_idx</span> <span class="o">=</span> <span class="n">U</span>
+        <span class="k">for</span> <span class="n">app_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+            <span class="n">U_2_idx</span> <span class="o">=</span> <span class="n">U_2_idx</span><span class="p">(</span><span class="n">U_2_idx</span><span class="p">)</span>
+        <span class="n">C_U</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">ControlledU</span><span class="p">(</span><span class="n">U_2_idx</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">C_U</span><span class="p">(</span>
+            <span class="n">state</span><span class="p">,</span>
+            <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="n">t_i</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">t</span><span class="o">+</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">state</span>
+
+
+<span class="c1"># The t-qubit quantum Fourier transform</span>
+<span class="k">def</span> <span class="nf">QFT</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="n">Op</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Identity</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>
+
+    <span class="c1"># The R_k gate applies a 2pi/2^k phase is the qubit is set</span>
+    <span class="n">C_Rs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">R_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">/</span> <span class="mi">2</span><span class="o">**</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">qc</span><span class="o">.</span><span class="n">RotationZ</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="o">**</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">C_Rs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">ControlledU</span><span class="p">(</span><span class="n">R_k</span><span class="p">)</span>
+
+    <span class="c1"># For each qubit in order, apply the Hadamard gate, and then</span>
+    <span class="c1"># apply the R_2, R_3, ... conditional on the remainder of the qubits</span>
+    <span class="k">for</span> <span class="n">t_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+        <span class="n">Op</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">Op</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="n">t_i</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">t</span><span class="o">+</span><span class="mi">1</span> <span class="o">-</span> <span class="n">t_i</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">Op</span> <span class="o">=</span> <span class="n">C_Rs</span><span class="p">[</span><span class="n">k</span><span class="p">](</span><span class="n">Op</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="n">t_i</span> <span class="o">+</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">t_i</span><span class="p">])</span>
+
+    <span class="c1"># We have the QFT, but with the qubits in reverse order</span>
+    <span class="c1"># Swap them back</span>
+    <span class="n">Swap</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Swap</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">j</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">Op</span> <span class="o">=</span> <span class="n">Swap</span><span class="p">(</span><span class="n">Op</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">Op</span>
+
+
+<span class="c1"># The t-qubit inverse quantum Fourier transform</span>
+<span class="k">def</span> <span class="nf">inv_QFT</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">QFT</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">adj</span>
+
+
+<span class="c1"># Do phase estimation for a random d-qubit operator,</span>
+<span class="c1"># recording the result in a t-qubit register.</span>
+<span class="k">def</span> <span class="nf">phase_estimation</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
+    <span class="c1"># a d-qubit gate</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="n">unitary_group</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>    
+    <span class="n">U</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Operator</span><span class="o">.</span><span class="n">from_matrix</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+    
+    <span class="c1"># an eigenvector u and the phase of its eigenvalue, phi</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">eigvals</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">phi</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">phi</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">eigvecs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">from_column_vector</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    
+    <span class="c1"># add the t-qubit register</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">u</span>
+
+    <span class="n">state</span> <span class="o">=</span> <span class="n">stage_1</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">inv_QFT</span><span class="p">(</span><span class="n">t</span><span class="p">)(</span><span class="n">state</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+    <span class="n">measurement</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">qubit_indices</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+    <span class="n">phi_estimate</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">measurement</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phi_estimate</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">phi</span><span class="p">,</span> <span class="n">phi_estimate</span> <span class="o">=</span> <span class="n">phase_estimation</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;True phase: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimated phase: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">phi_estimate</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="grover-s-algorithm">
+<h1>Grover’s Algorithm<a class="headerlink" href="#grover-s-algorithm" title="Permalink to this headline">¶</a></h1>
+<p>We are given a black-box boolean function f(x) that evaluates to
+1 for exactly one value of x.
+Grover’s algorithm finds the solution with resources proportional
+to the square root of the size of the search space.</p>
+<p><strong>Code</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qcircuits</span> <span class="k">as</span> <span class="nn">qc</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+
+<span class="c1"># Grover&#39;s algorithm (search)</span>
+<span class="c1"># Given a boolean function f, Grover&#39;s algorithm finds an x such that</span>
+<span class="c1"># f(x) = 1.</span>
+<span class="c1"># If there are N values of x, and M possible solutions, it requires</span>
+<span class="c1"># O(sqrt(N/M)) time.</span>
+<span class="c1"># Here, we construct a search problem with 1 solution amongst 1024</span>
+<span class="c1"># possible answers, and find the solution with 25 applications of</span>
+<span class="c1"># the Grover iteration operator.</span>
+
+
+<span class="c1"># Construct a Boolean function that is 1 in exactly one place</span>
+<span class="k">def</span> <span class="nf">construct_problem</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">num_inputs</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="n">d</span>
+    <span class="n">answers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_inputs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">answers</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_inputs</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="o">*</span><span class="n">bits</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">v</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bits</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">answers</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">f</span>
+
+
+<span class="k">def</span> <span class="nf">grover_algorithm</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+    <span class="c1"># The operators we will need</span>
+    <span class="n">Oracle</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">U_f</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">H_d</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="n">d</span>
+    <span class="n">zero_projector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+    <span class="n">zero_projector</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">Inversion</span> <span class="o">=</span> <span class="n">H_d</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">qc</span><span class="o">.</span><span class="n">Operator</span><span class="o">.</span><span class="n">from_matrix</span><span class="p">(</span><span class="n">zero_projector</span><span class="p">)</span> <span class="o">-</span> <span class="n">qc</span><span class="o">.</span><span class="n">Identity</span><span class="p">(</span><span class="n">d</span><span class="p">))(</span><span class="n">H_d</span><span class="p">))</span>
+    <span class="n">Grover</span> <span class="o">=</span> <span class="n">Inversion</span><span class="p">(</span><span class="n">Oracle</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+
+    <span class="c1"># Initial state</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">*</span> <span class="n">qc</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="p">(</span><span class="n">H_d</span> <span class="o">*</span> <span class="n">H</span><span class="p">)(</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="c1"># Number of Grover iterations</span>
+    <span class="n">angle_to_rotate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span><span class="p">))</span>
+    <span class="n">rotation_angle</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">N</span><span class="p">))</span>
+    <span class="n">iterations</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">angle_to_rotate</span> <span class="o">/</span> <span class="n">rotation_angle</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">Grover</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="n">measurements</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">qubit_indices</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">measurements</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="mi">10</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="n">construct_problem</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">bits</span> <span class="o">=</span> <span class="n">grover_algorithm</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Measurement: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bits</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Evaluate f at measurement: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">bits</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Andrew Michael Webb
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21765629-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

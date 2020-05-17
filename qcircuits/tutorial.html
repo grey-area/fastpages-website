@@ -1,0 +1,945 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial &mdash; QCircuits 0.5.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> QCircuits
+          
+
+          
+            
+            <img src="_static/logo_180px.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Tutorial</a></li>
+<li><a class="reference internal" href="#states">States</a></li>
+<li><a class="reference internal" href="#how-are-states-represented">How are States Represented?</a></li>
+<li><a class="reference internal" href="#operators">Operators</a></li>
+<li><a class="reference internal" href="#how-are-operators-represented">How are Operators Represented?</a></li>
+<li><a class="reference internal" href="#applying-operators-to-states">Applying Operators to States</a></li>
+<li><a class="reference internal" href="#tensor-products">Tensor Products</a></li>
+<li><a class="reference internal" href="#composing-operators">Composing Operators</a></li>
+<li><a class="reference internal" href="#measurement">Measurement</a></li>
+<li><a class="reference internal" href="#density-operators">Density Operators</a></li>
+<li><a class="reference internal" href="#warning-the-no-cloning-theorem">Warning: The No-Cloning Theorem</a></li>
+<li><a class="reference internal" href="#entanglement-schmidt-number">Entanglement / Schmidt Number</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">QCircuits</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial">
+<span id="tutorial-page"></span><h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<p>QCircuits is a library for simulating quantum circuits.
+Its primary classes are <a class="reference internal" href="qcircuits.state.html#qcircuits.state.State" title="qcircuits.state.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">State</span></code></a>, representing the (quantum) state
+of the computer, a unit vector in a
+complex vector space, and <a class="reference internal" href="qcircuits.operators.html#qcircuits.operators.Operator" title="qcircuits.operators.Operator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>, representing quantum gates,
+i.e. unitary operators
+on those vector spaces.
+This tutorial describes how to use QCircuits to prepare operators and states,
+apply operators to states, measure states, etc., in order to implement
+quantum algorithms.</p>
+<p>First, install QCircuits with pip:</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">qcircuits</span></code></p>
+<p>In the following, it is assumed that QCircuits has been imported with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">qcircuits</span> <span class="kn">as</span> <span class="nn">qc</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="states">
+<h1>States<a class="headerlink" href="#states" title="Permalink to this headline">¶</a></h1>
+<p>States in QCircuits represent the state of a <span class="math notranslate nohighlight">\(d\)</span>-qubit quantum computer.
+This section introduces some of the ways in which states can be prepared
+in QCircuits.</p>
+<p>States in an all-zero or all-one computational basis state may be prepared
+with the <a class="reference internal" href="qcircuits.state.html#qcircuits.state.zeros" title="qcircuits.state.zeros"><code class="xref py py-func docutils literal notranslate"><span class="pre">zeros()</span></code></a> and <a class="reference internal" href="qcircuits.state.html#qcircuits.state.ones" title="qcircuits.state.ones"><code class="xref py py-func docutils literal notranslate"><span class="pre">ones()</span></code></a> functions.
+E.g., to prepare the state <span class="math notranslate nohighlight">\(|\phi⟩ = |000⟩\)</span>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># the state |000⟩</span>
+</pre></div>
+</div>
+<p>And to prepare the state <span class="math notranslate nohighlight">\(|\phi⟩ = |11⟩\)</span>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># the state |11⟩</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="qcircuits.state.html#qcircuits.state.bitstring" title="qcircuits.state.bitstring"><code class="xref py py-func docutils literal notranslate"><span class="pre">bitstring()</span></code></a> function allows one to prepare a state in
+an arbitrary computational basis state. E.g., to prepare the state
+<span class="math notranslate nohighlight">\(|\phi⟩ = |01001⟩\)</span>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># the state |01001⟩</span>
+</pre></div>
+</div>
+<p>A single qubit may be prepared with the <a class="reference internal" href="qcircuits.state.html#qcircuits.state.qubit" title="qcircuits.state.qubit"><code class="xref py py-func docutils literal notranslate"><span class="pre">qubit()</span></code></a> function.
+A qubit <span class="math notranslate nohighlight">\(|\phi⟩ = \alpha |0⟩ + \beta |1⟩\)</span> may be prepared by providing
+<span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> such that
+<span class="math notranslate nohighlight">\(\lvert\alpha\rvert^2 + \lvert\beta\rvert^2 = 1\)</span>, e.g.,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">qubit</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># the state 0.5|0⟩ + 0.866|1⟩</span>
+</pre></div>
+</div>
+<p>Alternatively, a qubit can be prepared in the state
+<span class="math notranslate nohighlight">\(e^{i \omega} \big( \cos(\theta/2) |0⟩ + e^{i \phi} \sin(\theta/2) |1⟩ \big)\)</span>,
+where <span class="math notranslate nohighlight">\(\omega\)</span> is the global phase of the state,
+using the same function, e.g.,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">qubit</span><span class="p">(</span><span class="n">theta</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">global_phase</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The four Bell states can be prepared using the <a class="reference internal" href="qcircuits.state.html#qcircuits.state.bell_state" title="qcircuits.state.bell_state"><code class="xref py py-func docutils literal notranslate"><span class="pre">bell_state()</span></code></a> function.
+This takes two binary arguments x and y, and produces the Bell state
+<span class="math notranslate nohighlight">\(|\beta_{xy}⟩ = \big( |0, y⟩ + (-1)^x |1, 1-y⟩ \big)/\sqrt{2}\)</span>. E.g.,
+the Bell state <span class="math notranslate nohighlight">\(|\beta_{00}⟩ = \frac{|00⟩ + |11⟩}{\sqrt{2}}\)</span>
+can be prepared:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">beta</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># the state (|0⟩ + |1⟩)/1.414</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="qcircuits.state.html#qcircuits.state.positive_superposition" title="qcircuits.state.positive_superposition"><code class="xref py py-func docutils literal notranslate"><span class="pre">positive_superposition()</span></code></a> function may be used to prepare
+a d-qubit state in the positive equal superposition of the computational
+states. E.g., to construct the 2-qubit state
+<span class="math notranslate nohighlight">\(|\phi⟩ = \big(|00⟩ + |01⟩ + |10⟩ + |11⟩ \big) / 2\)</span>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">positive_superposition</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>States can also be prepared by applying operators to states or taking the
+tensor product of states, each of which is described in later sections.</p>
+</div>
+<div class="section" id="how-are-states-represented">
+<h1>How are States Represented?<a class="headerlink" href="#how-are-states-represented" title="Permalink to this headline">¶</a></h1>
+<p>Internally, QCircuits encodes a d-qubit state with an array of shape
+(2, 2, …, 2), with d axes in total, representing a tensor with
+d contravariant indices. E.g., a 3-qubit state is represented by an array
+of shape (2, 2, 2), and indexing into this array with indices i, j, k
+gets the probability amplitude for the computational basis vector
+<span class="math notranslate nohighlight">\(|ijk⟩\)</span>. The shape and the rank (number of axes) can be accessed
+with the <code class="xref py py-attr docutils literal notranslate"><span class="pre">State.shape</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">State.rank</span></code> properties.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+<span class="go">3-qubit state. Tensor:</span>
+<span class="go">[[[1.+0.j 0.+0.j]</span>
+<span class="go">  [0.+0.j 0.+0.j]]</span>
+
+<span class="go"> [[0.+0.j 0.+0.j]</span>
+<span class="go">  [0.+0.j 0.+0.j]]]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">phi</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="go">(2, 2, 2)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">phi</span><span class="o">.</span><span class="n">rank</span><span class="p">)</span>
+<span class="go">3</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">phi</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>  <span class="c1"># the probability amplitude of our state for |000⟩</span>
+<span class="go">(1+0j)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">phi</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># the probability amplitude of our state for |001⟩</span>
+<span class="go">0j</span>
+</pre></div>
+</div>
+<p>A d-qubit state can be constructed by providing this array.
+E.g., a 3-qubit state can be constructed by providing a (2, 2, 2)
+shape array:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">State</span><span class="p">([[[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>  <span class="c1"># the state |000⟩</span>
+<span class="gp">... </span>                 <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]],</span>
+<span class="gp">... </span>                <span class="p">[[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+<span class="gp">... </span>                 <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]]])</span>
+</pre></div>
+</div>
+<p>An alternative and common representation of a d-qubit state is as a column
+vector of length <span class="math notranslate nohighlight">\(2^d\)</span>. This column-vector representation can
+be obtained with the <a class="reference internal" href="qcircuits.state.html#qcircuits.state.State.to_column_vector" title="qcircuits.state.State.to_column_vector"><code class="xref py py-meth docutils literal notranslate"><span class="pre">State.to_column_vector()</span></code></a> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span><span class="o">.</span><span class="n">to_column_vector</span><span class="p">()</span>
+<span class="go">array([0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j, 0.+0.j])</span>
+</pre></div>
+</div>
+<p>States can be constructed from the column vector representation using
+the <a class="reference internal" href="qcircuits.state.html#qcircuits.state.State.from_column_vector" title="qcircuits.state.State.from_column_vector"><code class="xref py py-meth docutils literal notranslate"><span class="pre">State.from_column_vector()</span></code></a> static method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">from_column_vector</span><span class="p">(</span>   <span class="c1"># the state |010⟩</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that while QCircuits allows the user to extract the tensor data from a state,
+i.e., observe a state in full, rather than just taking a measurement,
+in true quantum computation this is not possible.</p>
+</div>
+<div class="section" id="operators">
+<h1>Operators<a class="headerlink" href="#operators" title="Permalink to this headline">¶</a></h1>
+<p>Operators in QCircuits represent quantum ‘gates’ for <span class="math notranslate nohighlight">\(d\)</span>-qubit
+quantum computers, i.e., unitary linear operators on a <span class="math notranslate nohighlight">\(2^d\)</span> dimensional
+complex vector space.</p>
+<p>This section describes some of the built-in operators that may be used.</p>
+<p>The <a class="reference internal" href="qcircuits.operators.html#qcircuits.operators.PauliX" title="qcircuits.operators.PauliX"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliX()</span></code></a>, <a class="reference internal" href="qcircuits.operators.html#qcircuits.operators.PauliY" title="qcircuits.operators.PauliY"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliY()</span></code></a>, and <a class="reference internal" href="qcircuits.operators.html#qcircuits.operators.PauliZ" title="qcircuits.operators.PauliZ"><code class="xref py py-func docutils literal notranslate"><span class="pre">PauliZ()</span></code></a> functions
+return instances of the common X, Y, and Z gates. Here they are shown acting
+on some computational basis vectors as expected:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">PauliX</span><span class="p">()</span>  <span class="c1"># The X gate, or NOT gate</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">X</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>  <span class="c1"># apply the X gate to the state |0⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>    <span class="c1"># the result is the state |1⟩</span>
+<span class="go">1-qubit state. Tensor:</span>
+<span class="go">[0.+0.j 1.+0.j]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">PauliY</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">Y</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="c1"># apply the Y gate to the state |0⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>   <span class="c1"># the result is the state i|1⟩</span>
+<span class="go">1-qubit state. Tensor:</span>
+<span class="go">[0.+0.j 0.+1.j]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">PauliZ</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">Z</span><span class="p">(</span><span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># apply the Z gate to the state |0⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># the result is the state |0⟩</span>
+<span class="go">1-qubit state. Tensor:</span>
+<span class="go">[1.+0.j 0.+0.j]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">Z</span><span class="p">(</span><span class="n">qc</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># apply the Z gate to the state |1⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># the result is the state -|1⟩</span>
+<span class="go">1-qubit state. Tensor:</span>
+<span class="go">[-0.-0.j -1.-0.j]</span>
+</pre></div>
+</div>
+<p>We have seen in the above examples that operators are applied to states
+by function application, i.e., U(v), where U is an operator and v a state.
+Operator application will be described in more detail later in the tutorial.</p>
+<p>An instance of the Hadamard gate can be obtained with the
+<a class="reference internal" href="qcircuits.operators.html#qcircuits.operators.Hadamard" title="qcircuits.operators.Hadamard"><code class="xref py py-func docutils literal notranslate"><span class="pre">Hadamard()</span></code></a> function. Here we see an example of applying the
+Hadamard operator to the state <span class="math notranslate nohighlight">\(|0⟩\)</span>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># the state |0⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>    <span class="c1"># the state (|0⟩ + |1⟩) / sqrt(2)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="go">1-qubit state. Tensor:</span>
+<span class="go">[0.70710678+0.j 0.70710678+0.j]</span>
+</pre></div>
+</div>
+<p>The above functions, which return instances of the the X, Y, Z, and Hadamard
+gates, take an integer argument d. The returned d-qubit operator applies the gate in
+question to each qubit independently. E.g., for the X gate, the returned operator is
+<span class="math notranslate nohighlight">\(X^{\otimes d}\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">PauliX</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># The 3-qubit operator applying X to each qubit</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># the state |010⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">X</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>  <span class="c1"># the state |101⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="go">1-qubit state. Tensor:</span>
+<span class="go">[[[0.+0.j 0.+0.j]</span>
+<span class="go">  [0.+0.j 0.+0.j]]</span>
+
+<span class="go"> [[0.+0.j 1.+0.j]</span>
+<span class="go">  [0.+0.j 0.+0.j]]]</span>
+</pre></div>
+</div>
+<p>By default, dimensionality of the operator and the state it is applied to
+must match. I.e., a d-qubit operator must be applied to a d-qubit state.
+Ways of applying n-qubit operators to d-qubit states where n is less than d
+will be discussed in the sections on tensor products and operator application
+below.</p>
+<p>The <a class="reference internal" href="qcircuits.operators.html#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a> function returns an instance of the CNOT operator,
+i.e., the 2-qubit operator that applies the X operator to the second (target) qubit
+if the first (control) qubit is in state <span class="math notranslate nohighlight">\(|1⟩\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CNOT</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">CNOT</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">CNOT</span><span class="p">(</span><span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>   <span class="c1"># |00⟩ -&gt; |00⟩</span>
+<span class="go">2-qubit state. Tensor:</span>
+<span class="go">[[1.+0.j 0.+0.j]</span>
+<span class="go"> [0.+0.j 0.+0.j]]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">CNOT</span><span class="p">(</span><span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>   <span class="c1"># |01⟩ -&gt; |01⟩</span>
+<span class="go">2-qubit state. Tensor:</span>
+<span class="go">[[0.+0.j 1.+0.j]</span>
+<span class="go"> [0.+0.j 0.+0.j]]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">CNOT</span><span class="p">(</span><span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>   <span class="c1"># |10⟩ -&gt; |11⟩</span>
+<span class="go">2-qubit state. Tensor:</span>
+<span class="go">[[0.+0.j 0.+0.j]</span>
+<span class="go"> [0.+0.j 1.+0.j]]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">CNOT</span><span class="p">(</span><span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>   <span class="c1"># |11⟩ -&gt; |10⟩</span>
+<span class="go">2-qubit state. Tensor:</span>
+<span class="go">[[0.+0.j 0.+0.j]</span>
+<span class="go"> [1.+0.j 0.+0.j]]</span>
+</pre></div>
+</div>
+<p>Often, we want to swap the role of the qubits, flipping the first qubit if the second
+is set, or more generally, for a d-qubit state we may want to apply the 2-qubit CNOT
+operator on any two qubits. How this is done is described in the section on
+operator application below.</p>
+<p>The <a class="reference internal" href="qcircuits.operators.html#qcircuits.operators.ControlledU" title="qcircuits.operators.ControlledU"><code class="xref py py-func docutils literal notranslate"><span class="pre">ControlledU()</span></code></a> function takes a d-qubit operator as an argument,
+and returns the (d+1)-qubit controlled-U operator: if the first qubit is set,
+the operator U is applied to the following d qubits.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">phi0</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># the 3-qubit state |000⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi1</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># the 3-qubit state |100⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># a 2-qubit operator, applying the Hadamard operator to each qubit</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c_H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">ControlledU</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>  <span class="c1"># a 3-qubit operator, applying the Hadamard operator</span>
+<span class="gp">... </span>                         <span class="c1"># to qubits 2 and 3 if qubit 1 is set</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">c_H</span><span class="p">(</span><span class="n">phi0</span><span class="p">))</span>  <span class="c1"># the state is left unchanged</span>
+<span class="go">3-qubit state. Tensor:</span>
+<span class="go">[[[1.+0.j 0.+0.j]</span>
+<span class="go">  [0.+0.j 0.+0.j]]</span>
+
+<span class="go"> [[0.+0.j 0.+0.j]</span>
+<span class="go">  [0.+0.j 0.+0.j]]]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">c_H</span><span class="p">(</span><span class="n">phi1</span><span class="p">))</span>  <span class="c1"># the 2-qubit H operator is applied</span>
+<span class="go">1-qubit state. Tensor:</span>
+<span class="go">[[[0. +0.j 0. +0.j]</span>
+<span class="go">  [0. +0.j 0. +0.j]]</span>
+
+<span class="go"> [[0.5+0.j 0.5+0.j]</span>
+<span class="go">  [0.5+0.j 0.5+0.j]]]</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="qcircuits.operators.html#qcircuits.operators.U_f" title="qcircuits.operators.U_f"><code class="xref py py-func docutils literal notranslate"><span class="pre">U_f()</span></code></a> function takes two arguments: a function f and an integer d.
+The function f must be a boolean function of d-1 boolean arguments.
+This returns a d-qubit operator whose action is to flip the last qubit
+if the result of applying the boolean function to the first d-1 qubits is one.
+An example of its use can be found in the Deutsch-Jozsa algorithm in the
+<a class="reference internal" href="examples.html#examples-page"><span class="std std-ref">examples page</span></a>.</p>
+<p>For a full list of available operators, see <a class="reference internal" href="qcircuits.operators.html#qcircuits.operators.Operator" title="qcircuits.operators.Operator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Operator</span></code></a>.</p>
+</div>
+<div class="section" id="how-are-operators-represented">
+<h1>How are Operators Represented?<a class="headerlink" href="#how-are-operators-represented" title="Permalink to this headline">¶</a></h1>
+<p>Internally, QCircuits encodes an operator for a d-qubit system with an array of shape
+(2, 2, …, 2), with 2d axes in total, representing a tensor with
+d contravariant indices and d covariant indices.
+E.g., an operator for a 2-qubit system is represented by an array
+of shape (2, 2, 2, 2).
+The shape and the rank (number of axes) can be accessed
+with the <code class="xref py py-attr docutils literal notranslate"><span class="pre">Operator.shape</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">Operator.rank</span></code> properties.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+
+<span class="go">Operator for 1-qubit state space. Tensor:</span>
+<span class="go">[[ 0.70710678+0.j  0.70710678+0.j]</span>
+<span class="go"> [ 0.70710678+0.j -0.70710678+0.j]]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="go">(2, 2)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">rank</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p>We use the convention that the covariant and contravariant indices
+alternate.
+The result is that indexing into the array representing operator U with indices i, j, k, …
+in the odd-numbered places gets the state the computational basis vector
+<span class="math notranslate nohighlight">\(|ijk\ldots⟩\)</span> is taken to by the operator.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">U</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>  <span class="c1"># Indexing in with 0 here gets the tensor representation of</span>
+<span class="gp">... </span>                <span class="c1"># the operator applied to the state |0⟩</span>
+<span class="go">[ 0.53114041-0.31105474j -0.69143236-0.37822758j]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">U</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span>
+<span class="go">[ 0.53114041-0.31105474j -0.69143236-0.37822758j]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">V</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">])</span>  <span class="c1"># Indexing in with 1, 0 here gets the tensor representation</span>
+<span class="gp">... </span>                      <span class="c1"># of the operator applied to the state |10⟩</span>
+<span class="go">array([[-0.66947579+0.19664594j, -0.37841556-0.24010317j],</span>
+<span class="go">       [ 0.30464249-0.40638463j,  0.16243857-0.16716121j]])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">V</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span>
+<span class="go">array([[-0.66947579+0.19664594j, -0.37841556-0.24010317j],</span>
+<span class="go">       [ 0.30464249-0.40638463j,  0.16243857-0.16716121j]])</span>
+</pre></div>
+</div>
+<p>An operator can be constructed by providing an array of the appropriate shape.
+E.g., the two qubit Hadamard gate <span class="math notranslate nohighlight">\(H\otimes H\)</span> can be constructed
+by providing the (2, 2, 2, 2)-shape array:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Operator</span><span class="p">([[[[</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">],</span>
+<span class="gp">... </span>                   <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">]],</span>
+<span class="gp">... </span>                  <span class="p">[[</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">],</span>
+<span class="gp">... </span>                   <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">]]],</span>
+<span class="gp">...</span>
+<span class="gp">... </span>                 <span class="p">[[[</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">],</span>
+<span class="gp">... </span>                   <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">]],</span>
+<span class="gp">... </span>                  <span class="p">[[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span>
+<span class="gp">... </span>                   <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">]]]])</span>
+</pre></div>
+</div>
+<p>An alterantive and common representation of d-qubit operators is as a
+<span class="math notranslate nohighlight">\(2^d \times 2^d\)</span> matrix. This matrix representation can be accessed
+with the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Operator.to_matrix()</span></code> method. E.g., for the two-qubit
+Hadamard gate:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">to_matrix</span><span class="p">())</span>
+<span class="go">[[ 0.5+0.j  0.5+0.j  0.5+0.j  0.5+0.j]</span>
+<span class="go"> [ 0.5+0.j -0.5+0.j  0.5+0.j -0.5+0.j]</span>
+<span class="go"> [ 0.5+0.j  0.5+0.j -0.5+0.j -0.5+0.j]</span>
+<span class="go"> [ 0.5+0.j -0.5+0.j -0.5+0.j  0.5+0.j]]</span>
+</pre></div>
+</div>
+<p>Operators can be constructed from this matrix representation using the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Operator.from_matrix()</span></code> static method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[[</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">],</span>
+<span class="gp">... </span>     <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span>
+<span class="gp">... </span>     <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span>
+<span class="gp">... </span>     <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">]]</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="applying-operators-to-states">
+<h1>Applying Operators to States<a class="headerlink" href="#applying-operators-to-states" title="Permalink to this headline">¶</a></h1>
+<p>Operators are applied to states as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>  <span class="c1"># the single-qubit Hadamard gate</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>    <span class="c1"># a single qubit in the |0⟩ state</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>           <span class="c1"># apply the Hadamard gate to the qubit to obtain an equal superposition state</span>
+</pre></div>
+</div>
+<p>When applying an operator to a state, a qubit_indices argument can be supplied in
+order to permute the order of the state for the operator application.
+For example, the <a class="reference internal" href="qcircuits.operators.html#qcircuits.operators.CNOT" title="qcircuits.operators.CNOT"><code class="xref py py-func docutils literal notranslate"><span class="pre">CNOT()</span></code></a> gate flips the second bit if the first bit is set:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CNOT</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">CNOT</span><span class="p">()</span>        <span class="c1"># the CNOT gate</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># the |11⟩ state</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">CNOT</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>             <span class="c1"># the resulting |10⟩ state</span>
+</pre></div>
+</div>
+<p>Passing in the qubit_indices argument allows us to specify the roles of the two
+qubits explicitly. For example, the following swaps the roles of the qubits during
+operator application, so that the first qubit flips if the second is set.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">CNOT</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>  <span class="c1"># the resulting |01⟩ state</span>
+</pre></div>
+</div>
+<p>The qubit_indices argument can also be used to apply an <span class="math notranslate nohighlight">\(m\)</span>-qubit operator to an
+<span class="math notranslate nohighlight">\(n\)</span>-qubit state where <span class="math notranslate nohighlight">\(n&gt;m\)</span>. For example, the following code applies a two qubit
+Hadamard operator to the first and third qubits of a six qubit state.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>   <span class="c1"># the two-qubit Hadamard gate</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>        <span class="c1"># the six-qubit state |000000⟩ state</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>  <span class="c1"># resulting state |+0+000⟩</span>
+</pre></div>
+</div>
+<p>This is useful, as it is much more efficient than expanding the <span class="math notranslate nohighlight">\(m\)</span>-qubit operator
+to a <span class="math notranslate nohighlight">\(n\)</span>-qubit operator by taking the tensor product with the identity and then applying the result.</p>
+</div>
+<div class="section" id="tensor-products">
+<h1>Tensor Products<a class="headerlink" href="#tensor-products" title="Permalink to this headline">¶</a></h1>
+<p>If a quantum system <span class="math notranslate nohighlight">\(A\)</span> is in state <span class="math notranslate nohighlight">\(|\psi⟩\)</span>, and system
+<span class="math notranslate nohighlight">\(B\)</span> is in state <span class="math notranslate nohighlight">\(|\phi⟩\)</span>, then the combined system
+<span class="math notranslate nohighlight">\(A\otimes B\)</span> is in state <span class="math notranslate nohighlight">\(|\psi⟩ \otimes |\phi⟩\)</span>,
+where <span class="math notranslate nohighlight">\(\otimes\)</span> is the tensor product. If operator <span class="math notranslate nohighlight">\(U\)</span>
+is applied to system <span class="math notranslate nohighlight">\(A\)</span> and operator V applied to system <span class="math notranslate nohighlight">\(B\)</span>,
+then this can be described by a single operator <span class="math notranslate nohighlight">\(U\otimes V\)</span> applied
+to system <span class="math notranslate nohighlight">\(A\otimes B\)</span>.</p>
+<p>This tensor product operation can be used via the infix multiplication
+operator * in QCircuits to produce operators and states for larger systems
+from operators and states for smaller systems:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">psi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>   <span class="c1"># the state |0⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>  <span class="c1"># the state |11⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">state</span> <span class="o">=</span> <span class="n">psi</span> <span class="o">*</span> <span class="n">phi</span>       <span class="c1"># the state |011⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="go">3-qubit state. Tensor:</span>
+<span class="go">[[[0.+0.j 0.+0.j]</span>
+<span class="go">  [0.+0.j 1.+0.j]]</span>
+
+<span class="go"> [[0.+0.j 0.+0.j]</span>
+<span class="go">  [0.+0.j 0.+0.j]]]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">PauliX</span><span class="p">()</span>  <span class="c1"># a single qubit X operator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">PauliZ</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># a 2-qubit operator applying Z independently to two qubits</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">U</span> <span class="o">=</span> <span class="n">X</span> <span class="o">*</span> <span class="n">Z</span>  <span class="c1"># a 3-qubit operator, applying X to the first qubit and Z to the second and third</span>
+</pre></div>
+</div>
+<p>One use of taking the tensor product of operators is applying smaller operators to larger states.
+E.g., a 1-qubit operator may be applied to one of the qubits of a 2-qubit state by taking the tensor
+product of the operator with the identity operator.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>  <span class="c1"># the 1-qubit Hadamard operator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Identity</span><span class="p">()</span>  <span class="c1"># the 1-qubit identity operator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># the state |00⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">((</span><span class="n">H</span> <span class="o">*</span> <span class="n">I</span><span class="p">)(</span><span class="n">phi</span><span class="p">))</span>  <span class="c1"># apply the Hadamard operator to the first qubit</span>
+<span class="gp">... </span>                     <span class="c1"># resulting in state (|0⟩ + |1⟩)/sqrt(2) |0⟩</span>
+<span class="go">2-qubit state. Tensor:</span>
+<span class="go">[[0.70710678+0.j 0.        +0.j]</span>
+<span class="go"> [0.70710678+0.j 0.        +0.j]]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">((</span><span class="n">I</span> <span class="o">*</span> <span class="n">H</span><span class="p">)(</span><span class="n">phi</span><span class="p">))</span>  <span class="c1"># apply the Hadamard operator to the second qubit</span>
+<span class="gp">... </span>                     <span class="c1"># resulting in state |0⟩ (|0⟩ + |1⟩)/sqrt(2)</span>
+<span class="go">2-qubit state. Tensor:</span>
+<span class="go">[[0.70710678+0.j 0.70710678+0.j]</span>
+<span class="go"> [0.        +0.j 0.        +0.j]]</span>
+</pre></div>
+</div>
+<p>Since a d-qubit operator is specified with <span class="math notranslate nohighlight">\(2^{2d}\)</span> complex values,
+while a d-qubit state is specified with <span class="math notranslate nohighlight">\(2^d\)</span> complex values,
+this method is not ideal when applying very small operators to very large states.
+As an example, working with 30-qubit states is plausible on personal hardware,
+requiring 16 GB of memory.
+Expanding an operator to a 30-qubit operator to act on this state is not plausible,
+as this would require 16 exabytes (1 million TB) of memory.
+The following section describes an alternative way to apply smaller operators to larger
+states.</p>
+<p>One can use power notation to take the tensor product of an operator or state
+with itself <span class="math notranslate nohighlight">\(n\)</span> times, as in the following code that creates an <span class="math notranslate nohighlight">\(n\)</span>-qubit
+operator from a single-qubit operator:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Op2</span> <span class="o">=</span> <span class="n">Op</span><span class="o">**</span><span class="n">n</span>  <span class="c1"># creating an n-qubit operator from a single-qubit operator</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="composing-operators">
+<h1>Composing Operators<a class="headerlink" href="#composing-operators" title="Permalink to this headline">¶</a></h1>
+<p>Operators may be applied to other operators to produce new operators,
+as linear operators are associative, i.e., <span class="math notranslate nohighlight">\(A(B|\phi⟩) = (AB)|\phi⟩\)</span>.
+For example, suppose we start with state <span class="math notranslate nohighlight">\(|00⟩\)</span>, and wish to apply
+the Hadamard gate to the first qubit, then apply the CNOT gate, resulting
+in a Bell state. We can either apply these operators in sequence, or
+we can first construct a single 2-qubit operator by composing the operators,
+and apply the resulting operator to the state.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Identity</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">CNOT</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">CNOT</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result1</span> <span class="o">=</span> <span class="n">CNOT</span><span class="p">((</span><span class="n">H</span> <span class="o">*</span> <span class="n">I</span><span class="p">)(</span><span class="n">phi</span><span class="p">))</span>  <span class="c1"># these result in the same state</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">U</span> <span class="o">=</span> <span class="n">CNOT</span><span class="p">(</span><span class="n">H</span> <span class="o">*</span> <span class="n">I</span><span class="p">)</span>  <span class="c1"># this method produces an operator U that performs both operators</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result2</span> <span class="o">=</span> <span class="n">U</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>  <span class="c1"># the result is a Bell state</span>
+</pre></div>
+</div>
+<p>Suppose we wish to apply the inverse operator, taking a Bell state to the state
+<span class="math notranslate nohighlight">\(|00⟩\)</span>. First we apply the CNOT operator to the state, then we apply
+the 1-qubit Hadamard operator to the first qubit.
+Again, this can be done with operator composition:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">CNOT</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">CNOT</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">H</span> <span class="o">*</span> <span class="n">I</span><span class="p">)(</span><span class="n">CNOT</span><span class="p">)(</span><span class="n">phi</span><span class="p">)</span>  <span class="c1"># first H*I is applied to CNOT, composing the</span>
+<span class="gp">... </span>                             <span class="c1"># operators. The result is applied to the state</span>
+</pre></div>
+</div>
+<p>In this case, though, where we are applying a smaller operator to a larger operator,
+we can use the same interface as when applying a smaller operator to a larger state,
+by specifying the qubits on which the operator acts:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">CNOT</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">CNOT</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">U</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">CNOT</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">U</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="measurement">
+<h1>Measurement<a class="headerlink" href="#measurement" title="Permalink to this headline">¶</a></h1>
+<p>Measurement in the computational basis may be performed on one or
+more qubits of a state with the <a class="reference internal" href="qcircuits.state.html#qcircuits.state.State.measure" title="qcircuits.state.State.measure"><code class="xref py py-meth docutils literal notranslate"><span class="pre">State.measure()</span></code></a> method,
+which returns the result of measurement.
+Post-measurement, the state collapses to the computational basis
+state corresponding to the result of the measurement of the measured
+qubits. The <a class="reference internal" href="qcircuits.state.html#qcircuits.state.State.measure" title="qcircuits.state.State.measure"><code class="xref py py-meth docutils literal notranslate"><span class="pre">State.measure()</span></code></a> method has two arguments:
+a list of indices specifying the qubits to be measured,
+and a flag specifying whether the measured qubits are to be removed from the state.
+If no indices are supplied, every qubit is measured.</p>
+<p>E.g., the single-qubit state <span class="math notranslate nohighlight">\(|0⟩\)</span> will yield the measurement 0
+with certainty:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+<span class="go">(0,)</span>
+</pre></div>
+</div>
+<p>The 3-qubit state <span class="math notranslate nohighlight">\(|111⟩\)</span> will yield measurement 1, 1 with certainty when the
+first two qubits are measured. Post-measurement we are left with either a 3- or 1-qubit
+state, depending on if we choose to remove the measured qubits from the state.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">remove</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">(1,1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(2,2,2)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">remove</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">(1,1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phi</span><span class="o">.</span><span class="n">shape</span>  <span class="c1"># if the measured qubits are removed, we are left with state |1⟩</span>
+<span class="go">(2,)</span>
+</pre></div>
+</div>
+<p>Measuring the state <span class="math notranslate nohighlight">\((|0⟩ + |1⟩)/\sqrt{2}\)</span> yields 0 or 1 with equal probability.
+Note that in the following code we must prepare a fresh state each time we measure
+to see different measurement outcomes, because the measured state is left either
+in the state <span class="math notranslate nohighlight">\(|0⟩\)</span> or in the state <span class="math notranslate nohighlight">\(|1⟩\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span><span class="p">(</span><span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+<span class="go">(0,)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span><span class="p">(</span><span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+<span class="go">(1,)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">H</span><span class="p">(</span><span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+<span class="go">(0,)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="density-operators">
+<h1>Density Operators<a class="headerlink" href="#density-operators" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Density_matrix">Density operators</a> are a useful
+way of representing mixed states, i.e., statistical ensembles of quantum states
+that can arise when there is uncertainty about the actual quantum states that
+are being manipulated. If a system is known to be in one of a collection of
+states <span class="math notranslate nohighlight">\(|\phi_i⟩\)</span>, each with probability <span class="math notranslate nohighlight">\(p_i\)</span>, then the density
+operator representation of this state is <span class="math notranslate nohighlight">\(\rho = \sum_i p_i |\phi_i⟩⟨\phi_i|\)</span>.</p>
+<p>The usual way to create DensityOperator objects then is to supply a list
+of <a class="reference internal" href="qcircuits.state.html#qcircuits.state.State" title="qcircuits.state.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">State</span></code></a> objects and a list of probabilities, matching in length,
+which must sum to one:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">state1</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># the state |010⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">state2</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># the state |100⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mixed_state</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">DensityOperator</span><span class="o">.</span><span class="n">from_ensemble</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="n">state1</span><span class="p">,</span> <span class="n">state2</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">ps</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>  <span class="c1"># the statistical ensemble known to be in states |010⟩ and |100⟩</span>
+<span class="gp">... </span>   <span class="c1"># each with probability 1/2.</span>
+</pre></div>
+</div>
+<p>The collection of states must have matching rank. I.e., one cannot form a mixture
+of a two qubit and a three qubit state. If the probability vector is omitted a
+uniform mixture is assumed.</p>
+<p>Operators can be applied to mixed states in the same way that they are
+applied to pure states:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># the three-qubit Hadamard operator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">state1</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># the state |010⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">state2</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># the state |100⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rho</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">DensityOperator</span><span class="o">.</span><span class="n">from_ensemble</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="n">state1</span><span class="p">,</span> <span class="n">state2</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">ps</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>  <span class="c1"># the statistical ensemble known to be in states |010⟩ and |100⟩</span>
+<span class="gp">... </span>   <span class="c1"># each with probability 1/2.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span>  <span class="c1"># apply the operator to the state</span>
+</pre></div>
+</div>
+<p>Under the hood, this takes the density operator <span class="math notranslate nohighlight">\(\rho\)</span> to
+<span class="math notranslate nohighlight">\(H \rho H^{\dagger}\)</span>, which is the resulting density operator if
+the operator <span class="math notranslate nohighlight">\(H\)</span> is applied to the state whose uncertainty is
+being represented.</p>
+<p>If the operator is for a lower-dimensional space than the density operator
+represents, or if you want to permute the roles of the qubits in the
+operator application, a qubit_indices argument can be supplied as when
+applying operators to pure states:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># the two-qubit Hadamard operator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">state1</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># the state |010⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">state2</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># the state |100⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rho</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">DensityOperator</span><span class="o">.</span><span class="n">from_ensemble</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="n">state1</span><span class="p">,</span> <span class="n">state2</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">ps</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>  <span class="c1"># the statistical ensemble known to be in states |010⟩ and |100⟩</span>
+<span class="gp">... </span>   <span class="c1"># each with probability 1/2.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">H</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>  <span class="c1"># apply the two-qubit operator to</span>
+<span class="gp">... </span>                                       <span class="c1"># qubits 0 and 2</span>
+</pre></div>
+</div>
+<p>Measurement in the computational basis may be performed on one or
+more qubits of a mixed state with the <a class="reference internal" href="qcircuits.density_operator.html#qcircuits.density_operator.DensityOperator.measure" title="qcircuits.density_operator.DensityOperator.measure"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DensityOperator.measure()</span></code></a> method,
+which returns the result of measurement.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">state1</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># the state |0⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">state2</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># the state |1⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mixed_state</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">DensityOperator</span><span class="o">.</span><span class="n">from_ensemble</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="n">state1</span><span class="p">,</span> <span class="n">state2</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">ps</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>  <span class="c1"># the statistical ensemble known to be in states |0⟩ and |1⟩</span>
+<span class="gp">... </span>   <span class="c1"># each with probability 1/2.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mixed_state</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>  <span class="c1"># measure the qubit</span>
+<span class="go">(0,)</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="qcircuits.density_operator.html#qcircuits.density_operator.DensityOperator.measure" title="qcircuits.density_operator.DensityOperator.measure"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DensityOperator.measure()</span></code></a> method has two arguments:
+a list of indices specifying the qubits to be measured,
+and a flag specifying whether the measured qubits are to be removed from the state.
+If no indices are supplied, every qubit is measured.
+E.g., in the following example, the system is known to be in state
+<span class="math notranslate nohighlight">\(|00⟩\)</span> or state <span class="math notranslate nohighlight">\(|11⟩\)</span> with equal probability. We measure
+the first qubit, opting to then remove the collapsed qubit from the state,
+and we measure <span class="math notranslate nohighlight">\(0\)</span>.
+Post-measurement, the density operator represents the state <span class="math notranslate nohighlight">\(|0⟩\)</span>
+(for the second qubit) with certainty.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">state1</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># the state |00⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">state2</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># the state |11⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mixed_state</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">DensityOperator</span><span class="o">.</span><span class="n">from_ensemble</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="n">state1</span><span class="p">,</span> <span class="n">state2</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">ps</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>  <span class="c1"># the statistical ensemble known to be in states |00⟩ and |11⟩</span>
+<span class="gp">... </span>   <span class="c1"># each with probability 1/2.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mixed_state</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">remove</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  <span class="c1"># measure the state, and remove the</span>
+<span class="gp">... </span>                                                     <span class="c1"># qubit from the density operator</span>
+<span class="go">(0,)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">mixed_state</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">Density</span> <span class="n">operator</span> <span class="k">for</span> <span class="mi">1</span><span class="o">-</span><span class="n">qubit</span> <span class="n">state</span> <span class="n">space</span><span class="o">.</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="go">    [[1.+0.j 0.+0.j]</span>
+<span class="go">     [0.+0.j 0.+0.j]]</span>
+</pre></div>
+</div>
+<p>Generally, the post-measurement state is as follows.
+Each of the ensemble of states the density operator represents
+collapses to the computational basis state corresponding to the result
+of the measurement of the measured qubits.
+The mixture probabilities,
+representing our state of belief of the current state of the system,
+are updated using Bayes rule.
+Equivalently, the post-measurement density
+operator is <span class="math notranslate nohighlight">\(P_m \rho P_m^{\dagger} / p(m)\)</span>, where <span class="math notranslate nohighlight">\(m\)</span> is the
+outcome of measurement, <span class="math notranslate nohighlight">\(p(m)\)</span> is
+the probability of that outcome, and <span class="math notranslate nohighlight">\(P_m\)</span> is the projector onto
+the computational basis states corresponding to the measurement outcome,
+and <span class="math notranslate nohighlight">\(\rho\)</span> is the pre-measurement state.</p>
+<p>One can take the tensor product of density operators for subsystems,
+in the same way as for states and operators, to obtain the density
+operator for the larger composite system:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">state1</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">DensityOperator</span><span class="o">.</span><span class="n">from_ensemble</span><span class="p">(</span><span class="n">list_of_states1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">state2</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">DensityOperator</span><span class="o">.</span><span class="n">from_ensemble</span><span class="p">(</span><span class="n">list_of_states2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">state1</span><span class="o">.</span><span class="n">rank</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">state2</span><span class="o">.</span><span class="n">rank</span><span class="p">)</span>
+<span class="go">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">composite_system</span> <span class="o">=</span> <span class="n">state1</span> <span class="o">*</span> <span class="n">state2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">composite_system</span><span class="o">.</span><span class="n">rank</span><span class="p">)</span>
+<span class="go">6</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="warning-the-no-cloning-theorem">
+<h1>Warning: The No-Cloning Theorem<a class="headerlink" href="#warning-the-no-cloning-theorem" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/No-cloning_theorem">no cloning theorem</a> says that, in general, given a quantum system in a given state,
+one cannot clone the state such that another system is in the same state without
+modifying the state of the original system.</p>
+<p>There are several ways to violate the no-cloning theorem in the QCircuits library,
+and users should be aware that none of the following constitute valid steps in a
+quantum computation.</p>
+<p>Firstly, one could simply create a deepcopy of a state.</p>
+<p>Secondly, one could extract the underlying tensor of a state and then create another state from it.</p>
+<p>Thirdly, one could apply an operator to a state, such as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">Op</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and then use both <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> in subsequent computation. It is clear that this violates the no-cloning theorem, since the operator may be the identity.</p>
+<p>Fourthly, one can take the tensor product of a state with itself, or a tensor power, as in:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">**</span><span class="mi">5</span>
+</pre></div>
+</div>
+<p>I have decided not to disallow any of these, since each has genuine use-cases. For example
+if we know how to prepare a single qubit in a given state, then we know how to prepare
+a multi-qubit system with each qubit in that state, and the tensor power is a short-hand way
+of achieving this.</p>
+</div>
+<div class="section" id="entanglement-schmidt-number">
+<h1>Entanglement / Schmidt Number<a class="headerlink" href="#entanglement-schmidt-number" title="Permalink to this headline">¶</a></h1>
+<p>A state <span class="math notranslate nohighlight">\(|\phi⟩\)</span> of a composite quantum system
+<span class="math notranslate nohighlight">\(A\otimes B\)</span> has a Schmidt decomposition:
+<span class="math notranslate nohighlight">\(|\phi⟩ = \sum_i \lambda_i |i_A⟩|i_B⟩\)</span>, where
+the <em>Schmidt coefficients</em> <span class="math notranslate nohighlight">\(\lambda_i\)</span> are non-negative and the
+<span class="math notranslate nohighlight">\(|i_A⟩\)</span> and <span class="math notranslate nohighlight">\(|i_B⟩\)</span> are orthonormal bases for systems
+<span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>.
+The number of non-zero Schmidt coefficients is a measure of the entanglement
+of the two systems, and is called the <em>Schmidt number</em>.</p>
+<p>In QCircuits, the Schmidt number of a multi-qubit state may be computed with
+respect to a partitioning of the qubits into two subsystems with the
+<a class="reference internal" href="qcircuits.state.html#qcircuits.state.State.schmidt_number" title="qcircuits.state.State.schmidt_number"><code class="xref py py-meth docutils literal notranslate"><span class="pre">State.schmidt_number()</span></code></a> method, by supplying a list of qubit indices
+for one of the subsystems.</p>
+<p>E.g., the Bell State <span class="math notranslate nohighlight">\((|00⟩ + |11⟩)/\sqrt{2}\)</span>, which is already written
+as a Schmidt decomposition, has Schmidt number 2:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">qc</span><span class="o">.</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">schmidt_number</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p>The state <span class="math notranslate nohighlight">\((|00⟩ + |01⟩ + |10⟩ + |11⟩)/2\)</span> can be written as a product
+<span class="math notranslate nohighlight">\((|0⟩ + |1⟩)/\sqrt{2} \otimes (|0⟩ + |1⟩)/\sqrt{2}\)</span>, so it has a
+Schmidt number of 1:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">qc</span><span class="o">.</span><span class="n">positive_superposition</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">schmidt_number</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>Any state that is the result of a tensor product of states with respect to
+two subsystems with have a Schmidt number 1 with respect to those two subsystems:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">state_A</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">state_B</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">state_AB</span> <span class="o">=</span> <span class="n">state_A</span> <span class="o">*</span> <span class="n">state_B</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">state_AB</span><span class="o">.</span><span class="n">schmidt_number</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<p>For examples of the use of QCircuits to implement quantum algorithms,
+see the <a class="reference internal" href="examples.html#examples-page"><span class="std std-ref">examples page</span></a>.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Andrew Michael Webb
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21765629-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>
