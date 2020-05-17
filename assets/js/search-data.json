@@ -29,7 +29,7 @@
   
       ,"page1": {
           "title": "About Me",
-          "content": "I’m currently a machine learning R &amp; D engineer at vTime Limited. . Previously, I was a research associate at the University of Manchester, working on the LAMBDA project under Gavin Brown, studying methods of training deep neural network ensembles for regression and classification that reward model diversity. I also worked on the PAMELA project, working on the efficient integration of semantic segmentation into state-of-the-art SLAM (simultaneous localisation and mapping) systems. . I use my Twitter account to share maths and science animations and visualizations. . I maintain QCircuits (), a Python package for simulating the execution of algorithms on small-scale quantum computers. . Around the Web . Google Scholar . LinkedIn . Github . Twitter .",
+          "content": "&lt;img align=”right” src=/fastpages-website/images/me4.jpg&gt; . I’m currently a machine learning R &amp; D engineer at vTime Limited. . Previously, I was a research associate at the University of Manchester, working on the LAMBDA project under Gavin Brown, studying ensemble methods in deep learning. I also worked on the PAMELA project, working on the efficient integration of semantic segmentation into SLAM (simultaneous localisation and mapping) systems. . I use my Twitter account to share maths and science animations and visualizations. I maintain QCircuits ((&lt;img src=/fastpages-website/images/github.png style=”border:0;” height=”15” width=”15”&gt;), a Python package for simulating the execution of algorithms on small-scale quantum computers. .",
           "url": "https://grey-area.github.io/fastpages-website/about/",
           "relUrl": "/about/",
           "date": ""
