@@ -7,30 +7,30 @@
 <meta name="generator" content="Jekyll v4.0.0" />
 <meta property="og:title" content="Who Needs Loss Functions? Mixing Manual and Automatic Differentiation" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="TODO: insert summary" />
-<meta property="og:description" content="TODO: insert summary" />
+<meta name="description" content="Exploring mixing manual and automatic differentiation" />
+<meta property="og:description" content="Exploring mixing manual and automatic differentiation" />
 <link rel="canonical" href="https://grey-area.github.io/fastpages-website/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html" />
 <meta property="og:url" content="https://grey-area.github.io/fastpages-website/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html" />
 <meta property="og:site_name" content="Andrew M. Webb" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2018-05-24T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"TODO: insert summary","mainEntityOfPage":{"@type":"WebPage","@id":"https://grey-area.github.io/fastpages-website/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html"},"@type":"BlogPosting","url":"https://grey-area.github.io/fastpages-website/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html","headline":"Who Needs Loss Functions? Mixing Manual and Automatic Differentiation","dateModified":"2018-05-24T00:00:00-05:00","datePublished":"2018-05-24T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"description":"Exploring mixing manual and automatic differentiation","mainEntityOfPage":{"@type":"WebPage","@id":"https://grey-area.github.io/fastpages-website/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html"},"@type":"BlogPosting","url":"https://grey-area.github.io/fastpages-website/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html","headline":"Who Needs Loss Functions? Mixing Manual and Automatic Differentiation","dateModified":"2018-05-24T00:00:00-05:00","datePublished":"2018-05-24T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/fastpages-website/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://grey-area.github.io/fastpages-website/feed.xml" title="Andrew M. Webb" /><link rel="shortcut icon" type="image/x-icon" href="/fastpages-website/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Who Needs Loss Functions? Mixing Manual and Automatic Differentiation | Andrew M. Webb</title>
 <meta name="generator" content="Jekyll v4.0.0" />
 <meta property="og:title" content="Who Needs Loss Functions? Mixing Manual and Automatic Differentiation" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="TODO: insert summary" />
-<meta property="og:description" content="TODO: insert summary" />
+<meta name="description" content="Exploring mixing manual and automatic differentiation" />
+<meta property="og:description" content="Exploring mixing manual and automatic differentiation" />
 <link rel="canonical" href="https://grey-area.github.io/fastpages-website/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html" />
 <meta property="og:url" content="https://grey-area.github.io/fastpages-website/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html" />
 <meta property="og:site_name" content="Andrew M. Webb" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2018-05-24T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"TODO: insert summary","mainEntityOfPage":{"@type":"WebPage","@id":"https://grey-area.github.io/fastpages-website/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html"},"@type":"BlogPosting","url":"https://grey-area.github.io/fastpages-website/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html","headline":"Who Needs Loss Functions? Mixing Manual and Automatic Differentiation","dateModified":"2018-05-24T00:00:00-05:00","datePublished":"2018-05-24T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"description":"Exploring mixing manual and automatic differentiation","mainEntityOfPage":{"@type":"WebPage","@id":"https://grey-area.github.io/fastpages-website/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html"},"@type":"BlogPosting","url":"https://grey-area.github.io/fastpages-website/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html","headline":"Who Needs Loss Functions? Mixing Manual and Automatic Differentiation","dateModified":"2018-05-24T00:00:00-05:00","datePublished":"2018-05-24T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -101,7 +101,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Who Needs Loss Functions? Mixing Manual and Automatic Differentiation</h1><p class="page-description">TODO: insert summary</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2018-05-24T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Who Needs Loss Functions? Mixing Manual and Automatic Differentiation</h1><p class="page-description">Exploring mixing manual and automatic differentiation</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2018-05-24T00:00:00-05:00" itemprop="datePublished">
         May 24, 2018
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -439,7 +439,11 @@ Epoch: 4500	Loss: 0.01919456571340561
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Compare the above to the result of running the following code, in which instead of doing backpropagation from the loss, we do backpropagation from the natural parameter prediction $\hat{\eta}$ ($\texttt{eta}$ in the code), while setting the accumulated backprop gradient explicitly to $1/\text{batch_size} * (\hat{y} - y)$. Note that we don't need to specify a loss function at all in the following, and we do so only so that the loss can be reported. For optimisation purposes, the loss function has been <strong>implicitly</strong> set to the negative log-likelihood for the Gaussian distribution by choosing the appropriate inverse link function (the identity function, i.e., the line $\texttt{y_hat} = \texttt{eta_hat}$).</p>
+<p>Compare the above to the result of running the following code, in which instead of doing backpropagation from the loss, we do backpropagation from the natural parameter prediction $\hat{\eta}$ ($\texttt{eta}$ in the code), while setting the accumulated backprop gradient explicitly to</p>
+<p>
+$$\frac{1}{\text{batch_size}} * (\hat{y} - y) \quad.$$
+</p>
+<p>Note that we don't need to specify a loss function at all in the following, and we do so only so that the loss can be reported. For optimisation purposes, the loss function has been <strong>implicitly</strong> set to the negative log-likelihood for the Gaussian distribution by choosing the appropriate inverse link function (the identity function, in this case).</p>
 
 </div>
 </div>
@@ -521,7 +525,7 @@ Epoch: 4500	Loss: 0.01919456571340561
 <h2 id="The-General-Case">
 <a class="anchor" href="#The-General-Case" aria-hidden="true"><span class="octicon octicon-link"></span></a>The General Case<a class="anchor-link" href="#The-General-Case"> </a>
 </h2>
-<p>The following code demonstrates how easy it is to switch between different types of regression in this way. We pass through the main loop three times, once for regression with Gaussian distributed labels, once for classification, and once for regression with Poisson distributed labels. The only differences between these cases (marked "$\texttt{# ***}$" in the code) are:</p>
+<p>The following code demonstrates how easy it is to switch between different types of regression in this way. We pass through the main loop three times, once for regression with Gaussian distributed labels, once for classification, and once for regression with Poisson distributed labels. The only differences between these cases (marked "# ***}" in the code) are:</p>
 <ul>
 <li>Loading the appropriate data</li>
 <li>Setting the network output dimension (2 for binary classification, 1 for the regression examples)</li>
