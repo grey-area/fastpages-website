@@ -150,15 +150,6 @@
   
 
   
-  
-
-  
-
-  
-  
-
-  
-  
 
   
   
@@ -169,7 +160,18 @@
   
 
   
-      ,"page11": {
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+      ,"page12": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://grey-area.github.io/fastpages-website/robots.txt",
