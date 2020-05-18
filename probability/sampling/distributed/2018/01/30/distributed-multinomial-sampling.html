@@ -184,9 +184,9 @@ window.onload = wrap_img;
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>How long is that going to take? If you sample from a binomial using NumPy or R, which algorithm is used depends on the parameters. If $N p \le 30$, then an inverse transformation algorithm is used, which takes $\text{O}(N \text{min}(p, 1-p))$. If $N p &gt; 30$, an algorithm called BTPE, which is an approximate sequential acceptance/rejection algorithm, is used. This algorithm is sublinear time, and is "approximately constant time" for $N p &gt; 30$ <sup id="fnref-1" class="footnote-ref"><a href="#fn-1">1</a></sup>.</p>
+<p>Let's say that binomial sampling is $\text{O}(1)$. Then multinomial sampling by sequential binomial sampling is $\text{O}(d)$, where $d$ is the number of possible outcomes.</p>
 <p></p>
 <div class="footnotes"><p id="fn-1">1. Binomial random variate generation, Kachitvichyanukul and Schmeiser.<a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
-<p>Let's say that binomial sampling is $\text{O}(1)$. Then multinomial sampling by sequential binomial sampling is $\text{O}(d)$, where $d$ is the number of possible outcomes.</p>
 
 </div>
 </div>
