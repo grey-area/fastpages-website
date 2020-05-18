@@ -9,14 +9,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood." />
 <meta property="og:description" content="Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood." />
-<link rel="canonical" href="https://grey-area.github.io/fastpages-website/probability/mcmc/dimensionality/2017/05/18/cross-entropy-and-log-likelihood.html" />
-<meta property="og:url" content="https://grey-area.github.io/fastpages-website/probability/mcmc/dimensionality/2017/05/18/cross-entropy-and-log-likelihood.html" />
+<link rel="canonical" href="https://grey-area.github.io/fastpages-website/probability/2017/05/18/cross-entropy-and-log-likelihood.html" />
+<meta property="og:url" content="https://grey-area.github.io/fastpages-website/probability/2017/05/18/cross-entropy-and-log-likelihood.html" />
 <meta property="og:site_name" content="Andrew M. Webb" />
-<meta property="og:image" content="https://grey-area.github.io/fastpages-website/images/blog_posts/cross_entropy_log_.png" />
+<meta property="og:image" content="https://grey-area.github.io/fastpages-website/images/blog_posts/cross_entropy_log_likelihood.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2017-05-18T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood.","mainEntityOfPage":{"@type":"WebPage","@id":"https://grey-area.github.io/fastpages-website/probability/mcmc/dimensionality/2017/05/18/cross-entropy-and-log-likelihood.html"},"@type":"BlogPosting","url":"https://grey-area.github.io/fastpages-website/probability/mcmc/dimensionality/2017/05/18/cross-entropy-and-log-likelihood.html","headline":"Cross Entropy and Log Likelihood","dateModified":"2017-05-18T00:00:00-05:00","datePublished":"2017-05-18T00:00:00-05:00","image":"https://grey-area.github.io/fastpages-website/images/blog_posts/cross_entropy_log_.png","@context":"https://schema.org"}</script>
+{"description":"Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood.","mainEntityOfPage":{"@type":"WebPage","@id":"https://grey-area.github.io/fastpages-website/probability/2017/05/18/cross-entropy-and-log-likelihood.html"},"@type":"BlogPosting","url":"https://grey-area.github.io/fastpages-website/probability/2017/05/18/cross-entropy-and-log-likelihood.html","headline":"Cross Entropy and Log Likelihood","dateModified":"2017-05-18T00:00:00-05:00","datePublished":"2017-05-18T00:00:00-05:00","image":"https://grey-area.github.io/fastpages-website/images/blog_posts/cross_entropy_log_likelihood.png","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/fastpages-website/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://grey-area.github.io/fastpages-website/feed.xml" title="Andrew M. Webb" /><link rel="shortcut icon" type="image/x-icon" href="/fastpages-website/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Cross Entropy and Log Likelihood | Andrew M. Webb</title>
@@ -25,14 +25,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood." />
 <meta property="og:description" content="Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood." />
-<link rel="canonical" href="https://grey-area.github.io/fastpages-website/probability/mcmc/dimensionality/2017/05/18/cross-entropy-and-log-likelihood.html" />
-<meta property="og:url" content="https://grey-area.github.io/fastpages-website/probability/mcmc/dimensionality/2017/05/18/cross-entropy-and-log-likelihood.html" />
+<link rel="canonical" href="https://grey-area.github.io/fastpages-website/probability/2017/05/18/cross-entropy-and-log-likelihood.html" />
+<meta property="og:url" content="https://grey-area.github.io/fastpages-website/probability/2017/05/18/cross-entropy-and-log-likelihood.html" />
 <meta property="og:site_name" content="Andrew M. Webb" />
-<meta property="og:image" content="https://grey-area.github.io/fastpages-website/images/blog_posts/cross_entropy_log_.png" />
+<meta property="og:image" content="https://grey-area.github.io/fastpages-website/images/blog_posts/cross_entropy_log_likelihood.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2017-05-18T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood.","mainEntityOfPage":{"@type":"WebPage","@id":"https://grey-area.github.io/fastpages-website/probability/mcmc/dimensionality/2017/05/18/cross-entropy-and-log-likelihood.html"},"@type":"BlogPosting","url":"https://grey-area.github.io/fastpages-website/probability/mcmc/dimensionality/2017/05/18/cross-entropy-and-log-likelihood.html","headline":"Cross Entropy and Log Likelihood","dateModified":"2017-05-18T00:00:00-05:00","datePublished":"2017-05-18T00:00:00-05:00","image":"https://grey-area.github.io/fastpages-website/images/blog_posts/cross_entropy_log_.png","@context":"https://schema.org"}</script>
+{"description":"Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood.","mainEntityOfPage":{"@type":"WebPage","@id":"https://grey-area.github.io/fastpages-website/probability/2017/05/18/cross-entropy-and-log-likelihood.html"},"@type":"BlogPosting","url":"https://grey-area.github.io/fastpages-website/probability/2017/05/18/cross-entropy-and-log-likelihood.html","headline":"Cross Entropy and Log Likelihood","dateModified":"2017-05-18T00:00:00-05:00","datePublished":"2017-05-18T00:00:00-05:00","image":"https://grey-area.github.io/fastpages-website/images/blog_posts/cross_entropy_log_likelihood.png","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -261,7 +261,7 @@ window.onload = wrap_img;
 
 
 
-  </div><a class="u-url" href="/fastpages-website/probability/mcmc/dimensionality/2017/05/18/cross-entropy-and-log-likelihood.html" hidden></a>
+  </div><a class="u-url" href="/fastpages-website/probability/2017/05/18/cross-entropy-and-log-likelihood.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
