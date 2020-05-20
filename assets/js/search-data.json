@@ -121,6 +121,17 @@
         
     
   
+    
+        ,"post11": {
+            "title": "Multiview Object Detection using ORB SLAM",
+            "content": ". The above video is an early attempt to aggregate the predictions of an object detection system (darknet/YOLO) from multiple views using information available in a SLAM system (ORB-SLAM2) operating on the same data. . The video shows the (modified) output windows of the ORB-SLAM system. The bottom window displays each frame of the video being operated on. Overlaid on this window are the bounding boxes and class labels of object predictions coming out of YOLO as it operates on each frame independently. Also shown are the ORB features used by the SLAM system (dark green). The class label of a bounding box is associated with every feature it contains. . The top window displays the 3D model produced by the SLAM system. Currently, the aggregate class label of each point in the 3D model is determined by voting; each point in the model has access to each frame in which it has appeared, and also to the corresponding feature in that frame. The class label that occurs most often amongst the corresponding features of a point &#39;wins&#39;, and that label is associated with the 3D point. (Whenever a feature corresponding to a point appears outside of any bounding box, that counts as a vote for it being &quot;not an object.&quot;) . It seems clear that even this simple aggregation method leads to more robust predictions. .",
+            "url": "https://grey-area.github.io/fastpages-website/slam/deep%20learning/2017/02/28/orb-slam-demo.html",
+            "relUrl": "/slam/deep%20learning/2017/02/28/orb-slam-demo.html",
+            "date": " • Feb 28, 2017"
+        }
+        
+    
+  
 
   
   
