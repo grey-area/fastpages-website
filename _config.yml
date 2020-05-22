@@ -14,7 +14,10 @@ github_repo: "fastpages-website"
 
 # OPTIONAL: override baseurl and url if using a custom domain
 # Note: leave out the trailing / from this value. 
-url: "https://grey-area.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+
+url: "https://awebb.info" # the base hostname & protocol for your site, e.g. http://example.com
+#url: "https://grey-area.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+
 
 ###########################################################
 #########  Special Instructions for baseurl ###############
@@ -34,7 +37,9 @@ url: "https://grey-area.github.io" # the base hostname & protocol for your site,
 #
 # 3. You must replace the parameter `baseurl` in _action_files/settings.ini with the same value as you set here but WITHOUT QUOTES.
 #
-baseurl: "/fastpages-website" # the subpath of your site, e.g. "/blog".
+
+baseurl: "" # the subpath of your site, e.g. "/blog".
+#baseurl: "/fastpages-website" # the subpath of your site, e.g. "/blog".
 
 # Github and twitter are optional:
 minima:
