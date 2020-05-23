@@ -20,6 +20,7 @@ group :jekyll_plugins do
   gem "jekyll-twitter-plugin"
   gem 'jekyll-relative-links'
   gem 'jekyll-seo-tag'
+  gem 'jekyll-redirect-from'
   gem 'jekyll-toc'
   gem 'jekyll-gist'
   gem 'jekyll-paginate'
