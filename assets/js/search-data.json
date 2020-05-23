@@ -179,8 +179,8 @@
       ,"page9": {
           "title": "",
           "content": "",
-          "url": "http://www.awebb.info/blog/iterated_mark",
-          "relUrl": "/blog/iterated_mark",
+          "url": "http://www.awebb.info/blog/observing_functions",
+          "relUrl": "/blog/observing_functions",
           "date": ""
       }
       
@@ -189,7 +189,117 @@
   
       ,"page10": {
           "title": "",
-          "content": "{“/blog/iterated_mark”:”http://www.awebb.info/probability/bayesian/simulation/2020/01/02/iterated-mark-and-recapture.html”} .",
+          "content": "",
+          "url": "http://www.awebb.info/blog/multiview_object",
+          "relUrl": "/blog/multiview_object",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page11": {
+          "title": "",
+          "content": "",
+          "url": "http://www.awebb.info/blog/MCMC_and",
+          "relUrl": "/blog/MCMC_and",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page12": {
+          "title": "",
+          "content": "",
+          "url": "http://www.awebb.info/blog/quantiles_of",
+          "relUrl": "/blog/quantiles_of",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page13": {
+          "title": "",
+          "content": "",
+          "url": "http://www.awebb.info/blog/cross_entropy",
+          "relUrl": "/blog/cross_entropy",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page14": {
+          "title": "",
+          "content": "",
+          "url": "http://www.awebb.info/blog/distributed_multinomial",
+          "relUrl": "/blog/distributed_multinomial",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page15": {
+          "title": "",
+          "content": "",
+          "url": "http://www.awebb.info/blog/who_needs",
+          "relUrl": "/blog/who_needs",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page16": {
+          "title": "",
+          "content": "",
+          "url": "http://www.awebb.info/blog/arm_research",
+          "relUrl": "/blog/arm_research",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page17": {
+          "title": "",
+          "content": "",
+          "url": "http://www.awebb.info/blog/distributed_joint",
+          "relUrl": "/blog/distributed_joint",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page18": {
+          "title": "",
+          "content": "",
+          "url": "http://www.awebb.info/blog/cool_softplus",
+          "relUrl": "/blog/cool_softplus",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page19": {
+          "title": "",
+          "content": "",
+          "url": "http://www.awebb.info/blog/iterated_mark",
+          "relUrl": "/blog/iterated_mark",
+          "date": ""
+      }
+      
+  
+
+  
+      ,"page20": {
+          "title": "",
+          "content": "{“/blog/observing_functions”:”http://www.awebb.info/probability/inference/mcmc/2017/02/22/observing-functions-of-random-variables-in-pymc.html”,”/blog/multiview_object”:”http://www.awebb.info/slam/deep%20learning/2017/02/28/orb-slam-demo.html”,”/blog/MCMC_and”:”http://www.awebb.info/probability/mcmc/dimensionality/2017/03/21/MCMC-and-the-typical-set.html”,”/blog/quantiles_of”:”http://www.awebb.info/probability/2017/05/12/quantiles-of-mixture-distributions.html”,”/blog/cross_entropy”:”http://www.awebb.info/probability/2017/05/18/cross-entropy-and-log-likelihood.html”,”/blog/distributed_multinomial”:”http://www.awebb.info/probability/sampling/distributed/2018/01/30/distributed-multinomial-sampling.html”,”/blog/who_needs”:”http://www.awebb.info/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html”,”/blog/arm_research”:”http://www.awebb.info/presentation/deep%20learning/2018/09/19/arm-research-summit.html”,”/blog/distributed_joint”:”http://www.awebb.info/deep%20learning/distributed/2019/02/25/distributed-joint-training.html”,”/blog/cool_softplus”:”http://www.awebb.info/probability/2019/03/22/cool-softplus-function-properties.html”,”/blog/iterated_mark”:”http://www.awebb.info/probability/bayesian/simulation/2020/01/02/iterated-mark-and-recapture.html”} .",
           "url": "http://www.awebb.info/redirects.json",
           "relUrl": "/redirects.json",
           "date": ""
@@ -206,7 +316,7 @@
   
 
   
-      ,"page14": {
+      ,"page24": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "http://www.awebb.info/robots.txt",
