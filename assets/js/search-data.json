@@ -176,28 +176,6 @@
   
 
   
-      ,"page9": {
-          "title": "",
-          "content": "",
-          "url": "http://awebb.info/blog/iterated_mark",
-          "relUrl": "/blog/iterated_mark",
-          "date": ""
-      }
-      
-  
-
-  
-      ,"page10": {
-          "title": "",
-          "content": "{“/blog/iterated_mark”:”http://awebb.info/probability/bayesian/simulation/2020/01/02/iterated-mark-and-recapture.html”} .",
-          "url": "http://awebb.info/redirects.json",
-          "relUrl": "/redirects.json",
-          "date": ""
-      }
-      
-  
-
-  
   
 
   
@@ -206,7 +184,7 @@
   
 
   
-      ,"page14": {
+      ,"page12": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "http://awebb.info/robots.txt",
