@@ -42,6 +42,7 @@ function clamp(x, lo, hi) {
 
 function handleMouseMove(event) {
     target_angle_v = 2.5 * (2 * (event.clientX / WIDTH) - 1);
+    console.log(event.clientX, WIDTH, event.clientX / WIDTH);
 }
 
 function handleWheel(event) {
