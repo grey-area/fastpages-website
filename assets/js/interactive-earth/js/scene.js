@@ -1,6 +1,6 @@
 'use strict';
 
-import * as THREE from '../../../assets/js/three.module.js';
+import * as THREE from '../../threejs/three.module.js';
 
 
 function createClouds(scene, textureLoader) {
