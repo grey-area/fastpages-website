@@ -78,5 +78,6 @@ function createScene() {
     return scene;
 }
 
+alert(site.baseurl);
 
 export {createScene};
