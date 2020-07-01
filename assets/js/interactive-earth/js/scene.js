@@ -6,8 +6,8 @@ import * as THREE from '../../threejs/three.module.js';
 function createClouds(scene, textureLoader) {
     const geometry = new THREE.SphereGeometry(6.371 + 0.02, 32, 32);
     const material = new THREE.MeshPhongMaterial({
-        map: textureLoader.load('../images/earthcloudmap.jpg'),
-        alphaMap: textureLoader.load('../images/earthcloudmaptransinv.jpg'),
+        map: textureLoader.load('{{site.baseurl}}/assets/js/interactive-earth/images/earthcloudmap.jpg'),
+        alphaMap: textureLoader.load('{{site.baseurl}}/assets/js/interactive-earth/images/earthcloudmaptransinv.jpg'),
         opacity: 0.8,
         side: THREE.DoubleSide,
         depthWrite: false,
@@ -21,10 +21,10 @@ function createClouds(scene, textureLoader) {
 function createEarth(scene, textureLoader) {
     const geometry = new THREE.SphereGeometry(6.371, 32, 32);
     const material = new THREE.MeshPhongMaterial({
-        map: textureLoader.load('../images/8081_earthmap10k.jpg'),
-        bumpMap: textureLoader.load('../images/8081_earthbump4k.jpg'),
+        map: textureLoader.load('{{site.baseurl}}/assets/js/interactive-earth/images/8081_earthmap10k.jpg'),
+        bumpMap: textureLoader.load('{{site.baseurl}}/assets/js/interactive-earth/images/8081_earthbump4k.jpg'),
         bumpScale: 0.15,
-        specularMap: textureLoader.load('../images/8081_earthspec4k.jpg'),
+        specularMap: textureLoader.load('{{site.baseurl}}/assets/js/interactive-earth/images/8081_earthspec4k.jpg'),
         specular: 0x101010
     });
 
@@ -39,7 +39,7 @@ function createStarfield(scene, textureLoader) {
     const material = new THREE.MeshBasicMaterial({
         color: 0xFFFFFF,
         side: THREE.BackSide,
-        map: textureLoader.load('../images/starfield.jpg')
+        map: textureLoader.load('{{site.baseurl}}/assets/js/interactive-earth/images/starfield.jpg')
     });
 
     const stars = new THREE.Mesh(geometry, material);
