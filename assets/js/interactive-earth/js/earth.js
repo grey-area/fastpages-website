@@ -4,7 +4,7 @@ import * as THREE from '../../threejs/three.module.js';
 import {createScene} from './scene.js';
 
 
-let renderer, camera, scene, WIDTH;
+let renderer, canvas, camera, scene, WIDTH;
 let prevTime = 0;
 let angle_v = 0;
 let target_angle_v = 0;
@@ -13,7 +13,7 @@ let zoom = 1;
 
 
 function initialize() {
-    const canvas = document.querySelector('#main_canvas');
+    canvas = document.querySelector('#main_canvas');
 
     // Default: look down the -Z axis with +Y up
     camera = new THREE.PerspectiveCamera(
