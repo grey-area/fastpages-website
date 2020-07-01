@@ -41,8 +41,10 @@ function clamp(x, lo, hi) {
 }
 
 function handleMouseMove(event) {
-    target_angle_v = 2.5 * (2 * (event.clientX / WIDTH) - 1);
-    console.log(event.clientX, WIDTH, event.clientX / WIDTH);
+    const rect = canvas.getBoundingClientRect();
+    const offsetX = rect.left;
+
+    target_angle_v = 2.5 * (2 * ((event.clientX - offsetX) / WIDTH) - 1);
 }
 
 function handleWheel(event) {
