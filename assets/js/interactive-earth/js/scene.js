@@ -2,7 +2,7 @@
 
 import * as THREE from '../../threejs/three.module.js';
 
-imagesURL = `${window.location.origin}/assets/js/interactive-earth/images`
+const imagesURL = `${window.location.origin}/assets/js/interactive-earth/images`
 
 
 function createClouds(scene, textureLoader) {
