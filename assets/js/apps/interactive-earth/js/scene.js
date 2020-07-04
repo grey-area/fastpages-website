@@ -2,14 +2,14 @@
 
 import * as THREE from '../../../threejs/three.module.js';
 
-const imagesURL = `${window.location.origin}/assets/js/apps/interactive-earth/images`
+const IMAGES_URL = `${window.location.origin}/assets/js/apps/interactive-earth/images`;
 
 
 function createClouds(scene, textureLoader) {
     const geometry = new THREE.SphereGeometry(6.371 + 0.02, 32, 32);
     const material = new THREE.MeshPhongMaterial({
-        map: textureLoader.load(`${imagesURL}/earthcloudmap.jpg`),
-        alphaMap: textureLoader.load(`${imagesURL}/earthcloudmaptransinv.jpg`),
+        map: textureLoader.load(`${IMAGES_URL}/earthcloudmap.jpg`),
+        alphaMap: textureLoader.load(`${IMAGES_URL}/earthcloudmaptransinv.jpg`),
         opacity: 0.8,
         side: THREE.DoubleSide,
         depthWrite: false,
@@ -23,10 +23,10 @@ function createClouds(scene, textureLoader) {
 function createEarth(scene, textureLoader) {
     const geometry = new THREE.SphereGeometry(6.371, 32, 32);
     const material = new THREE.MeshPhongMaterial({
-        map: textureLoader.load(`${imagesURL}/8081_earthmap10k.jpg`),
-        bumpMap: textureLoader.load(`${imagesURL}/8081_earthbump4k.jpg`),
+        map: textureLoader.load(`${IMAGES_URL}/8081_earthmap10k.jpg`),
+        bumpMap: textureLoader.load(`${IMAGES_URL}/8081_earthbump4k.jpg`),
         bumpScale: 0.15,
-        specularMap: textureLoader.load(`${imagesURL}/8081_earthspec4k.jpg`),
+        specularMap: textureLoader.load(`${IMAGES_URL}/8081_earthspec4k.jpg`),
         specular: 0x101010
     });
 
@@ -41,7 +41,7 @@ function createStarfield(scene, textureLoader) {
     const material = new THREE.MeshBasicMaterial({
         color: 0xFFFFFF,
         side: THREE.BackSide,
-        map: textureLoader.load(`${imagesURL}/starfield.jpg`)
+        map: textureLoader.load(`${IMAGES_URL}/starfield.jpg`)
     });
 
     const stars = new THREE.Mesh(geometry, material);
@@ -69,15 +69,13 @@ function createSun(scene, textureLoader){
     createLight(scene, sun.position.x);
 }
 
-function createScene() {
-    const scene = new THREE.Scene();
+function createScene(scene) {
     const textureLoader = new THREE.TextureLoader();
 
     for (let createElem of [createEarth, createStarfield, createSun]) {
         createElem(scene, textureLoader);
     }
-
-    return scene;
 }
 
-export {createScene};
+
+export { createScene };
