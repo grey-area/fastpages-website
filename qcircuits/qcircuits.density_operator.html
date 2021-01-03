@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>qcircuits.density_operator module &mdash; QCircuits 0.5.0 documentation</title>
+  <title>qcircuits.density_operator module &mdash; QCircuits 0.6.0 documentation</title>
   
 
   
@@ -231,6 +231,64 @@ an int is returned, otherwise a tuple.</p>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int or tuple of int</p>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qcircuits.density_operator.DensityOperator.probabilities">
+<code class="descname">probabilities</code><a class="headerlink" href="#qcircuits.density_operator.DensityOperator.probabilities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the probability of observing each computational basis
+vector upon making a measurement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The probability associated with each computational basis
+vector.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy float64 multidimensional array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="qcircuits.density_operator.DensityOperator.purify">
+<code class="descname">purify</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.density_operator.DensityOperator.purify" title="Permalink to this definition">¶</a></dt>
+<dd><p>If this is a density operator for a <span class="math notranslate nohighlight">\(d\)</span> qubit system, produce
+a pure state for a <span class="math notranslate nohighlight">\(2d\)</span> qubit system with the same measurement
+probabilities for the first <span class="math notranslate nohighlight">\(d\)</span> qubits, and whose reduced density
+operator for the first <span class="math notranslate nohighlight">\(d\)</span> qubits is equal to the original
+density operator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A <cite>2d</cite> qubit pure state.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="qcircuits.state.html#qcircuits.state.State" title="qcircuits.state.State">State</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="qcircuits.density_operator.DensityOperator.reduced_density_operator">
+<code class="descname">reduced_density_operator</code><span class="sig-paren">(</span><em>qubit_indices</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.density_operator.DensityOperator.reduced_density_operator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the reduced density operator of the given qubits by tracing out
+the qubits not given.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>qubit_indices</strong> (<em>iterable</em>) – Indices indicating the qubit(s) that
+we compute the reduced density operator of.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The reduced density operator of the sub-system.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#qcircuits.density_operator.DensityOperator" title="qcircuits.density_operator.DensityOperator">DensityOperator</a></td>
 </tr>
 </tbody>
 </table>
