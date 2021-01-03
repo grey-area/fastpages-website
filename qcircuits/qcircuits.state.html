@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>qcircuits.state module &mdash; QCircuits 0.5.0 documentation</title>
+  <title>qcircuits.state module &mdash; QCircuits 0.6.0 documentation</title>
   
 
   
@@ -191,6 +191,22 @@ probability amplitudes.</td>
 </dd></dl>
 
 <dl class="method">
+<dt id="qcircuits.state.State.density_operator">
+<code class="descname">density_operator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.State.density_operator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the density operator for this pure state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The density operator of this pure state.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="qcircuits.density_operator.html#qcircuits.density_operator.DensityOperator" title="qcircuits.density_operator.DensityOperator">DensityOperator</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="qcircuits.state.State.dot">
 <code class="descname">dot</code><span class="sig-paren">(</span><em>arg</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.State.dot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Give the dot product between this and another State.</p>
@@ -308,6 +324,26 @@ vector.</td>
 </dd></dl>
 
 <dl class="method">
+<dt id="qcircuits.state.State.reduced_density_operator">
+<code class="descname">reduced_density_operator</code><span class="sig-paren">(</span><em>qubit_indices</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.State.reduced_density_operator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the reduced density operator of the given qubits by tracing out
+the qubits not given.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>qubit_indices</strong> (<em>iterable</em>) – Indices indicating the qubit(s) that
+we compute the reduced density operator of.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The reduced density operator of the sub-system.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="qcircuits.density_operator.html#qcircuits.density_operator.DensityOperator" title="qcircuits.density_operator.DensityOperator">DensityOperator</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="qcircuits.state.State.renormalize_">
 <code class="descname">renormalize_</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.State.renormalize_" title="Permalink to this definition">¶</a></dt>
 <dd><p>Renormalize the state so that the sum of squared amplitude
@@ -317,7 +353,7 @@ magnitudes is 1.</p>
 <dl class="method">
 <dt id="qcircuits.state.State.schmidt_number">
 <code class="descname">schmidt_number</code><span class="sig-paren">(</span><em>indices</em><span class="sig-paren">)</span><a class="headerlink" href="#qcircuits.state.State.schmidt_number" title="Permalink to this definition">¶</a></dt>
-<dd><p>For a d-qubit state (d&gt;1) in vector space <cite>Aotimes B</cite>,
+<dd><p>For a d-qubit state (d&gt;1) in vector space <span class="math notranslate nohighlight">\(A\otimes B\)</span>,
 get the Schmidt number, a measure of entanglement,
 for the Schmidt decomposition of that
 state for the subsystems A and B.</p>

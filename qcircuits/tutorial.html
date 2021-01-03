@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tutorial &mdash; QCircuits 0.5.0 documentation</title>
+  <title>Tutorial &mdash; QCircuits 0.6.0 documentation</title>
   
 
   
@@ -96,6 +96,7 @@
 <li><a class="reference internal" href="#composing-operators">Composing Operators</a></li>
 <li><a class="reference internal" href="#measurement">Measurement</a></li>
 <li><a class="reference internal" href="#density-operators">Density Operators</a></li>
+<li><a class="reference internal" href="#reduced-density-operators-and-purification">Reduced Density Operators and Purification</a></li>
 <li><a class="reference internal" href="#warning-the-no-cloning-theorem">Warning: The No-Cloning Theorem</a></li>
 <li><a class="reference internal" href="#entanglement-schmidt-number">Entanglement / Schmidt Number</a></li>
 <li><a class="reference internal" href="#examples">Examples</a></li>
@@ -706,7 +707,8 @@ that can arise when there is uncertainty about the actual quantum states that
 are being manipulated. If a system is known to be in one of a collection of
 states <span class="math notranslate nohighlight">\(|\phi_i⟩\)</span>, each with probability <span class="math notranslate nohighlight">\(p_i\)</span>, then the density
 operator representation of this state is <span class="math notranslate nohighlight">\(\rho = \sum_i p_i |\phi_i⟩⟨\phi_i|\)</span>.</p>
-<p>The usual way to create DensityOperator objects then is to supply a list
+<p>A DensityOperator object can be created with the <a class="reference internal" href="qcircuits.density_operator.html#qcircuits.density_operator.DensityOperator.from_ensemble" title="qcircuits.density_operator.DensityOperator.from_ensemble"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DensityOperator.from_ensemble()</span></code></a>
+static method, by supplying a list
 of <a class="reference internal" href="qcircuits.state.html#qcircuits.state.State" title="qcircuits.state.State"><code class="xref py py-class docutils literal notranslate"><span class="pre">State</span></code></a> objects and a list of probabilities, matching in length,
 which must sum to one:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">state1</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># the state |010⟩</span>
@@ -721,6 +723,12 @@ which must sum to one:</p>
 <p>The collection of states must have matching rank. I.e., one cannot form a mixture
 of a two qubit and a three qubit state. If the probability vector is omitted a
 uniform mixture is assumed.</p>
+<p>A DensityOperator can be created from a single pure state using the <a class="reference internal" href="qcircuits.state.html#qcircuits.state.State.density_operator" title="qcircuits.state.State.density_operator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">State.density_operator()</span></code></a>
+method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">state</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bitstring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># the state |000⟩</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rho</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">density_operator</span><span class="p">()</span>
+</pre></div>
+</div>
 <p>Operators can be applied to mixed states in the same way that they are
 applied to pure states:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">H</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">Hadamard</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># the three-qubit Hadamard operator</span>
@@ -819,6 +827,35 @@ operator for the larger composite system:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">composite_system</span> <span class="o">=</span> <span class="n">state1</span> <span class="o">*</span> <span class="n">state2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">composite_system</span><span class="o">.</span><span class="n">rank</span><span class="p">)</span>
 <span class="go">6</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reduced-density-operators-and-purification">
+<h1>Reduced Density Operators and Purification<a class="headerlink" href="#reduced-density-operators-and-purification" title="Permalink to this headline">¶</a></h1>
+<p>The reduced density operator of a state can be computed using the
+<a class="reference internal" href="qcircuits.state.html#qcircuits.state.State.reduced_density_operator" title="qcircuits.state.State.reduced_density_operator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">State.reduced_density_operator()</span></code></a> or
+<a class="reference internal" href="qcircuits.density_operator.html#qcircuits.density_operator.DensityOperator.reduced_density_operator" title="qcircuits.density_operator.DensityOperator.reduced_density_operator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DensityOperator.reduced_density_operator()</span></code></a> methods,
+for pure and mixed states respectively.
+This will give the reduced density operator for the subsystem of the given
+qubit indices, by tracing out the remaining qubits.
+This is equivalent to the density operator obtained by measuring the traced out
+qubits and forgetting the result of the measurement.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">state</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">bell_state</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rho</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">reduced_density_operator</span><span class="p">(</span><span class="n">qubit_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span>
+<span class="go">Density operator for 1-qubit state space. Tensor:</span>
+<span class="go">[[0.5+0.j 0. +0.j]</span>
+<span class="go"> [0. +0.j 0.5+0.j]]</span>
+</pre></div>
+</div>
+<p>A mixed state can be purified with the <a class="reference internal" href="qcircuits.density_operator.html#qcircuits.density_operator.DensityOperator.purify" title="qcircuits.density_operator.DensityOperator.purify"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DensityOperator.purify()</span></code></a> method.
+This will produce a <cite>2d</cite> qubit pure state from a <cite>d</cite> qubit mixed state, with the
+measurement probabilities of the first <cite>d</cite> qubits in agreement with the measurement
+probabilities of the mixed state.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">state</span> <span class="o">=</span> <span class="n">rho</span><span class="o">.</span><span class="n">purify</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<span class="go">State([[0.70710678+0.j 0.        +0.j]</span>
+<span class="go">       [0.        +0.j 0.70710678+0.j]])</span>
 </pre></div>
 </div>
 </div>
