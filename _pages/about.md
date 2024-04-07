@@ -6,7 +6,9 @@ permalink: /about/
 
 <img align="right" src="{{site.baseurl}}/images/me4.jpg" width="225" height="254">
 
-I'm currently a machine learning R & D engineer at [vTime Limited](https://vtime.net/).
+I'm currently lead machine learning R & D engineer at [vTime Limited](https://vtime.net/), leading a team of engineers developing novel deep learning solutions for problems with vision, audio, text, and 3D scene data. We develop processes for reducing development time and improving reproducibility. We export models for deployment on mobile
+devices, and deploy models at scale in the cloud with AWS Lambda and AWS EC2/ECS. Example projects include text-to-speech,
+automatic avatar and room customization, emotion/animation prediction.
 
 Previously, I was a research associate at the University of Manchester, working on the LAMBDA project under [Gavin Brown](http://www.cs.man.ac.uk/~gbrown), studying ensemble methods in deep learning. I also worked on the [PAMELA project](http://apt.cs.manchester.ac.uk/projects/PAMELA), working on the efficient integration of semantic segmentation into [SLAM](http://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping) (simultaneous localisation and mapping) systems.
 
