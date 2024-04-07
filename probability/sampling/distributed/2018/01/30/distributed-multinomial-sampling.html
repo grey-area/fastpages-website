@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Distributed Multinomial Sampling | Andrew M. Webb</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Distributed Multinomial Sampling" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A distributed algorithm for sampling from a multinomial distribution in O(log d) time, where d is the number of outcomes." />
+<meta property="og:description" content="A distributed algorithm for sampling from a multinomial distribution in O(log d) time, where d is the number of outcomes." />
+<link rel="canonical" href="http://www.awebb.info/probability/sampling/distributed/2018/01/30/distributed-multinomial-sampling.html" />
+<meta property="og:url" content="http://www.awebb.info/probability/sampling/distributed/2018/01/30/distributed-multinomial-sampling.html" />
+<meta property="og:site_name" content="Andrew M. Webb" />
+<meta property="og:image" content="http://www.awebb.info/images/blog_posts/distributed_multinomial_sampling.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-01-30T00:00:00-06:00" />
+<script type="application/ld+json">
+{"image":"http://www.awebb.info/images/blog_posts/distributed_multinomial_sampling.png","description":"A distributed algorithm for sampling from a multinomial distribution in O(log d) time, where d is the number of outcomes.","@type":"BlogPosting","url":"http://www.awebb.info/probability/sampling/distributed/2018/01/30/distributed-multinomial-sampling.html","headline":"Distributed Multinomial Sampling","dateModified":"2018-01-30T00:00:00-06:00","datePublished":"2018-01-30T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://www.awebb.info/probability/sampling/distributed/2018/01/30/distributed-multinomial-sampling.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="http://www.awebb.info/feed.xml" title="Andrew M. Webb" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-21765629-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Distributed Multinomial Sampling | Andrew M. Webb</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Distributed Multinomial Sampling" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A distributed algorithm for sampling from a multinomial distribution in O(log d) time, where d is the number of outcomes." />
+<meta property="og:description" content="A distributed algorithm for sampling from a multinomial distribution in O(log d) time, where d is the number of outcomes." />
+<link rel="canonical" href="http://www.awebb.info/probability/sampling/distributed/2018/01/30/distributed-multinomial-sampling.html" />
+<meta property="og:url" content="http://www.awebb.info/probability/sampling/distributed/2018/01/30/distributed-multinomial-sampling.html" />
+<meta property="og:site_name" content="Andrew M. Webb" />
+<meta property="og:image" content="http://www.awebb.info/images/blog_posts/distributed_multinomial_sampling.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-01-30T00:00:00-06:00" />
+<script type="application/ld+json">
+{"image":"http://www.awebb.info/images/blog_posts/distributed_multinomial_sampling.png","description":"A distributed algorithm for sampling from a multinomial distribution in O(log d) time, where d is the number of outcomes.","@type":"BlogPosting","url":"http://www.awebb.info/probability/sampling/distributed/2018/01/30/distributed-multinomial-sampling.html","headline":"Distributed Multinomial Sampling","dateModified":"2018-01-30T00:00:00-06:00","datePublished":"2018-01-30T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://www.awebb.info/probability/sampling/distributed/2018/01/30/distributed-multinomial-sampling.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="http://www.awebb.info/feed.xml" title="Andrew M. Webb" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-21765629-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Andrew M. Webb</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/cv/">CV</a><a class="page-link" href="/qcirc/">QCircuits</a><a class="page-link" href="/search/">Search Blog</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Distributed Multinomial Sampling</h1><p class="page-description">A distributed algorithm for sampling from a multinomial distribution in O(log d) time, where d is the number of outcomes.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2018-01-30T00:00:00-06:00" itemprop="datePublished">
+        Jan 30, 2018
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      8 min read
+    
+</span></p>
+
+    
+
+    
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#The-sequential-solution">The sequential solution </a></li>
+<li class="toc-entry toc-h2"><a href="#Can-we-do-better?">Can we do better? </a></li>
+<li class="toc-entry toc-h2"><a href="#Consistency">Consistency </a></li>
+<li class="toc-entry toc-h2"><a href="#Equal-probability-case">Equal probability case </a></li>
+<li class="toc-entry toc-h2"><a href="#When-might-this-be-useful?">When might this be useful? </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2018-01-30-distributed-multinomial-sampling.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Suppose you want to sample from the multinomial distribution, that is, the binomial distribution generalized to more than two outcomes.</p>
+<p>The distribution is specified with an integer parameter $N$, specifying the number of independent trials, and a discrete probability vector $\bf p$ of length $d$ specifying the probability of each outcome in each trial. It is the probability distribution of the number of each of the $d$ possible outcomes.</p>
+<h2 id="The-sequential-solution">
+<a class="anchor" href="#The-sequential-solution" aria-hidden="true"><span class="octicon octicon-link"></span></a>The sequential solution<a class="anchor-link" href="#The-sequential-solution"> </a>
+</h2>
+<p>Typically, you'd sample from the multinomial by doing repeated binomial sampling; sample from the binomial to determine the number of trials resulting in outcome number 1, i.e., sample $n_1 \sim \text{Bin}(N, p_1)$. Then subtract $n_1$ from the number of trials $N$ and sample from the binomial for the second outcome, $n_2 \sim \text{Bin}(N-n_1, p_2)$, and so on, as follows.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">multinomial_sample</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">ps</span><span class="p">):</span>
+    <span class="n">N1</span> <span class="o">=</span> <span class="n">N</span>
+    <span class="n">ns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">ps</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">p_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ps</span><span class="p">)):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">N1</span><span class="p">,</span> <span class="n">ps</span><span class="p">[</span><span class="n">p_i</span><span class="p">]</span> <span class="o">/</span> <span class="n">ps</span><span class="p">[</span><span class="n">p_i</span><span class="p">:])</span>
+        <span class="n">ns</span><span class="p">[</span><span class="n">p_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span>
+        <span class="n">N1</span> <span class="o">-=</span> <span class="n">n</span>
+
+    <span class="k">return</span> <span class="n">ns</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>How long is that going to take? If you sample from a binomial using NumPy or R, which algorithm is used depends on the parameters. If $N p \le 30$, then an inverse transformation algorithm is used, which takes $\text{O}(N \text{min}(p, 1-p))$. If $N p &gt; 30$, an algorithm called BTPE, which is an approximate sequential acceptance/rejection algorithm, is used. This algorithm is sublinear time, and is "approximately constant time" for $N p &gt; 30$ <sup id="fnref-1" class="footnote-ref"><a href="#fn-1">1</a></sup>.</p>
+<p>Let's say that binomial sampling is $\text{O}(1)$. Then multinomial sampling by sequential binomial sampling is $\text{O}(d)$, where $d$ is the number of possible outcomes.</p>
+<p></p>
+<div class="footnotes"><p id="fn-1">1. Binomial random variate generation, Kachitvichyanukul and Schmeiser.<a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Can-we-do-better?">
+<a class="anchor" href="#Can-we-do-better?" aria-hidden="true"><span class="octicon octicon-link"></span></a>Can we do better?<a class="anchor-link" href="#Can-we-do-better?"> </a>
+</h2>
+<p>What about parallelising the work? Our sequential binomial sampling method doesn't seem very parallelisable, so let's think of a way that does. Another approach to determine the number of trials resulting in the $i$th outcome is to repeatedly bisect the possible outcomes, using binomial sampling each time to sample the number of trials resulting in an outcome in the same half as the outcome we're interested in.</p>
+<p>E.g., suppose we have four possible outcomes, with probabilities [0.4, 0.1, 0.2, 0.3], and we want the number of trials resulting in the second outcome. First we sample from the binomial to determine how many trials result in any of the first half of outcomes (with probability 0.5), then we sample from the binomial again to determine the number of those that result in the second outcome (with probability $0.1/(0.4+0.1) = 0.2$). To sample the number of outcomes $i$, for any single $i$, in this way takes $\text{O}(\log d)$.</p>
+<h2 id="Consistency">
+<a class="anchor" href="#Consistency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Consistency<a class="anchor-link" href="#Consistency"> </a>
+</h2>
+<p>Now it's just a matter of assigning each outcome to a separate node/computer and doing the work in parallel, right? Not quite. There's quite a bit of shared computation going on between nodes, and they'd better agree on their answers. For example, all nodes sampling for the first half of the possible outcomes first sample from a binomial to determine the number of trials that lead to outcomes in that half, and they should all get the same answer. If they don't, we won't be collectively sampling from a multinomial and our total number of trials, when we sum over the outcomes, won't sum to $N$.</p>
+<p>There are two solutions: communication or ensuring consistent random number generator (RNG) states. The first solution would have a single node sample the number of trials leading to one of the first half of outcomes. It would then share this number with a second node, and the two of them would bisect the outcomes again, communicate the results to another two nodes, and so on.</p>
+<p>I'll focus here on the consistent RNG solution. The idea is that when any two nodes are asking <em>exactly the same question</em> then <em>their RNGs should be in the same state</em>. Since in my examples I'll be using NumPy's RNG, I'll be explicitly setting its seed algorithmically. <strong>This is probably a bad idea</strong>. Ideally, you'd be using an RNG that allows you to skip ahead by $n$ states in constant time.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="c1"># Sample the number of N trials resulting in outcome leaf_index with probability ps[leaf_index]</span>
+<span class="c1"># by repeatedly bisecting the possible outcomes and doing binomial sampling</span>
+<span class="k">def</span> <span class="nf">multinomial_sample2</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">ps</span><span class="p">,</span> <span class="n">leaf_index</span><span class="p">,</span> <span class="n">branch_index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">base_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">ps</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">N</span>
+
+    <span class="c1"># Split the outcomes in half</span>
+    <span class="n">split_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">ps</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+    <span class="c1"># Compute the probability that a trial results in the left half of the outcomes</span>
+    <span class="n">left_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ps</span><span class="p">[:</span><span class="n">split_index</span><span class="p">])</span>
+
+    <span class="c1"># Set the RNG such that the RNG state depends on where we are in the outcome bisection tree</span>
+    <span class="c1"># i.e., using the current branch index</span>
+    <span class="c1"># Algorithmically setting the NumPy RNG state is **probably a bad idea**</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">base_seed</span> <span class="o">+</span> <span class="n">branch_index</span><span class="p">)</span>
+
+    <span class="c1"># Sample from the binomial to determine the number of trials resulting in one of the outcomes on the left</span>
+    <span class="n">left_N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">left_p</span><span class="p">)</span>
+
+    <span class="c1"># Recursively call this function, with parameters depending on if the leaf_index outcome is on the left or the right</span>
+    <span class="c1"># Branches are numbered depth first, so that if we take the left branch then the next branch index is the current + 1</span>
+    <span class="c1"># and if we take the right branch then the next branch index is the current + 1 + #branch indices in the left subtree</span>
+    <span class="k">if</span> <span class="n">leaf_index</span> <span class="o">&gt;=</span> <span class="n">split_index</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">multinomial_sample2</span><span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="n">left_N</span><span class="p">,</span> <span class="n">ps</span><span class="p">[</span><span class="n">split_index</span><span class="p">:]</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">left_p</span><span class="p">),</span> <span class="n">leaf_index</span> <span class="o">-</span> <span class="n">split_index</span><span class="p">,</span> <span class="n">branch_index</span> <span class="o">+</span> <span class="n">split_index</span><span class="p">,</span> <span class="n">base_seed</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">multinomial_sample2</span><span class="p">(</span><span class="n">left_N</span><span class="p">,</span> <span class="n">ps</span><span class="p">[:</span><span class="n">split_index</span><span class="p">]</span><span class="o">/</span><span class="n">left_p</span><span class="p">,</span> <span class="n">leaf_index</span><span class="p">,</span> <span class="n">branch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">base_seed</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The following shows the algorithm in action. The boxplots indicate the count for each outcome over a number of trials, while the coloured dots indicate the expected values.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+<span class="n">ps</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ps</span><span class="p">)</span>
+<span class="n">trials</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="n">outcome_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">multinomial_sample2</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">ps</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">)]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">trials</span><span class="p">)])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">figure</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">outcome_counts</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">N</span><span class="o">*</span><span class="n">ps</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">"r"</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Outcome"</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Count"</span><span class="p">);</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Total number of events counted = </span><span class="si">{}</span><span class="s2"> per trial"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">outcome_counts</span><span class="p">)</span> <span class="o">/</span> <span class="n">trials</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Total number of events counted = 1000 per trial
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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%0A">
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Equal-probability-case">
+<a class="anchor" href="#Equal-probability-case" aria-hidden="true"><span class="octicon octicon-link"></span></a>Equal probability case<a class="anchor-link" href="#Equal-probability-case"> </a>
+</h2>
+<p>One problem with the above is that it requires us to compute the sum of the probabilities on the left hand branch each time we bisect the possible outcomes. This effectively adds an $\text{O}(d)$ operation for each node. For the special case that each of the $d$ possible outcomes has the same probability, then we don't have to perform this sum and can do the following instead. (This is also useful if the <em>majority</em> of outcomes have the same probability.)</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description" open="">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-show</span>
+<span class="c1"># Sample the number of N trials resulting in outcome leaf_index, where each outcome has the same probability,</span>
+<span class="c1"># by repeatedly bisecting the possible outcomes and doing binomial sampling</span>
+<span class="k">def</span> <span class="nf">multinomial_sample3</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">leaf_index</span><span class="p">,</span> <span class="n">branch_index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">base_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">d</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">N</span>
+
+    <span class="c1"># Split the outcomes in half</span>
+    <span class="n">split_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">d</span><span class="p">))</span>
+    <span class="c1"># Compute the probability that a trial results in the left half of the outcomes</span>
+    <span class="n">left_p</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">split_index</span><span class="p">)</span> <span class="o">/</span> <span class="n">d</span>
+
+    <span class="c1"># Set the RNG such that the RNG state depends on where we are in the outcome bisection tree</span>
+    <span class="c1"># i.e., using the current branch index</span>
+    <span class="c1"># Algorithmically setting the NumPy RNG state is **probably a bad idea**</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">base_seed</span> <span class="o">+</span> <span class="n">branch_index</span><span class="p">)</span>
+
+    <span class="c1"># Sample from the binomial to determine the number of trials resulting in one of the outcomes on the left</span>
+    <span class="n">left_N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">left_p</span><span class="p">)</span>
+
+    <span class="c1"># Recursively call this function, with parameters depending on if the leaf_index outcome is on the left or the right</span>
+    <span class="c1"># Branches are numbered depth first, so that if we take the left branch then the next branch index is the current + 1</span>
+    <span class="c1"># and if we take the right branch then the next branch index is the current + 1 + #branch indices in the left subtree</span>
+    <span class="k">if</span> <span class="n">leaf_index</span> <span class="o">&gt;=</span> <span class="n">split_index</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">multinomial_sample3</span><span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="n">left_N</span><span class="p">,</span> <span class="n">d</span><span class="o">-</span><span class="n">split_index</span><span class="p">,</span> <span class="n">leaf_index</span> <span class="o">-</span> <span class="n">split_index</span><span class="p">,</span> <span class="n">branch_index</span> <span class="o">+</span> <span class="n">split_index</span><span class="p">,</span> <span class="n">base_seed</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">multinomial_sample3</span><span class="p">(</span><span class="n">left_N</span><span class="p">,</span> <span class="n">split_index</span><span class="p">,</span> <span class="n">leaf_index</span><span class="p">,</span> <span class="n">branch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">base_seed</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">trials</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="n">outcome_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">multinomial_sample3</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">)]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">trials</span><span class="p">)])</span>
+
+<span class="n">figure</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">outcome_counts</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">N</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s2">"r"</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Outcome"</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Count"</span><span class="p">);</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Total number of events counted = </span><span class="si">{}</span><span class="s2"> per trial"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">outcome_counts</span><span class="p">)</span> <span class="o">/</span> <span class="n">trials</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Total number of events counted = 1000 per trial
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAtMAAAHgCAYAAABn8uGvAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADh0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4yLjEsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy+j8jraAAAgAElEQVR4nO3df5Sdd30f+PfHkjyOhRMwVjgEcKweKFU0bihWKQGHgyB1cJzFaTaN0ck2NNWa9RJNyI9DBZk9S3r2zBaSyC1RT6OSiAJdNAlJSCE4zkI9yg+VhBxBCQgUYprUBEKw+RVieY2M+e4fc+U7lkfS6NHMPPfqvl7n3DN3nnvv6KOPvs9z33rm+31utdYCAACcv0v6LgAAAMaVMA0AAB0J0wAA0JEwDQAAHQnTAADQkTANAAAdbey7gAtx1VVXtWuuuabvMgAAuMh98IMf/Hxrbcvp28c6TF9zzTU5evRo32UAAHCRq6p7lttumgcAAHQkTAMAQEfCNAAAdCRMAwBAR8I0AAB0JEwDAEBHwjQAAHQkTAMAQEfCNAAAdCRMAwBAR8I0AAB0JEwDAEBHwjQAAHQkTAMAQEfCNAAAdCRMwyqbn5/P9PR0NmzYkOnp6czPz/ddUm/0AuD8OG6On419FwAXk/n5+czOzubgwYO5/vrrc+TIkezevTtJsmvXrp6rW196AXB+HDfHU7XW+q6hsx07drSjR4/2XQY8Ynp6Ovv378/OnTsf2Xb48OHMzMzk2LFjPVa2/vQC4Pw4bo62qvpga23HY7YL07B6NmzYkAcffDCbNm16ZNtDDz2Uyy67LA8//HCPla0/vQA4P46bo+1MYdqcaVhF27Zty5EjRx617ciRI9m2bVtPFfVHLwDOj+PmeBKmYRXNzs5m9+7dOXz4cB566KEcPnw4u3fvzuzsbN+lrTu9AFbKortFjpuPNjbjorU2trfrrruuwag5dOhQ2759e7vkkkva9u3b26FDh/ouqTd6AZzLoUOH2tatW9vCwkI7efJkW1hYaFu3bp3Y44Xj5qJRHBdJjrZl8qg50wBAbyy6YzmjOC4sQAQARo5FdyxnFMeFBYgAwMix6I7ljNO4EKYBgN5YdMdyxmlc+ATECzA/P5+5ubkcP34827Zty+zsrE8oAoDzcOp9c2Zm5pH307m5Oe+nE26cxoU50x2d6SM/R/UfGgCA7ixAXGWjuMoUAIC1IUyvslFcZQoAwNpwNY9VNk6rTAEAWBvCdEfjtMoUAIC1IUx3tGvXrtx000258cYbc+mll+bGG2/MTTfdZPEhwFnMz89neno6GzZsyPT0dObn5/suCeCCCNMdzc/P54477sidd96ZkydP5s4778wdd9zhjQHgDE5dBWn//v158MEHs3///szOzjpuAmPNAsSOXM0D4Pw4bgLjzNU8VpmreQCcH8dNYJy5mscqczUPgPPjuAlcjITpjlzNA87NYrOhmZmZXHbZZamqXHbZZZmZmem7pHXnuPlo9g+WY1yModba2N6uu+661qdDhw617du3t0suuaRt3769HTp0qNd6YJQcOnSobd26tS0sLLSTJ0+2hYWFtnXr1oncT/bs2dM2btzY9u3b106cONH27dvXNm7c2Pbs2dN3aevOcXOR/YPlGBejLcnRtkwe7T0QX8it7zANnNn27dvbwsLCo7YtLCy07du391RRf6amptq+ffsetW3fvn1tamqqp4rom/2D5RgXo+1MYdoCRGBNWGw2VFU5ceJELr/88ke2PfDAA9m8eXPG+RhMd/YPlmNcjDYLEIF1ZbHZ0NTUVA4cOPCobQcOHMjU1FRPFdE3+wfLMS7G05qF6ap6c1XdW1XHlmz7v6rqI1X14ap6b1V9y2B7VdUvVNUnB48/e63qAtaHxWZDt956a/bu3Zvbb789DzzwQG6//fbs3bs3t956a9+l0RP7B8sxLsbUcnM/VuOW5AVJnp3k2JJt37jk/o8lOTC4/z1J7kxSSZ6b5AMr+TP6njNtIQ2c3Z49e9rU1FRL0qampiZywd0pesHpvIewHONidKWPOdNVdU2S97TWppd57LVJrm6t/e9V9R+S/G5rbX7w2CeSvLC19tmz/fw+50yf+ljcgwcP5vrrr8+RI0eye/fuzM3NZdeuXb3UBKPEPgLAxWRk5kxX1VxV/WWSH0ryfw42PyXJXy552qcH20bW3NxcDh48mJ07d2bTpk3ZuXNnDh48mLm5ub5Lg5FgHwFgEvR9Zvqy1trrquo9SV7fWjsyeOyuJHtba4857VxVr0jyiiS5+uqrr7vnnnvWrP6zseIWzs4+AsDFZGTOTC/x9iT/8+D+Z5I8bcljTx1se4zW2ptaaztaazu2bNmyxiWemRW3cHb2EQAmwbqG6ap6xpJvb07yp4P7707yw4Orejw3yd+ca75036y4hbOzjwAwCdby0njzSf4wyTOr6tNVtTvJ66vqWFV9JMkNSV41ePpvJ/nzJJ9M8ktJXrlWda2WXbt25aabbsqNN96YSy+9NDfeeGNuuummiV1YNT8/n+np6WzYsCHT09OZn5/vuyR6tmvXrszNzWVmZiaXXXZZZmZmLD7EsQJYsbE5Xix3iY9xufV5abxDhw61rVu3toWFhXby5Mm2sLDQtm7dOpGXsNELYCUcK4CVGsXjRc5wabzeA/GF3PoM09u3b28LCwuP2rawsNC2b9/eU0X90QtgJRwrgJUaxePFmcL0ml7NY631eZ1pVyoY0gtgJSb1WFFVq/Jzxvn9Gs7XKB4vRvFqHmPNlQqG9AJYiUk9Vix3JmvpbSXPEaSZNON0vBCmO3KlgqHZ2dnccsst2bp1ay655JJs3bo1t9xyy0T2IskjC+6q6pGFd8DiseLmm2/OpZdemqrKpZdemptvvnlijxUMjc1CM9bNOOWsjX0XMK5OXZFgZmYmx48fz7Zt21ypIKv368xxNTMzkwMHDuQNb3hDbrvtthw4cCB79+5Nkuzfv7/n6qBf73//+3PixIls2bIln/vc53LllVfmvvvuy/vf//6JP3ZOsvn5+czOzubgwYO5/vrrc+TIkezevTtJjIsJNlY5ayW/WhrVW58LEBkaxUUCfZmammr79u171LZ9+/a1qampniqC0WH/WN7iW/Hk8h7CuIgFiKyVUVwk0JeqyokTJ3L55Zc/su2BBx7I5s2bzXlk4tk/lldVE/339x7CuLAAkTUzTosE1trU1FQOHDjwqG0HDhzI1NRUTxXB6LB/sBzvIYw7YZoLNk6LBNbarbfemr179+b222/PAw88kNtvvz179+7Nrbfe2ndp0Dv7B8vxHsLYW27ux7jczJkeHXv27GlTU1MtSZuammp79uzpu6Te3HDDDa2qWpJWVe2GG27ouyQYGfaPx8qEz5luzXvIUocOHWrbt29vl1xySdu+fbtPCB0hOcOcaWemuWDz8/O54447cuedd+bkyZO58847c8cdd0zkpY3m5+dz991356677srJkydz11135e67757IXsDp7B8sx3vI0Kkrm+zfvz8PPvhg9u/fn9nZ2YnsxVhZLmGPy82Z6dFgJfaQXsCZ2T+Wlwk/M21cDOnFaIurebBWrMQe0gs4M/vH8lzNw7g4RS9Gm6t5sGasxB7SCzgz+wfLMS6G9GI8CdNcMCuxh/QCzsz+wXKMiyG9GFPLzf0Yl1vfc6atuB3SiyGr0oeMiyG9WKQPj5UJnzPdmuPmUvaR0ZUzzJnuPRBfyK3PMH3o0KG2devWtrCw0E6ePNkWFhba1q1bDfoJZ1wM6cWQXnA2kx6m7R+MC2F6lVlxy3KMiyG9GNILzmbSw7T9g3FxpjDtah4dTeKK26palZ8zzmPuXCZxXJyJXgxNYi8cL1bO1Twmb/9gPLmaxyqbxBW3y/1v7PTbSp53MZvEcXEmejE0ib1YjWPFxX68YNEk7h9cXDb2XcC4mp2dzS233JLNmzfnnnvuybd+67fmxIkTeeMb39h3afRo6bj41Kc+lauvvnpix8WpVekHDx7M9ddfnyNHjmT37t2Zm5vru7R1pxdwZt5PGXfC9CpYrV9ncnGZ9LNqu3btSpLMzMzk+PHj2bZtW+bm5h7ZPkn0AlbG+ynjyJzpjqanp7N///7s3LnzkW2HDx/OzMxMjh071ktNo2DS5/4ZF7Ayk36sWGrSe+G4ybg405xpYbojCyaWN+lvCpM4Liw0G9KLlZv0Y8VSk96LSTxuJo4X48gCxFVmwQTLmcRxYWHqkF7A+ZvE42Zike7FRJjuyEd+shzjAuD8OG4y7ixA7MiCIpZjXACcH8dNxp0506yqSZ/7x/KMiyG9WKQPQ3rBcoyL0WPONAAArDLTPM7BaluWY1wAnD/HTpYz7uNCmD6HlfzD+FXM5DEuAM7fuY6JjpuTadzHhWkeAADQkTANAAAdCdMAANCRMA0AAB0J0wAA0JEwDQAAHQnTAADQkTANAAAdCdMAANCRMA0AAB0J0wAA0JEwDQAAHQnTAADQkTANAAAdCdMAANCRMA0AAB0J0wAA0NGahemqenNV3VtVx5Zs+7mq+tOq+khV/WZVPX7JY6+tqk9W1Seq6rvXqi4AAFgta3lm+i1JXnLatvclmW6t/f0kf5bktUlSVd+W5GVJtg9e8++rasMa1gYAABdszcJ0a+33k3zxtG3vba19bfDtHyV56uD+zUl+pbX21dbaXyT5ZJLnrFVtAACwGvqcM/0vktw5uP+UJH+55LFPD7Y9RlW9oqqOVtXR++67b41LBACAM+slTFfVbJKvJXn7+b62tfam1tqO1tqOLVu2rH5xAACwQhvX+w+sqn+e5HuTvLi11gabP5PkaUue9tTBNgAAGFnrema6ql6S5F8meWlr7YElD707ycuqaqqqtiZ5RpI/Xs/aAADgfK3Zmemqmk/ywiRXVdWnk7wui1fvmEryvqpKkj9qrd3WWvtYVb0jycezOP3jR1trD69VbQAAsBrWLEy31nYts/ngWZ4/l2RureoBAIDV5hMQAQCgI2EaAAA6EqYBAKAjYRoAADoSpgEAoCNhGgAAOhKmAQCgI2EaAAA6EqYBAKAjYRoAADoSpgEAoCNhGgAAOhKmAQCgI2EaAAA6EqYBAKAjYRoAADoSpgEAoCNhGgAAOhKmAQCgI2EaAAA6EqYBAKAjYRoAADoSpgEAoCNhGgAAOhKmAQCgI2EaAAA6EqYBAKAjYRoAADoSpgEAoCNhGgAAOhKmAQCgI2EaAAA6EqYBAKAjYRoAADoSpgEAoCNhGgAAOhKmAQCgI2EaAAA6EqYBAKAjYRoAADoSpgEAoCNhGgAAOhKmAQCgI2EaAAA6EqYBAKAjYRoAADoSpgEAoKM1C9NV9eaqureqji3Z9k+r6mNV9fWq2nHa819bVZ+sqk9U1XevVV0AALBa1vLM9FuSvOS0bceSfH+S31+6saq+LcnLkmwfvObfV9WGNawNAAAu2JqF6dba7yf54mnbjrfWPrHM029O8iutta+21v4iySeTPGetagMAgNUwKnOmn5LkL5d8/+nBNgAAGFmjEqZXrKpeUVVHq+rofffd13c5AABMsFEJ059J8rQl3z91sO0xWmtvaq3taK3t2LJly7oUBwAAyxmVMP3uJC+rqqmq2prkGUn+uOeaAADgrDau1Q+uqvkkL0xyVVV9OsnrsrggcX+SLUnuqKoPt9a+u7X2sap6R5KPJ/lakh9trT28VrUBAMBqWLMw3VrbdYaHfvMMz59LMrdW9QAAwGoblWkeAAAwdoRpAADoSJgGAICOhGkAAOhImAYAgI6EaQAA6EiYBoALcOWVV6aqOt+SXNDrqypXXnllz12AybVm15kGgEnwpS99Ka21Xms4FcqB9efMNAAAdCRMAwBAR8I0AAB0JEwDAEBHwjSPuNAV6auxKt2KdBgPrmABsMjVPHiEFenASjleACxyZhoAADoSpgEAoCNhGgAAOpr4MG3RHcsxLob0Ykgv4OwsTB3Si6GLvRcTvwDRIhqWY1wM6cWQXsDZ2UeG9GLoYu/FxJ+ZBgCAroRpAADoSJgGAICOhGkAAOhImAYAgI6EaQAA6EiYBgCAjoRpAADoSJgGAICOhGkAAOhImAYAgI6EaQAA6EiYBgCAjoRpAADoSJgGAICOhGkAAOhImAYAgI6EaQAA6EiYBgCAjlYUpqvq+SvZBgAAk2SlZ6b3r3AbAABMjI1ne7CqviPJ85JsqaqfXPLQNybZsJaFAQDAqDtrmE5yaZLHDZ53xZLtX0nyA2tVFAAAjIOzhunW2u8l+b2qektr7Z51qgkAAMbCuc5MnzJVVW9Kcs3S17TWXrQWRQEAwDhYaZj+tSQHkvxykofXrhwAABgfKw3TX2ut/eKaVgIAAGNmpZfG+62qemVVPbmqrjx1W9PKAABgxK30zPTLB19fvWRbS/J3VrecMfO3f5v86q8md9+dPOMZyS23JFdcce7XXYz0YkgvhvRiSC8W6cOQXgzpxZBeDI1LL1pra3JL8uYk9yY5tmTblUnel+TuwdcnDLZXkl9I8skkH0ny7JX8Gdddd127UIst6OAP/qC1K65obfPm1pLFr1dcsbh9vWpYZXoxpBdDejGkF0Od6ljFPnSuYQ3oxZBeDOnF0MXSiyRH2zJ5tBYfO7uq+uEzBPG3neU1L0hyf5K3tdamB9t+NskXW2uvr6rXDML03qr6niQzSb4nyT9K8sbW2j86V107duxoR48ePWf9Z1NVWUkPHuVv/zZ5ylMWv57uiiuSv/qr5HGPW9sa1oBeXGAdejGkF0N6sWiV+9CphjWiFxdQh14M6cXQiPaiqj7YWttx+vaVzpn+h0tu35nkZ5K89GwvaK39fpIvnrb55iRvHdx/a5LvW7L9bYPg/0dJHl9VT15hbevvV381+frXl3/s619ffHxS6MWQXgzpxZBeLNKHIb0Y0oshvRgas16s6Mz0Y15U9fgkv9Jae8k5nndNkvcsOTP95dba4wf3K8mXWmuPr6r3JHl9a+3I4LG7kuxtrT3mtHNVvSLJK5Lk6quvvu6eey7ws2R+5psu7PWr5Wf+pu8K9OJRNejFKZ3+N793b/KzP3vmx1/zmuRf/+u1rWEtGBdLatCLYQ16MaxBL4Y16MWwhoujF2c6M911PvSmJJ9YwfOuyaPnTH/5tMe/NPj6niTXL9l+V5Id5/r5vc2Z/qVfGs7hOf22eXNrv/zLa1/DGtCLIb0Y0oshvRg67zpWuQ+dalgjejGkF0N6MXSx9CIXOGf6t7J49Y4k2ZBkW5J3tNZec47XXZNHn5n+RJIXttY+O5jG8buttWdW1X8Y3J8//Xln+/nmTK8uvbjAOvRiSC+G9GLRiM6BXA16cQF16MWQXgyNaC8udM70zyfZN7j930lecK4gfQbvzvAyey9P8q4l23+4Fj03yd+cK0j36oorkt/+7cWvmzcvbtu8ebj9PP+Bx5peDOnFkF4M6cUifRjSiyG9GNKLoTHrxYrnTFfVk7K4ADFJ/ri1du85nj+f5IVJrkryuSSvS/Kfk7wjydVJ7knyg621Lw7mT/+7JC9J8kCSH2nLzJc+XW9npk+5//7FSfCf/GTy9KcvXv+wwz/w2P7PcSm9GNKLIb0Y0otFq9SHC6phlenFKtShF0N6MTRivTjTmemVTvP4wSQ/l+R3s3hN6O9M8urW2q9fUFUXqPcwvUpGoYZRqWMUahiVOkahhlGpYxRqGJU6RqGGUaljFGoYlTpGoYZRqWMUahiVOkahhlGpYy3D9Eo/AXE2yT88dTa6qrYk+S9Jeg3TwNprr/vG3ldit9d9Y69/PgCcyUrD9CWnTev4QlY+3xoYY/WvvjIaZxR+ptcSAGBZKw3Tv1NV/2+S+cH3tyT57bUpCQAAxsNZw3RVPT3Jk1prr66q709y/eChP0zy9rUuDgAARtm5zkz/2ySvTZLW2juTvDNJqurawWP/05pWBwAAI+xc856f1Fr76OkbB9uuWZOKAABgTJwrTD/+LI99w2oWAgAA4+ZcYfpoVd16+saq+l+TfHBtSgIAgPFwrjnTP57kN6vqhzIMzzuSXJrkn6xlYQAAMOrOGqZba59L8ryq2plkerD5jtbawppXBgAAI25F15lurR1OcniNawEAgLHiUwwBAKAjYRoAADoSpgEAoCNhGgAAOhKmAQCgI2EaAAA6EqYBAKAjYRoAADoSpgEAoCNhGgAAOhKmAQCgI2EaAAA6EqYBAKAjYRoAADoSpgEAoCNhGgAAOhKmAQCgo419FzAKqqrXP/8JT3hCr3/+UnoxpBdwdvaRIb0Y0gsmzcSH6dbaBf+MqlqVn9M3vRjSCzi7Cx3bF9P+oRdDesEkMs0DAAA6EqYBAKAjYRoAADoSpgEAoKOJX4AInJvV+UN6AayU48XQxdwLYRo4K1c2GdILYKVc2WToYu+FaR4AANCRMA0AAB0J0wAA0JEwDQAAHQnTAADQkTANAAAdCdMAANCRMA0AAB0J0wAA0JEwDQAAHQnTAADQUS9huqpeVVXHqupjVfXjg21XVtX7quruwdcn9FEbAACs1LqH6aqaTnJrkuck+fYk31tVT0/ymiR3tdaekeSuwfcAADCy+jgzvS3JB1prD7TWvpbk95J8f5Kbk7x18Jy3Jvm+HmoDAIAV6yNMH0vynVX1xKq6PMn3JHlakie11j47eM5fJ3lSD7UBAMCKbVzvP7C1dryq3pDkvUlOJPlwkodPe06rqrbc66vqFUlekSRXX331GlcLAABn1ssCxNbawdbada21FyT5UpI/S/K5qnpykgy+3nuG176ptbajtbZjy5Yt61c0AACcpq+reXzz4OvVWZwvfSjJu5O8fPCUlyd5Vx+1AQDASq37NI+B36iqJyZ5KMmPtta+XFWvT/KOqtqd5J4kP9hTbQAAsCK9hOnW2ncus+0LSV7cQzkAANCJT0AEAICOhGkAAOhImAYAgI6EaQAA6EiYBgCAjoRpAADoSJgGAICOhGkAAOhImAYAgI6EaQAA6EiYBgCAjoRpAADoSJgGAICOhGkAAOhImAYAgI6EaQAA6EiYBgCAjoRpAADoSJgGAICOhGkAAOhImAYAgI6EaQAA6EiYBgCAjoRpAADoSJgGAICOhGkAAOhImAYAgI6EaQAA6EiYBgCAjoRpAADoSJgGAICOhGkAAOhImAYAgI6EaQAA6EiYBgCAjoRpAADoSJgGAICOhGkAAOhImAYAgI6EaQAA6EiYBgCAjoRpAADoSJgGAICOhGkAAOhImAYAgI6EaQAA6EiYBgCAjoRpAADoqJcwXVU/UVUfq6pjVTVfVZdV1daq+kBVfbKqfrWqLu2jNgAAWKl1D9NV9ZQkP5ZkR2ttOsmGJC9L8oYk/6a19vQkX0qye71rAwCA89HXNI+NSb6hqjYmuTzJZ5O8KMmvDx5/a5Lv66k2AABYkXUP0621zyT5+SSfymKI/pskH0zy5dba1wZP+3SSpyz3+qp6RVUdraqj991333qUDAAAy+pjmscTktycZGuSb0myOclLVvr61tqbWms7Wms7tmzZskZVAgDAufUxzeO7kvxFa+2+1tpDSd6Z5PlJHj+Y9pEkT03ymR5qAwCAFesjTH8qyXOr6vKqqiQvTvLxJIeT/MDgOS9P8q4eagMAgBXrY870B7K40PBDST46qOFNSfYm+cmq+mSSJyY5uN61AQDA+dh47qesvtba65K87rTNf57kOT2UAwAAnfgERAAA6EiYBgCAjoRpAADoSJgGAICOhGkAAOhImAYAgI6EaQAA6EiYBgCAjoRpAADoSJgGAICOhGkAAOhImAYAgI6EaQAA6EiYBgCAjoRpAADoSJgGAICOhGkAAOhoY98FjLqqWpXntdZWoxxGhHEBZ7eSfWQlz7GPXFyMCy5GwvQ52GFZjnEBZ2cfYTnGBRcj0zwAAKAjYfoCzM/PZ3p6Ohs2bMj09HTm5+f7LgkAgHVkmkdH8/PzmZ2dzcGDB3P99dfnyJEj2b17d5Jk165dPVcHAMB6cGa6o7m5uRw8eDA7d+7Mpk2bsnPnzhw8eDBzc3N9lwYAwDqpcV4MsGPHjnb06NFe/uwNGzbkwQcfzKZNmx7Z9tBDD+Wyyy7Lww8/3EtNa22lV7A4l3EeczyWcXF+qmpi/q6sjDHBciZpXIzL+0hVfbC1tuP07c5Md7Rt27YcOXLkUduOHDmSbdu29VTR2mutrcqNi4txAcCFGPf3EWG6o9nZ2dxyyy3ZunVrNmzYkK1bt+aWW27J7Oxs36XRMwtT4czsHyzHuGCcWYC4CpxV4xQLU+HM7B8sx7hg7K3WqfU+btddd13ry/bt29vCwsKjti0sLLTt27f3VBGjwLjgXBYPu5PJ/rG8SR4TrRkXZzLp42IUJTnalsmjFiB2NIkLEDk342Kyjcsimr7YP5Y3SQvNljOp48LxYvxYgLjKJnEBIudmXEy25c5YdLldrOwfLGdSx4XjxcVDmO5odnY2u3fvzuHDh/PQQw/l8OHD2b17twWIE864gDOzf7Ac44Kxt1r/M+rj1uec6dZau+GGG1pVtSStqtoNN9zQaz2MhkOHDrXt27e3Sy65pG3fvr0dOnSo75J6oxdDe/bsaVNTUy1Jm5qaanv27Om7pF7ow2PF3FjHCpZ17bXXtiSP3K699tpe68kZ5kz3Hogv5NZnmN6zZ0/buHFj27dvXztx4kTbt29f27hxozcGGDh06FDbunVrW1hYaCdPnmwLCwtt69atE/km6XixyJhYnjANj3UqSL/0pS9t9913X3vpS1/ae6AWplfZ1NRU27dv36O27du3r01NTfVUEYwWK/SHHC8WGRPLE6bhsU4F6aVOBeq+nClMu5pHR1WVEydO5PLLL39k2wMPPJDNmzdnnHsKq2VSV+gvx/Fi0aSOCVdtgPNXVbnvvvty1VVXPbLt85//fLZs2dLbvuBqHqtsamoqBw4ceNS2AwcOZGpqqqeKYLRM6gr95TheLJrUMbHcmawuN5g0pz6850zfjwqfgNjRrbfemle/+tX5uZ/7udx777355m/+5tx777155Stf2XdpMBJOrdA//VPN5ubm+i5t3d16663Zu3dvkuS2227LgQMHsnfv3tx22209V7a+Zmdnc2Ee0yUAAA2TSURBVMstt2Tz5s351Kc+lauvvjonTpzIG9/4xr5LA0bMtddem3e/+9254oorcuLEiWzevDn3339/rr322r5LewxhuqPnPe95edvb3pYvfOEL+frXv54vfOELedzjHpfnPe95fZcGI+HUxwDPzMzk+PHj2bZtW+bm5iby44H379+fJPnpn/7p/NRP/VSmpqZy2223PbJ9EjnTCpzNa1/72rz85S/P/fffnyS5//77s2nTprz2ta/tubLHMme6o+np6ezfvz87d+58ZNvhw4czMzOTY8eO9VITwChz3ARWahSPF2eaMy1MdzSpC2kAunLcBFZqFI8XFiCuskldSAPQleMmsFLjdLwQpjvy8acA58dxE1ipsTperNYle/q49f1x4j7+FM7OPjKkF4v0YUgv4Oz27NnTpqamWpI2NTXV+6fGxicgAuvJR0cP6QWnMybg7EZxHxGmgXXlo6OH9ILTGRNwdqO4j5wpTLuaB7AmRnEldl/0gtMZE3B2o7iPuJoHsK7GaSX2WtMLTmdMwNmN0z6y7mG6qp5ZVR9ecvtKVf14VV1ZVe+rqrsHX5+w3rUBq2esVmKvMb3gdMYEnN1Y7SPLzf1Yr1uSDUn+Osm3JvnZJK8ZbH9Nkjec6/V9z5m2EhvOzj4ypBeczpiAsxu1fSSjOGe6qm5I8rrW2vOr6hNJXtha+2xVPTnJ77bWnnm21/c5Z3p+fj6zs7M5ePBgrr/++hw5ciS7d+/O3Nxcdu3a1UtNAACsjVGdM/2yJPOD+09qrX12cP+vkzypn5JWZm5uLgcPHszOnTuzadOm7Ny5MwcPHszc3FzfpQEAsE56OzNdVZcm+ask21trn6uqL7fWHr/k8S+11h4zb7qqXpHkFUly9dVXX3fPPfesW81LjeIqUwAA1sYonpm+McmHWmufG3z/ucH0jgy+3rvci1prb2qt7Wit7diyZcs6lfpY47TKFACAtdFnmN6V4RSPJHl3kpcP7r88ybvWvaLzMFarTNfB/Px8pqens2HDhkxPT2d+fv7cL+KiZ1zAmdk/4CKx3KrEtb4l2ZzkC0m+acm2Jya5K8ndSf5LkivP9XNczWM0jOJHftI/4wLOzP4B4yejeDWPC+UTEEfD9PR09u/fn507dz6y7fDhw5mZmcmxY8d6rIw+GRdwZvYPGD9nmjMtTHPBLMZkOcYFnJn9A8bPKC5A5CJhMSbLMS7gzOwfcPEQprlgFmOyHOMCzsz+ARePjX0XwPjbtWtX3v/+9+fGG2/MV7/61UxNTeXWW2/1SZAT7tS//8zMTI4fP55t27b5hFAYcNyEi4cz01yw+fn53HHHHbnzzjtz8uTJ3Hnnnbnjjjtc5ons2rUrx44dy8MPP5xjx44JCjDguAkXDwsQuWBWpQOcH8dNGD+u5sGasSod4Pw4bsL4cTUP1oxV6QDnx3ETLh7CNBfMqnSA8+O4CRcPV/PgglmVDnB+XO0GLh7OTHPBrEoHOH+udgMXBwsQuWBWpQMAFztX82DNWJUOAFzsXM2DNWNVOgAwqYRpLphV6QDApHI1Dy6YVekAwKQyZxoAAM7BnGkAAFhlwjQAAHQkTAMAQEfCNMA6mJ+fz/T0dDZs2JDp6WmfEApwkXA1D4A1Nj8/n9nZ2Rw8eDDXX399jhw5kt27dyeJq94AjDlX8wBYY9PT09m/f3927tz5yLbDhw9nZmYmx44d67EyAFbKx4kD9GTDhg158MEHs2nTpke2PfTQQ7nsssvy8MMP91gZACvl0ngAPdm2bVuOHDnyqG1HjhzJtm3beqoIgNUiTAOssdnZ2ezevTuHDx/OQw89lMOHD2f37t2ZnZ3tuzQALpAFiABr7NQiw5mZmRw/fjzbtm3L3NycxYcAFwFzpgEA4BzMmQYAgFUmTAMAQEfCNAAAdCRMAwBAR8I0AAB0JEwDAEBHwjQAAHQkTAMAQEfCNAAAdCRMAwBAR8I0AAB0JEwDAEBHwjQAAHQkTAMAQEfCNAAAdFSttb5r6Kyq7ktyT991JLkqyef7LmJE6MWQXgzpxZBeLNKHIb0Y0oshvRgalV58a2tty+kbxzpMj4qqOtpa29F3HaNAL4b0YkgvhvRikT4M6cWQXgzpxdCo98I0DwAA6EiYBgCAjoTp1fGmvgsYIXoxpBdDejGkF4v0YUgvhvRiSC+GRroX5kwDAEBHzkwDAEBHwvQFqKo3V9W9VXWs71r6VFVPq6rDVfXxqvpYVb2q75r6UlWXVdUfV9WfDHrxr/quqW9VtaGq/ltVvafvWvpUVf+jqj5aVR+uqqN919Onqnp8Vf16Vf1pVR2vqu/ou6Y+VNUzB+Ph1O0rVfXjfdfVl6r6icFx81hVzVfVZX3X1JeqetWgDx+btDGxXLaqqiur6n1Vdffg6xP6rPF0wvSFeUuSl/RdxAj4WpKfaq19W5LnJvnRqvq2nmvqy1eTvKi19u1JnpXkJVX13J5r6turkhzvu4gRsbO19qxRvsTTOnljkt9prf29JN+eCR0frbVPDMbDs5Jcl+SBJL/Zc1m9qKqnJPmxJDtaa9NJNiR5Wb9V9aOqppPcmuQ5Wdw/vreqnt5vVevqLXlstnpNkrtaa89Ictfg+5EhTF+A1trvJ/li33X0rbX22dbahwb3/zaLb4xP6beqfrRF9w++3TS4TezChKp6apKbkvxy37UwGqrqm5K8IMnBJGmtnWytfbnfqkbCi5P899baKHwQWV82JvmGqtqY5PIkf9VzPX3ZluQDrbUHWmtfS/J7Sb6/55rWzRmy1c1J3jq4/9Yk37euRZ2DMM2qqqprkvyDJB/ot5L+DKY1fDjJvUne11qb2F4k+bdJ/mWSr/ddyAhoSd5bVR+sqlf0XUyPtia5L8l/HEz/+eWq2tx3USPgZUnm+y6iL621zyT5+SSfSvLZJH/TWntvv1X15liS76yqJ1bV5Um+J8nTeq6pb09qrX12cP+vkzypz2JOJ0yzaqrqcUl+I8mPt9a+0nc9fWmtPTz4te1Tkzxn8Cu7iVNV35vk3tbaB/uuZURc31p7dpIbszgV6gV9F9STjUmeneQXW2v/IMmJjNivbNdbVV2a5KVJfq3vWvoymAN7cxb/s/UtSTZX1f/Sb1X9aK0dT/KGJO9N8jtJPpzk4V6LGiFt8TJ0I/UbX2GaVVFVm7IYpN/eWntn3/WMgsGvrg9ncufVPz/JS6vqfyT5lSQvqqr/p9+S+jM485bW2r1ZnBf7nH4r6s2nk3x6yW9sfj2L4XqS3ZjkQ621z/VdSI++K8lftNbua609lOSdSZ7Xc029aa0dbK1d11p7QZIvJfmzvmvq2eeq6slJMvh6b8/1PIowzQWrqsri/MfjrbXb+66nT1W1paoeP7j/DUn+cZI/7beqfrTWXttae2pr7Zos/gp7obU2kWeaqmpzVV1x6n6SG7L4q9yJ01r76yR/WVXPHGx6cZKP91jSKNiVCZ7iMfCpJM+tqssH7ykvzoQuTE2Sqvrmwderszhf+lC/FfXu3UlePrj/8iTv6rGWx9jYdwHjrKrmk7wwyVVV9ekkr2utHey3ql48P8k/S/LRwVzhJPnp1tpv91hTX56c5K1VtSGL/1l9R2ttoi8JR5LF+X2/uZgRsjHJodba7/RbUq9mkrx9ML3hz5P8SM/19Gbwn6t/nOR/67uWPrXWPlBVv57kQ1m8QtR/y4h/6t0a+42qemKSh5L86CQt0l0uWyV5fZJ3VNXuJPck+cH+Knwsn4AIAAAdmeYBAAAdCdMAANCRMA0AAB0J0wAA0JEwDQAAHQnTACOsqp5aVe+qqrur6r9X1RsHl5Q722t+er3qA5h0wjTAiBp8eMU7k/zn1tozkvzdJI9LMneOlwrTAOtEmAYYXS9K8mBr7T8mSWvt4SQ/keRfVNUrq+rfnXpiVb2nql5YVa9P8g1V9eGqevvgsR+uqo9U1Z9U1X8abLumqhYG2+8afNJaquotVfWLVfVHVfXng5/55qo6XlVvWfLn3VBVf1hVH6qqX6uqx61bVwBGiDANMLq2J/ng0g2tta9k8aOXl/0E29baa5L8f621Z7XWfqiqtif5P5K8qLX27UleNXjq/iRvba39/SRvT/ILS37ME5J8RxaD+7uT/JtBLddW1bOq6qrBz/yu1tqzkxxN8pOr8RcGGDc+Thzg4vaiJL/WWvt8krTWvjjY/h1Jvn9w/z8l+dklr/mt1lqrqo8m+Vxr7aNJUlUfS3JNkqcm+bYk/3XwEemXJvnDNf57AIwkYRpgdH08yQ8s3VBV35jk6iRfzqN/u3jZKv65Xx18/fqS+6e+35jk4STva63tWsU/E2AsmeYBMLruSnJ5Vf1wklTVhiT7krwlyZ8neVZVXVJVT0vynCWve6iqNg3uLyT5p1X1xMHPuHKw/f1JXja4/0NJ/uA86vqjJM+vqqcPfubmqvq75/uXA7gYCNMAI6q11pL8kyyG4buT/FmSB7N4tY7/muQvsnj2+heSfGjJS9+U5CNV9fbW2seyePWP36uqP0ly++A5M0l+pKo+kuSfZTiXeiV13ZfknyeZH7z+D5P8va5/T4BxVovHagAA4Hw5Mw0AAB0J0wAA0JEwDQAAHQnTAADQkTANAAAdCdMAANCRMA0AAB0J0wAA0NH/D3XSQa1vsgOHAAAAAElFTkSuQmCC%0A">
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="When-might-this-be-useful?">
+<a class="anchor" href="#When-might-this-be-useful?" aria-hidden="true"><span class="octicon octicon-link"></span></a>When might this be useful?<a class="anchor-link" href="#When-might-this-be-useful?"> </a>
+</h2>
+<p>The above lets you replace an $\text{O}(d)$ time sampling algorithm with a $\text{O}(d \log d)$ one that allows the work to be distributed amongst $d$ independent nodes, allowing the sampling to be done in $\text{O}(\log d)$ time.</p>
+<p>Is this likely to be practically useful? If you need to sample from a multinomial where $d$, the number of possible outcomes, is so large that an algorithm linear in $d$ is too slow, well, you're unlikely to have a $d$-processor machine or a $d$-machine cluster available to you.</p>
+<p>If you have $m$ processing nodes available, $m &lt; d$, then you can split the outcomes into $m$ blocks of $d/m$, and use the above algorithm to sample the number of trials leading to an outcome in each of the blocks in $\text{O}(\log m)$ time. You can then use repeated binomial sampling within each node to sample the number of trials for each outcome in that block in $\text{O}(d/m)$ time. Since for $d &gt;&gt; m$, the work is going to be dominated by the $\text{O}(d/m)$ part, this effectively divides the sampling time by the number of nodes.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><a class="u-url" href="/probability/sampling/distributed/2018/01/30/distributed-multinomial-sampling.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p></p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/grey-area" title="grey-area"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/AndrewM_Webb" title="AndrewM_Webb"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

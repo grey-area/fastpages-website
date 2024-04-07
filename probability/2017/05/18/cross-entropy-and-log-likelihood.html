@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Cross Entropy and Log Likelihood | Andrew M. Webb</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Cross Entropy and Log Likelihood" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood." />
+<meta property="og:description" content="Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood." />
+<link rel="canonical" href="http://www.awebb.info/probability/2017/05/18/cross-entropy-and-log-likelihood.html" />
+<meta property="og:url" content="http://www.awebb.info/probability/2017/05/18/cross-entropy-and-log-likelihood.html" />
+<meta property="og:site_name" content="Andrew M. Webb" />
+<meta property="og:image" content="http://www.awebb.info/images/blog_posts/cross_entropy_log_likelihood.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-05-18T00:00:00-05:00" />
+<script type="application/ld+json">
+{"image":"http://www.awebb.info/images/blog_posts/cross_entropy_log_likelihood.png","description":"Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood.","@type":"BlogPosting","url":"http://www.awebb.info/probability/2017/05/18/cross-entropy-and-log-likelihood.html","headline":"Cross Entropy and Log Likelihood","dateModified":"2017-05-18T00:00:00-05:00","datePublished":"2017-05-18T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://www.awebb.info/probability/2017/05/18/cross-entropy-and-log-likelihood.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="http://www.awebb.info/feed.xml" title="Andrew M. Webb" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-21765629-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Cross Entropy and Log Likelihood | Andrew M. Webb</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Cross Entropy and Log Likelihood" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood." />
+<meta property="og:description" content="Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood." />
+<link rel="canonical" href="http://www.awebb.info/probability/2017/05/18/cross-entropy-and-log-likelihood.html" />
+<meta property="og:url" content="http://www.awebb.info/probability/2017/05/18/cross-entropy-and-log-likelihood.html" />
+<meta property="og:site_name" content="Andrew M. Webb" />
+<meta property="og:image" content="http://www.awebb.info/images/blog_posts/cross_entropy_log_likelihood.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-05-18T00:00:00-05:00" />
+<script type="application/ld+json">
+{"image":"http://www.awebb.info/images/blog_posts/cross_entropy_log_likelihood.png","description":"Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood.","@type":"BlogPosting","url":"http://www.awebb.info/probability/2017/05/18/cross-entropy-and-log-likelihood.html","headline":"Cross Entropy and Log Likelihood","dateModified":"2017-05-18T00:00:00-05:00","datePublished":"2017-05-18T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://www.awebb.info/probability/2017/05/18/cross-entropy-and-log-likelihood.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="http://www.awebb.info/feed.xml" title="Andrew M. Webb" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-21765629-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Andrew M. Webb</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/cv/">CV</a><a class="page-link" href="/qcirc/">QCircuits</a><a class="page-link" href="/search/">Search Blog</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Cross Entropy and Log Likelihood</h1><p class="page-description">Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2017-05-18T00:00:00-05:00" itemprop="datePublished">
+        May 18, 2017
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      8 min read
+    
+</span></p>
+
+    
+
+    
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Log-likelihood">Log likelihood </a></li>
+<li class="toc-entry toc-h2"><a href="#Cross-entropy">Cross entropy </a></li>
+<li class="toc-entry toc-h2"><a href="#K-L-divergence">K-L divergence </a></li>
+<li class="toc-entry toc-h2"><a href="#Multiple-observations">Multiple observations </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2017-05-18-cross-entropy-and-log-likelihood.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I lately ironed out a little confusion I had about the correspondence between cross entropy and negative log-likelihood when using a neural network for multi-class classification. I'm writing this mostly so I have a handy reference in future.</p>
+<p>Suppose we have a neural network for multi-class classification, and the final layer has a softmax activation function, i.e.,</p>
+<p>$\hat{\mathbf{y}} = \sigma(\mathbf{z})$,</p>
+<p>where</p>
+<p>$\sigma(\mathbf{z})_j = \frac{\exp(z_j)}{\sum_{k=1}^{M}\exp(z_k)}$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The vector $\hat{\boldsymbol{y}}$ is of length $M$ and can be interpreted as the probability of each of $M$ possible outcomes occuring, according to the model represented by the network.</p>
+<p>The model is discriminative (or conditional), meaning that it models the dependence of the unobserved variable $y$ on the observed variable $\boldsymbol{x}$. The model is parameterised by the parameters of the network, $\boldsymbol{\theta}$. I.e., the network represents a conditional probability distribution $\mathrm{p}(y \mid \boldsymbol{x}, \boldsymbol{\theta})$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Log-likelihood">
+<a class="anchor" href="#Log-likelihood" aria-hidden="true"><span class="octicon octicon-link"></span></a>Log likelihood<a class="anchor-link" href="#Log-likelihood"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ignoring any issues with generalisation, suppose we want to choose the model (within the family of models the network architecture represents) that maximizes the likelihood of the observed data. I.e., we want to find the value of the parameters $\boldsymbol{\theta}$ that maximizes the likelihood of the data. We'll do this by something like stochastic gradient descent, using the negative log-likelihood as a cost function.</p>
+<p>How do we compute the likelihood of the data? If we make a single observation, and we observe outcome $j$, then the likelihood is simply $\hat{y}_j$.</p>
+<p>If we represent the actual observation as a vector $\boldsymbol{y}$ with one-hot encoding (i.e., the $j$th element is 1 and all other elements are 0 when we observe the $j$th outcome), then the likelihood of the same single observation can be represented as</p>
+<p>$\prod_{j=1}^{M}\hat{y}_j ^ {y_j}$, since each term in the product except that corresponding to the observed value will be equal to 1.</p>
+<p>The negative log likelihood is then</p>
+<p>$-\sum_{j=1}^{M} y_j \log{\hat{y}_j}$.</p>
+<p>Now, we know that the vector $\hat{\boldsymbol{y}}$ represents a discrete probability distribution over the possible values of the observation (according to our model). The vector $\boldsymbol{y}$ can also be interpreted as a probability distribution over the same space, that just happens to give all of its probability mass to a single outcome (i.e., the one that happened). We might call it the empirical distribution. Under this interpretation, the expression for the negative log likelihood above is also equal to a quantity known as the cross entropy.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Cross-entropy">
+<a class="anchor" href="#Cross-entropy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cross entropy<a class="anchor-link" href="#Cross-entropy"> </a>
+</h2>
+<p>If a discrete random variable $X$ has the probability mass function $f(x)$, then the entropy of $X$ is</p>
+<p>$\mathrm{H}(X) = \sum_{x}f(x)\log \frac{1}{f(x)} = -\sum_{x}f(x)\log f(x)$.</p>
+<p>It is the expected number of bits needed to communicate the value taken by $X$ if we use the optimal coding scheme for the distribution.</p>
+<p>Imagine arranging the possible values of $X$ on a line, with each outcome occupying an area proportional to its probability.</p>
+<p><figure>
+  
+    <img class="docimage" src="/images/copied_from_nb/local_images/2017-05-18-cross-entropy/probability_space1.png" alt="" style="max-width: 400px">
+    
+    
+</figure>
+</p>
+<p>If we take the base-2 logarithm, you can think of $\log \frac{1}{f(x)}$ as being the number of yes/no questions you need to ask (if you ask the right questions) to narrow yourself down to the region of the line containing the outcome $x$. For example, using the above probability space we would first ask "Is the outcome in the first half of the line?", so would only ask one question to determine that the outcome was $x_1$. If the outcome is not $x_1$ then we have to ask a second question. The entropy is just the expected number of yes/no questions you'll need to ask; it's the sum of the number of questions for each possible outcome, each weighted by the probability of that outcome. (We don't literally ask questions about where we are in the probability line. Instead, we assign strings of bits to possible outcomes. So in the above example, we assign the string '0' to the outcome $x_1$, '10' to $x_2$, and '11' to $x_3$.)</p>
+<p>The key in the above paragraph was the phrase "if you ask the right questions".</p>
+<p>If we choose our series of yes/no questions to minimize the average number of questions we'd have to ask if the probability mass function over the outcomes was $f(x)$, but in reality the probability mass function is $g(x)$,</p>
+<p><figure>
+  
+    <img class="docimage" src="/images/copied_from_nb/local_images/2017-05-18-cross-entropy/probability_space2.png" alt="" style="max-width: 400px">
+    
+    
+</figure>
+</p>
+<p>then we're going to have to ask more yes/no questions to determine the outcome than if we used the optimal series of questions for $g(x)$. It's like if you'd played the game '20 questions' with your friend Alice so many times that you've got to learn the kind of objects she chooses, and tailored the sequence of questions to her. When you come to play the game with Bob, the questions aren't quite a perfect fit, and so you have to ask more questions on average.</p>
+<p>The expression for the cross entropy is</p>
+<p>$\mathrm{H}(g, f) = \sum_{x}g(x)\log \frac{1}{f(x)} = -\sum_{x}g(x)\log f(x)$.</p>
+<p>(I don't really like the standard notation here. $\mathrm{H}(X, Y)$, where $X$ and $Y$ are random variables, is taken to be the joint entropy of $X$ and $Y$, and $\mathrm{H}(f, g)$, where $f$ and $g$ are probability mass functions or probability density functions over the same space of events is taken to be the cross entropy of $f$ and $g$.)</p>
+<p>One important thing to note is that $H(p, q) \neq H(q, p)$. So going back to our example of using the cross entropy as a per-example loss function, how do we remember which of the distributions takes which role? I.e., how do we remember, without re-deriving the thing from the negative log likelihood, whether we should we computing</p>
+<p>$-\sum_{j=1}^{M} y_j \log{\hat{y}_j}$</p>
+<p>or</p>
+<p>$-\sum_{j=1}^{M} \hat{y}_j \log{y_j}$.</p>
+<p>The way I remember it is using the intuition from above. In the expression for cross entropy, the distribution that we take the element-wise logarithm of is the one that we used to generate our coding scheme, i.e., it is the distribution that we think the data follows. We can remember this by remembering the idea that the base-2 log of the (inverse) probability for each possible outcome measures the number of yes/no questions we have to ask (each time bisecting the probability space) in order to determine that that outcome occurred. To calculate the average number of questions we have to ask, we just weight each number by the true probability of each outcome. Clearly $\hat{\boldsymbol{y}}$ represents the distribution that the network/model believes the data follows, and $\boldsymbol{y}$ is the actual data, and so is the true distribution.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="K-L-divergence">
+<a class="anchor" href="#K-L-divergence" aria-hidden="true"><span class="octicon octicon-link"></span></a>K-L divergence<a class="anchor-link" href="#K-L-divergence"> </a>
+</h2>
+<p>The Kullback-Leibler (K-L) divergence is the number of <em>additional</em> bits, on average, needed to encode an outcome distributed as $g(x)$ if we use the optimal encoding for $f(x)$. Using the above definitions for cross entropy and entropy we see that the K-L divergence is</p>
+<p>$\mathrm{D}_{KL}(g\mid \mid f) = \mathrm{H}(g, f) - \mathrm{H}(g) = -(\sum_{x}g(x)\log f(x)-\sum_{x}g(x)\log g(x))$.</p>
+<p>The K-L divergence is often described as a measure of the distance between distributions, and so the K-L divergence between the model and the data might seem like a more natural loss function than the cross-entropy.</p>
+<p>In our network learning problem, the K-L divergence is</p>
+<p>$-(\sum_{j=1}^{M} y_j \log{\hat{y}_j} - \sum_{j=1}^{M} y_j \log{y_j})$.</p>
+<p>What if we were to use the K-L divergence as the loss function? We can see that the $\sum_{j=1}^{M} y_j \log{y_j}$ term depends only on the (fixed) data, not on the likelihood $\hat{\boldsymbol{y}}$, and so not on the parameters of the model $\boldsymbol{\theta}$. In other words, the value of $\boldsymbol{\theta}$ that minimizes the Kullback-Leibler divergence is the same value that minimizes the cross entropy and the negative log likelihood.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Multiple-observations">
+<a class="anchor" href="#Multiple-observations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Multiple observations<a class="anchor-link" href="#Multiple-observations"> </a>
+</h2>
+<p>If we have $N$ independently sampled examples from a training data set, the joint likelihood of the data is just the product of the likelihoods of the individual examples. The joint likelihood is</p>
+<p>$\prod_{i=1}^{N}\prod_{j=1}^{M}{\hat{y}_{j}^{(i)}} ^ {y_{j}^{(i)}}$,</p>
+<p>where $y_j^{(i)}$ is the target or outcome of the $i$th example, and $\hat{y}_j^{(i)}$ is the likelihood of that outcome according to the model.</p>
+<p>The negative log likelihood is</p>
+<p>$-\sum_{i=1}^{N}\sum_{j=1}^{M} y_j^{(i)} \log{\hat{y}_j^{(i)}}$.</p>
+<p>One source of confusion for me is that I read in a few places "the negative log likelihood is the same as the cross entropy" without it having been specified whether they are talking about a per-example loss function or a batch loss function over a number of examples. As we saw above, the per-example negative log likelihood can indeed be interpreted as cross entropy. However, the negative log likelihood of a batch of data (which is just the sum of the negative log likelihoods of the individual examples) seems to me to be not a cross entropy, but a sum of cross entropies each based on a different model distribution (since the model is conditional on a different $\boldsymbol{x}^{(i)}$ for each $i$).</p>
+<p>Edit (19/05/17): I think I was wrong that the expression above isn't a cross entropy; it's the cross entropy between the distribution over the vector of outcomes for the batch of data and the probability distribution over the vector of outcomes given by our model, i.e., $\mathrm{p}(\boldsymbol{y}\mid \boldsymbol{X}, \boldsymbol{\theta})$, with each distribution being conditional on the batch of observed values $\boldsymbol{X}$.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><a class="u-url" href="/probability/2017/05/18/cross-entropy-and-log-likelihood.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p></p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/grey-area" title="grey-area"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/AndrewM_Webb" title="AndrewM_Webb"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
