@@ -44,8 +44,8 @@ baseurl: "" # the subpath of your site, e.g. "/blog".
 # Github and twitter are optional:
 minima:
   social_links:
-    - { platform: github,  user_url: "https://github.com/grey-area" }
-    - { platform: twitter, user_url: "https://twitter.com/AndrewM_Webb" }
+    twitter: AndrewM_Webb
+    github: grey-area
 
 # Set this to true to get LaTeX math equation support
 use_math:  true
@@ -102,7 +102,7 @@ plugins:
 paginate: 7
 paginate_path: /page:num/
 
-remote_theme: jekyll/minima
+remote_theme: jekyll/minima@868b90fcdfac6b975609e2741eb9471bf0f7bac9
 
 titles_from_headings:
   enabled:     true
