@@ -6,9 +6,11 @@ permalink: /about/
 
 <img align="right" src="{{site.baseurl}}/images/me4.jpg" width="225" height="254">
 
-I'm currently a senior machine learning research scientist at [Genie AI](https://www.genieai.co/en-us).
+I'm currently a senior engineer at [Maze](https://mazehq.com/).
 
-Previously, I was lead machine learning R & D engineer at [vTime Limited](https://vtime.net/), leading a team of engineers developing novel deep learning solutions for problems with vision, audio, text, and 3D scene data. Example projects included text-to-speech,
+Previously, I was a senior machine learning research scientist at [Genie AI](https://www.genieai.co/en-us).
+
+Before that, I was lead machine learning R & D engineer at [vTime Limited](https://vtime.net/), leading a team of engineers developing novel deep learning solutions for problems with vision, audio, text, and 3D scene data. Example projects included text-to-speech,
 automatic avatar and room customization, emotion/animation prediction.
 
 Before that, I was a research associate at the University of Manchester, working on the LAMBDA project under [Gavin Brown](http://www.cs.man.ac.uk/~gbrown), studying ensemble methods in deep learning. I also worked on the [PAMELA project](http://apt.cs.manchester.ac.uk/projects/PAMELA), working on the efficient integration of semantic segmentation into [SLAM](http://en.wikipedia.org/wiki/Simultaneous_localization_and_mapping) (simultaneous localisation and mapping) systems.
