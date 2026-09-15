@@ -1,1 +1,1 @@
-Sitemap: http://www.awebb.info/sitemap.xml
+Sitemap: https://www.awebb.info/sitemap.xml
