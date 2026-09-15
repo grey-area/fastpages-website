@@ -74,6 +74,7 @@ exclude:
   - Makefile
   - README.md
   - LICENSE
+  - _templates
 
 # this setting allows you to keep pages organized in the _pages folder
 include:
@@ -104,6 +105,30 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jemoji
+
+# Sphinx-generated navigation scaffolding under /qcircuits/ has no content of
+# its own; keep it out of sitemap.xml. The pages stay reachable and linked.
+defaults:
+  - scope:
+      path: "qcircuits/genindex.html"
+    values:
+      sitemap: false
+  - scope:
+      path: "qcircuits/py-modindex.html"
+    values:
+      sitemap: false
+  - scope:
+      path: "qcircuits/modules.html"
+    values:
+      sitemap: false
+  - scope:
+      path: "qcircuits/search.html"
+    values:
+      sitemap: false
+  - scope:
+      path: "qcircuits/setup.html"
+    values:
+      sitemap: false
 
 # See https://jekyllrb.com/docs/pagination/
 # For pagination to work, you cannot have index.md at the root of your repo, instead you must rename this file to index.html

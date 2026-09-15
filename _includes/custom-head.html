@@ -10,7 +10,21 @@
 <link rel="preload" href="{{ "/assets/fonts/inter-var.woff2" | relative_url }}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ "/assets/fonts/source-serif-4-var.woff2" | relative_url }}" as="font" type="font/woff2" crossorigin>
 
-{% if site.use_math %}
+{%- comment -%}
+  Load KaTeX only on pages that actually contain maths. site.use_math is the
+  master switch; page.use_math forces it on for a page the check below misses.
+  Without this, every page pulls katex's css, js, auto-render and the font files
+  it triggers -- ~195 KB and 10 requests on /about/, which renders no maths at
+  all, and the same on the home page, /cv/, /publications/, /search/ and /404.
+  The delimiters checked here are the ones configured in renderMathInElement
+  below; a false positive (a bare $ in a code block) only costs a load, while a
+  false negative would leave maths unrendered, so this errs towards loading.
+{%- endcomment -%}
+{%- assign has_math = false -%}
+{%- if page.content contains '$' or page.content contains '[%' -%}
+  {%- assign has_math = true -%}
+{%- endif -%}
+{% if site.use_math and (has_math or page.use_math) %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"></script>
