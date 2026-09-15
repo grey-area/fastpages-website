@@ -1,0 +1,7 @@
+# Pinned so a transitive release cannot break the build silently.
+# nbconvert 7.16.4 is incompatible with mistune >= 3.1: its MathBlockParser
+# breaks with "no attribute 'parse_axt_heading'". Keep mistune pinned below 3.1
+# whenever nbconvert is bumped.
+nbconvert==7.16.4
+mistune==3.0.2
+nbformat==5.10.4

@@ -11,3 +11,10 @@ _notebooks/.ipynb_checkpoints
 .netlify
 .tweet-cache
 __pycache__
+# Written by the notebook converter at build time (_action_files/nb2post.py).
+# ~1 MB of generated HTML with base64-embedded figures; regenerate it, don't
+# commit it. A hand-written markdown post would need `git add -f`.
+images/copied_from_nb/*
+!images/copied_from_nb/README.md
+_posts/*.md
+!_posts/README.md

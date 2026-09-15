@@ -1,0 +1,46 @@
+{#-
+  Notebook -> Jekyll post body.
+
+  Ported from the fastpages nbconvert-5 templates (fastpages.tpl + hide.tpl),
+  which extended `basic.tpl`. nbconvert 6 removed that template format; this is
+  the same three block overrides in nbconvert 7's layout. The class names the
+  `basic` base emits (input_area, output_area, output_png, output_wrapper,
+  highlight, ...) are the ones _sass/minima/fastpages-styles.scss and
+  custom-styles.scss already target, so the stylesheets need no changes.
+
+  Cell metadata is set by the FastpagesDirectives preprocessor in nb2post.py.
+  Missing keys resolve to Jinja's Undefined, which is falsy -- same as the
+  original templates relied on.
+-#}
+{% extends 'basic/index.html.j2' %}
+
+{#- Liquid must not interpret braces inside code cells. -#}
+{% block codecell %}
+{{ "{% raw %}" }}
+{{ super() }}
+{{ "{% endraw %}" }}
+{% endblock codecell %}
+
+{% block input_group -%}
+{%- if cell.metadata.collapse_show -%}
+<details class="description" open>
+  <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+  {{ super() }}
+</details>
+{%- elif cell.metadata.collapse_hide -%}
+<details class="description">
+  <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+  {{ super() }}
+</details>
+{%- elif cell.metadata.hide_input or nb.metadata.hide_input -%}
+{%- else -%}
+{{ super() }}
+{%- endif -%}
+{% endblock input_group %}
+
+{% block output_group -%}
+{%- if cell.metadata.hide_output -%}
+{%- else -%}
+{{ super() }}
+{%- endif -%}
+{% endblock output_group %}
