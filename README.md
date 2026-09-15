@@ -60,11 +60,10 @@ is tracked by git normally — you don't need `git add -f`.
 
 One difference worth knowing: in a markdown post, `$$…$$` display maths is
 rendered **at build time** by `kramdown-math-katex`, which needs a JavaScript
-runtime. CI has one (GitHub runners ship Node), but the `ruby:3.2` container
-behind `make server` does not, so a local build of such a post fails with
-`Could not find a JavaScript runtime`. Notebook posts are unaffected: their
-content sits in a raw HTML block that kramdown passes straight through, and
-KaTeX renders it in the browser.
+runtime — unlike inline `$…$`, which KaTeX renders in the browser. CI gets one
+free because GitHub runners ship Node, and `make server` installs Node into the
+Jekyll container at start-up for the same reason. Notebook posts never need it:
+their content sits in a raw HTML block that kramdown passes straight through.
 
 ## Build
 

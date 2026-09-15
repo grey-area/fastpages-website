@@ -25,6 +25,11 @@ services:
      && watchmedo shell-command --command 'python _action_files/nb2post.py'
         --patterns '*.ipynb' --recursive --drop _notebooks"
 
+  # Node is installed at start-up because kramdown-math-katex renders $$...$$
+  # in *markdown* posts at build time through execjs, which needs a JavaScript
+  # runtime. CI gets one free (GitHub runners ship Node); ruby:3.2 does not, so
+  # without this a local preview of such a post dies with
+  # "Could not find a JavaScript runtime". Notebook posts don't need it.
   jekyll:
     working_dir: /data
     image: ruby:3.2
@@ -36,7 +41,8 @@ services:
       # persist installed gems so restarts don't re-download the bundle
       - jekyll-bundle:/usr/local/bundle
     command: >
-     bash -c "gem install bundler -v 2.4.22 --conservative
+     bash -c "(command -v node >/dev/null || (apt-get update -qq && apt-get install -y -qq --no-install-recommends nodejs))
+     && gem install bundler -v 2.4.22 --conservative
      && (bundle check || bundle install)
      && bundle exec jekyll serve --trace --strict_front_matter --host 0.0.0.0"
 
