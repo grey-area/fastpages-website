@@ -23,7 +23,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2017-05-18T00:00:00+00:00","datePublished":"2017-05-18T00:00:00+00:00","description":"Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood.","headline":"Cross Entropy and Log Likelihood","image":"https://www.awebb.info/images/blog_posts/cross_entropy_log_likelihood.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.awebb.info/probability/2017/05/18/cross-entropy-and-log-likelihood.html"},"url":"https://www.awebb.info/probability/2017/05/18/cross-entropy-and-log-likelihood.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/css/style.css?v=1789462252"><link type="application/atom+xml" rel="alternate" href="https://www.awebb.info/feed.xml" title="Andrew M. Webb" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="/assets/css/style.css?v=1789464608"><link type="application/atom+xml" rel="alternate" href="https://www.awebb.info/feed.xml" title="Andrew M. Webb" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
@@ -165,10 +165,10 @@ window.onload = wrap_img;
   <div class="post-content e-content" itemprop="articleBody"><details class="toc-details">
       <summary>Contents</summary>
       <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h2"><a href="#Log-likelihood">Log likelihood </a></li>
-<li class="toc-entry toc-h2"><a href="#Cross-entropy">Cross entropy </a></li>
-<li class="toc-entry toc-h2"><a href="#K-L-divergence">K-L divergence </a></li>
-<li class="toc-entry toc-h2"><a href="#Multiple-observations">Multiple observations </a></li>
+<li class="toc-entry toc-h2"><a href="#Log-likelihood">Log likelihood</a></li>
+<li class="toc-entry toc-h2"><a href="#Cross-entropy">Cross entropy</a></li>
+<li class="toc-entry toc-h2"><a href="#K-L-divergence">K-L divergence</a></li>
+<li class="toc-entry toc-h2"><a href="#Multiple-observations">Multiple observations</a></li>
 </ul>
     </details><!--
 #################################################
@@ -178,14 +178,6 @@ window.onload = wrap_img;
 -->
 
 <div class="container" id="notebook-container">
-        
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    
-
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -194,7 +186,6 @@ window.onload = wrap_img;
 <p>$\hat{\mathbf{y}} = \sigma(\mathbf{z})$,</p>
 <p>where</p>
 <p>$\sigma(\mathbf{z})_j = \frac{\exp(z_j)}{\sum_{k=1}^{M}\exp(z_k)}$.</p>
-
 </div>
 </div>
 </div>
@@ -203,7 +194,6 @@ window.onload = wrap_img;
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The vector $\hat{\boldsymbol{y}}$ is of length $M$ and can be interpreted as the probability of each of $M$ possible outcomes occuring, according to the model represented by the network.</p>
 <p>The model is discriminative (or conditional), meaning that it models the dependence of the unobserved variable $y$ on the observed variable $\boldsymbol{x}$. The model is parameterised by the parameters of the network, $\boldsymbol{\theta}$. I.e., the network represents a conditional probability distribution $\mathrm{p}(y \mid \boldsymbol{x}, \boldsymbol{\theta})$.</p>
-
 </div>
 </div>
 </div>
@@ -211,7 +201,7 @@ window.onload = wrap_img;
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Log-likelihood">
-<a class="anchor" href="#Log-likelihood" aria-hidden="true"><span class="octicon octicon-link"></span></a>Log likelihood<a class="anchor-link" href="#Log-likelihood"> </a>
+<a class="anchor" href="#Log-likelihood" aria-hidden="true"><span class="octicon octicon-link"></span></a>Log likelihood<a class="anchor-link" href="#Log-likelihood"></a>
 </h2>
 </div>
 </div>
@@ -226,7 +216,6 @@ window.onload = wrap_img;
 <p>The negative log likelihood is then</p>
 <p>$-\sum_{j=1}^{M} y_j \log{\hat{y}_j}$.</p>
 <p>Now, we know that the vector $\hat{\boldsymbol{y}}$ represents a discrete probability distribution over the possible values of the observation (according to our model). The vector $\boldsymbol{y}$ can also be interpreted as a probability distribution over the same space, that just happens to give all of its probability mass to a single outcome (i.e., the one that happened). We might call it the empirical distribution. Under this interpretation, the expression for the negative log likelihood above is also equal to a quantity known as the cross entropy.</p>
-
 </div>
 </div>
 </div>
@@ -234,29 +223,21 @@ window.onload = wrap_img;
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Cross-entropy">
-<a class="anchor" href="#Cross-entropy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cross entropy<a class="anchor-link" href="#Cross-entropy"> </a>
+<a class="anchor" href="#Cross-entropy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cross entropy<a class="anchor-link" href="#Cross-entropy"></a>
 </h2>
 <p>If a discrete random variable $X$ has the probability mass function $f(x)$, then the entropy of $X$ is</p>
 <p>$\mathrm{H}(X) = \sum_{x}f(x)\log \frac{1}{f(x)} = -\sum_{x}f(x)\log f(x)$.</p>
 <p>It is the expected number of bits needed to communicate the value taken by $X$ if we use the optimal coding scheme for the distribution.</p>
 <p>Imagine arranging the possible values of $X$ on a line, with each outcome occupying an area proportional to its probability.</p>
-<p><figure>
-  
-    <img class="docimage" src="/images/copied_from_nb/local_images/2017-05-18-cross-entropy/probability_space1.png" alt="" style="max-width: 400px">
-    
-    
+<figure>
+<img alt="" class="docimage" src="/images/copied_from_nb/local_images/2017-05-18-cross-entropy/probability_space1.png" style="max-width: 400px">
 </figure>
-</p>
 <p>If we take the base-2 logarithm, you can think of $\log \frac{1}{f(x)}$ as being the number of yes/no questions you need to ask (if you ask the right questions) to narrow yourself down to the region of the line containing the outcome $x$. For example, using the above probability space we would first ask "Is the outcome in the first half of the line?", so would only ask one question to determine that the outcome was $x_1$. If the outcome is not $x_1$ then we have to ask a second question. The entropy is just the expected number of yes/no questions you'll need to ask; it's the sum of the number of questions for each possible outcome, each weighted by the probability of that outcome. (We don't literally ask questions about where we are in the probability line. Instead, we assign strings of bits to possible outcomes. So in the above example, we assign the string '0' to the outcome $x_1$, '10' to $x_2$, and '11' to $x_3$.)</p>
 <p>The key in the above paragraph was the phrase "if you ask the right questions".</p>
 <p>If we choose our series of yes/no questions to minimize the average number of questions we'd have to ask if the probability mass function over the outcomes was $f(x)$, but in reality the probability mass function is $g(x)$,</p>
-<p><figure>
-  
-    <img class="docimage" src="/images/copied_from_nb/local_images/2017-05-18-cross-entropy/probability_space2.png" alt="" style="max-width: 400px">
-    
-    
+<figure>
+<img alt="" class="docimage" src="/images/copied_from_nb/local_images/2017-05-18-cross-entropy/probability_space2.png" style="max-width: 400px">
 </figure>
-</p>
 <p>then we're going to have to ask more yes/no questions to determine the outcome than if we used the optimal series of questions for $g(x)$. It's like if you'd played the game '20 questions' with your friend Alice so many times that you've got to learn the kind of objects she chooses, and tailored the sequence of questions to her. When you come to play the game with Bob, the questions aren't quite a perfect fit, and so you have to ask more questions on average.</p>
 <p>The expression for the cross entropy is</p>
 <p>$\mathrm{H}(g, f) = \sum_{x}g(x)\log \frac{1}{f(x)} = -\sum_{x}g(x)\log f(x)$.</p>
@@ -266,7 +247,6 @@ window.onload = wrap_img;
 <p>or</p>
 <p>$-\sum_{j=1}^{M} \hat{y}_j \log{y_j}$.</p>
 <p>The way I remember it is using the intuition from above. In the expression for cross entropy, the distribution that we take the element-wise logarithm of is the one that we used to generate our coding scheme, i.e., it is the distribution that we think the data follows. We can remember this by remembering the idea that the base-2 log of the (inverse) probability for each possible outcome measures the number of yes/no questions we have to ask (each time bisecting the probability space) in order to determine that that outcome occurred. To calculate the average number of questions we have to ask, we just weight each number by the true probability of each outcome. Clearly $\hat{\boldsymbol{y}}$ represents the distribution that the network/model believes the data follows, and $\boldsymbol{y}$ is the actual data, and so is the true distribution.</p>
-
 </div>
 </div>
 </div>
@@ -274,7 +254,7 @@ window.onload = wrap_img;
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="K-L-divergence">
-<a class="anchor" href="#K-L-divergence" aria-hidden="true"><span class="octicon octicon-link"></span></a>K-L divergence<a class="anchor-link" href="#K-L-divergence"> </a>
+<a class="anchor" href="#K-L-divergence" aria-hidden="true"><span class="octicon octicon-link"></span></a>K-L divergence<a class="anchor-link" href="#K-L-divergence"></a>
 </h2>
 <p>The Kullback-Leibler (K-L) divergence is the number of <em>additional</em> bits, on average, needed to encode an outcome distributed as $g(x)$ if we use the optimal encoding for $f(x)$. Using the above definitions for cross entropy and entropy we see that the K-L divergence is</p>
 <p>$\mathrm{D}_{KL}(g\mid \mid f) = \mathrm{H}(g, f) - \mathrm{H}(g) = -(\sum_{x}g(x)\log f(x)-\sum_{x}g(x)\log g(x))$.</p>
@@ -282,7 +262,6 @@ window.onload = wrap_img;
 <p>In our network learning problem, the K-L divergence is</p>
 <p>$-(\sum_{j=1}^{M} y_j \log{\hat{y}_j} - \sum_{j=1}^{M} y_j \log{y_j})$.</p>
 <p>What if we were to use the K-L divergence as the loss function? We can see that the $\sum_{j=1}^{M} y_j \log{y_j}$ term depends only on the (fixed) data, not on the likelihood $\hat{\boldsymbol{y}}$, and so not on the parameters of the model $\boldsymbol{\theta}$. In other words, the value of $\boldsymbol{\theta}$ that minimizes the Kullback-Leibler divergence is the same value that minimizes the cross entropy and the negative log likelihood.</p>
-
 </div>
 </div>
 </div>
@@ -290,7 +269,7 @@ window.onload = wrap_img;
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Multiple-observations">
-<a class="anchor" href="#Multiple-observations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Multiple observations<a class="anchor-link" href="#Multiple-observations"> </a>
+<a class="anchor" href="#Multiple-observations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Multiple observations<a class="anchor-link" href="#Multiple-observations"></a>
 </h2>
 <p>If we have $N$ independently sampled examples from a training data set, the joint likelihood of the data is just the product of the likelihoods of the individual examples. The joint likelihood is</p>
 <p>$\prod_{i=1}^{N}\prod_{j=1}^{M}{\hat{y}_{j}^{(i)}} ^ {y_{j}^{(i)}}$,</p>
@@ -299,12 +278,10 @@ window.onload = wrap_img;
 <p>$-\sum_{i=1}^{N}\sum_{j=1}^{M} y_j^{(i)} \log{\hat{y}_j^{(i)}}$.</p>
 <p>One source of confusion for me is that I read in a few places "the negative log likelihood is the same as the cross entropy" without it having been specified whether they are talking about a per-example loss function or a batch loss function over a number of examples. As we saw above, the per-example negative log likelihood can indeed be interpreted as cross entropy. However, the negative log likelihood of a batch of data (which is just the sum of the negative log likelihoods of the individual examples) seems to me to be not a cross entropy, but a sum of cross entropies each based on a different model distribution (since the model is conditional on a different $\boldsymbol{x}^{(i)}$ for each $i$).</p>
 <p>Edit (19/05/17): I think I was wrong that the expression above isn't a cross entropy; it's the cross entropy between the distribution over the vector of outcomes for the batch of data and the probability distribution over the vector of outcomes given by our model, i.e., $\mathrm{p}(\boldsymbol{y}\mid \boldsymbol{X}, \boldsymbol{\theta})$, with each distribution being conditional on the batch of observed values $\boldsymbol{X}$.</p>
-
 </div>
 </div>
 </div>
 </div>
-
 
 
   </div><nav class="post-nav" aria-label="Post navigation"><a class="post-nav-link post-nav-prev" href="/probability/2017/05/12/quantiles-of-mixture-distributions.html" rel="prev">
