@@ -12,7 +12,8 @@ _notebooks/.ipynb_checkpoints
 .tweet-cache
 __pycache__
 # Written by the notebook converter at build time (_action_files/nb2post.py).
-# ~1 MB of generated HTML with base64-embedded figures; regenerate it, don't
-# commit it. A hand-written markdown post would need `git add -f`.
+# Regenerate it, don't commit it. Generated posts are ignored via a _posts/.gitignore
+# the converter writes naming only its own output, so hand-written markdown posts
+# in _posts/ stay tracked normally.
 images/copied_from_nb/*
 !images/copied_from_nb/README.md
