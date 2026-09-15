@@ -37,6 +37,35 @@ Push to `master` and CI does the rest. `_templates/2017-02-27-template.ipynb` is
 a scaffold to copy; `_action_files/README.md` documents every directive the
 converter understands (`#hide`, `#collapse-show`, `> youtube:`, and so on).
 
+### Posts written in markdown
+
+Notebooks are not required. A plain `_posts/YYYY-MM-DD-slug.md` with normal
+Jekyll front matter works, and gets the same treatment as a converted notebook —
+title, contents, syntax highlighting, maths, social preview, search index:
+
+```
+---
+layout: post
+title: A Markdown Post
+description: Shown on the card and as the social preview text.
+categories: [markdown]
+toc: true
+image: /images/blog_posts/something.png
+---
+```
+
+`_posts/` holds both these and the converter's output. The converter writes a
+`_posts/.gitignore` naming only the files it generated, so a hand-written post
+is tracked by git normally — you don't need `git add -f`.
+
+One difference worth knowing: in a markdown post, `$$…$$` display maths is
+rendered **at build time** by `kramdown-math-katex`, which needs a JavaScript
+runtime. CI has one (GitHub runners ship Node), but the `ruby:3.2` container
+behind `make server` does not, so a local build of such a post fails with
+`Could not find a JavaScript runtime`. Notebook posts are unaffected: their
+content sits in a raw HTML block that kramdown passes straight through, and
+KaTeX renders it in the browser.
+
 ## Build
 
 ```

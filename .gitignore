@@ -16,5 +16,3 @@ __pycache__
 # commit it. A hand-written markdown post would need `git add -f`.
 images/copied_from_nb/*
 !images/copied_from_nb/README.md
-_posts/*.md
-!_posts/README.md

@@ -22,6 +22,11 @@ Output goes to `_posts/`, and images referenced from notebooks are copied into
 `images/copied_from_nb/`. Both are build artifacts, gitignored, and regenerated
 on every build — don't commit them and don't edit them by hand.
 
+`_posts/` is shared with hand-written markdown posts, so the converter writes a
+`_posts/.gitignore` naming exactly the files it generated (and itself). A
+blanket `_posts/*.md` rule would silently ignore a hand-written post: it would
+never be committed, so CI would never check it out and it would never publish.
+
 ## What replaced what
 
 This used to be a Docker action built `FROM hamelsmu/fastpages-nbdev`: an
