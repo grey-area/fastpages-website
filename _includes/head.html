@@ -4,7 +4,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#181818">
   {%- seo -%}
-  <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
+  {%- comment -%}
+    Cache-bust the stylesheet on every deploy. GitHub Pages serves CSS with
+    max-age=14400 but HTML with max-age=600, so without this a style change can
+    sit behind a 4-hour-stale stylesheet while the new HTML and images are
+    already live -- which is exactly what happened on the 9a379c1 deploy.
+    site.time changes each build, so the URL changes only when the site is
+    rebuilt, and the file stays cacheable in between.
+  {%- endcomment -%}
+  <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}?v={{ site.time | date: '%s' }}">
   {%- feed_meta -%}
   {%- include custom-head.html -%}
   
