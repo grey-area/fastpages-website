@@ -24,21 +24,21 @@
 /* ---------- self-hosted fonts (variable woff2, latin subset) ---------- */
 @font-face {
   font-family: "Inter";
-  src: url("/assets/fonts/inter-var.woff2") format("woff2");
+  src: url("../fonts/inter-var.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Source Serif 4";
-  src: url("/assets/fonts/source-serif-4-var.woff2") format("woff2");
+  src: url("../fonts/source-serif-4-var.woff2") format("woff2");
   font-weight: 200 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "JetBrains Mono";
-  src: url("/assets/fonts/jetbrains-mono-var.woff2") format("woff2");
+  src: url("../fonts/jetbrains-mono-var.woff2") format("woff2");
   font-weight: 100 800;
   font-style: normal;
   font-display: swap;
@@ -69,6 +69,9 @@
 
 /* ---------- base ---------- */
 html {
+  /* tell the browser this is a dark page, so native UI -- scrollbars, form
+     controls, and the CV page's built-in PDF viewer -- is drawn dark too */
+  color-scheme: dark;
   scroll-behavior: smooth;
   /* always reserve the scrollbar gutter so navigating between short pages
      (no scrollbar) and long pages (scrollbar) can't shift the layout */

@@ -33,8 +33,13 @@ services:
       - "4000:4000"
     volumes:
       - .:/data/
+      # persist installed gems so restarts don't re-download the bundle
+      - jekyll-bundle:/usr/local/bundle
     command: >
-     bash -c "gem update --system 3.4.22
-     && bundle install
+     bash -c "gem install bundler -v 2.4.22 --conservative
+     && (bundle check || bundle install)
      && bundle exec jekyll serve --trace --strict_front_matter --host 0.0.0.0"
+
+volumes:
+  jekyll-bundle:
 
