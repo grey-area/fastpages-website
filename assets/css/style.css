@@ -1462,6 +1462,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .post-card {
+  position: relative; /* containing block for the stretched title link */
   display: flex;
   align-items: stretch;
   background: var(--surface);
@@ -1472,10 +1473,37 @@ h1, h2, h3, h4, h5, h6 {
   transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
 }
 
-.post-card:hover {
+.post-card:hover,
+.post-card:focus-within {
   transform: translateY(-3px);
   box-shadow: var(--shadow-md);
   border-color: var(--accent-ring);
+}
+
+/* The whole card is the click target, not just the title.
+ *
+ * Done by stretching the title link's ::after over the card rather than
+ * wrapping the card in an <a> or adding a click handler. Wrapping would make
+ * the link's accessible name the whole card -- title, description and date read
+ * out as one link -- and a JS handler would break cmd-click, middle-click and
+ * keyboard activation. This way there is still exactly one link per card, named
+ * by the title, and it is a real <a> the browser treats normally.
+ *
+ * The trade-off is that text inside the card can no longer be selected, since
+ * the overlay sits above it. Anything that needs to stay separately clickable
+ * would need position: relative and a z-index above this.
+ */
+.post-card-title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Keyboard users focus the title link but should see the whole card marked. */
+.post-card:has(.post-card-title a:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .post-card-media {
