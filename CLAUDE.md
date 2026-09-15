@@ -9,6 +9,12 @@ is unmaintained. The build has been rebuilt on current pinned software and no
 longer depends on any fastpages infrastructure — don't reintroduce it, and treat
 fastpages docs found online as describing a stack this repo no longer runs.
 
+## Skills
+
+- `/blog-preview` — build and serve the site locally, then actually look at it.
+- `/blog-post` — turn a directory of draft text and images into a markdown post.
+  The author's words are preserved verbatim; the skill does layout, not writing.
+
 ## Pipeline
 
 ```
