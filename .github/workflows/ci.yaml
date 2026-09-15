@@ -6,6 +6,13 @@ on:
   # no filters on pull requests, so intentionally left blank
   pull_request: 
 
+# One deploy at a time. Two runs force-pushing gh-pages can publish out of
+# order, leaving the older build live, so pushes to master queue rather than
+# race. A superseded PR build is pure waste, so those cancel instead.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:     
   build-site:
     if: ( github.event.commits[0].message != 'Initial commit' ) || github.run_number > 1
@@ -21,12 +28,19 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.12'
-        cache: pip
-        cache-dependency-path: _action_files/requirements.txt
+
+    # uv rather than pip: installing the 32-package tree takes ~2.6s under pip
+    # with a warm wheel cache and ~0.4s under uv. setup-uv does the caching, so
+    # setup-python no longer needs cache: pip.
+    - name: Setup uv
+      uses: astral-sh/setup-uv@v6
+      with:
+        enable-cache: true
+        cache-dependency-glob: _action_files/requirements.txt
 
     - name: convert notebooks to posts
       run: |
-        pip install -r _action_files/requirements.txt
+        uv pip install --system -r _action_files/requirements.txt
         python _action_files/nb2post.py
 
     - name: setup directories for Jekyll build
