@@ -23,7 +23,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2018-05-24T00:00:00+00:00","datePublished":"2018-05-24T00:00:00+00:00","description":"Exploring mixing manual and automatic differentiation","headline":"Who Needs Loss Functions? Mixing Manual and Automatic Differentiation","image":"https://www.awebb.info/deep%20learning/pytorch/2018/05/24/images/blog_posts/who_needs_loss_functions.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.awebb.info/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html"},"url":"https://www.awebb.info/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/css/style.css?v=1789461002"><link type="application/atom+xml" rel="alternate" href="https://www.awebb.info/feed.xml" title="Andrew M. Webb" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="/assets/css/style.css?v=1789461237"><link type="application/atom+xml" rel="alternate" href="https://www.awebb.info/feed.xml" title="Andrew M. Webb" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
@@ -396,7 +396,7 @@ $$\frac{\partial L}{\partial \theta} = \frac{\partial L}{\partial \hat{\eta}} \f
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>
-$$\frac{\partial L}{\partial \hat{\eta}} = \mathbb{E}_\hat{\eta}[y] - y = \hat{y} - y \quad . $$
+$$\frac{\partial L}{\partial \hat{\eta}} = \mathbb{E}_{\hat{\eta}}[y] - y = \hat{y} - y \quad . $$
 </p>
 
 </div>
@@ -491,7 +491,7 @@ Epoch: 4500	Loss: 0.01919456571340561
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Compare the above to the result of running the following code, in which instead of doing backpropagation from the loss, we do backpropagation from the natural parameter prediction $\hat{\eta}$ ($\texttt{eta}$ in the code), while setting the accumulated backprop gradient explicitly to</p>
 <p>
-$$\frac{1}{\text{batch_size}} * (\hat{y} - y) \quad.$$
+$$\frac{1}{\text{batch\_size}} * (\hat{y} - y) \quad.$$
 </p>
 <p>Note that we don't need to specify a loss function at all in the following, and we do so only so that the loss can be reported. For optimisation purposes, the loss function has been <strong>implicitly</strong> set to the negative log-likelihood for the Gaussian distribution by choosing the appropriate inverse link function (the identity function, in this case).</p>
 
