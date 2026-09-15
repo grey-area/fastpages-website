@@ -401,6 +401,33 @@ a:hover { color: var(--accent-dark); }
 .post-content img:not(.emoji):not(.katex) {
   border-radius: 12px;
 }
+
+/* ---------- light-theme figures on a dark page ----------
+ * The matplotlib figures are drawn for a light background (dark ink, white
+ * panels, often on a transparent canvas), so they need inverting here. We do
+ * that at render time rather than by rewriting the PNGs and the base64 outputs
+ * inside the notebooks, because:
+ *   - rewriting destroys the anti-aliasing on coloured curves (the edge pixels
+ *     blend towards the old white background, so a pixel-wise invert leaves a
+ *     dotted white fringe along every line);
+ *   - the notebooks are the source of truth and are linked from each post via
+ *     the GitHub / Colab / Binder badges, where a light background is correct.
+ *
+ * invert($n) maps white to (1 - $n), so 1 - 24/255 = 0.906 lands the white
+ * panels exactly on the page background #181818 -- no black rectangles. Black
+ * ink maps to rgb(231,231,231), near --text. Keep the two in step if --bg
+ * changes. hue-rotate(180deg) undoes the hue flip that invert() applies, so
+ * the data colours (blue/orange/red/green) survive unchanged.
+ *
+ * Scope: notebook PNG outputs, the schematic drawn in a markdown cell, and the
+ * post-card thumbnails -- which are the same figures, minus the two that are
+ * genuine photographs and must NOT be inverted.
+ */
+.output_png img,
+img[src*="net_schematic"],
+.post-card-media img:not([src*="arm_summit"]):not([src*="orb_slam"]) {
+  filter: invert(90.6%) hue-rotate(180deg);
+}
 .post-content figure.image img {
   border: 1px solid var(--line);
   box-shadow: var(--shadow-sm);
