@@ -4,22 +4,11 @@ layout: default
 search_exclude: true
 ---
 
-<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
-
-<div class="container">
-  <h1>404</h1>
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
+<div class="error-404">
+  <div class="error-code">404</div>
+  <h1>Page not found</h1>
+  <p>The page you're looking for doesn't exist or has moved.</p>
+  <a class="pub-link" href="{{ '/' | relative_url }}">&larr; Back to the blog</a>
+  <a class="pub-link" href="{{ '/publications/' | relative_url }}">Publications</a>
+  <a class="pub-link" href="{{ '/search/' | relative_url }}">Search</a>
 </div>

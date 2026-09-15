@@ -5,8 +5,14 @@ title: CV
 search_exclude: true
 ---
 
-<script type="text/javascript">
-  window.open("{{site.baseurl}}/misc/cv.pdf", '_blank');
-</script>
+<div class="cv-toolbar">
+  <a class="pub-link" href="{{site.baseurl}}/misc/cv.pdf" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+  <a class="pub-link" href="{{site.baseurl}}/misc/cv.pdf" download>Download PDF</a>
+</div>
 
-If you are not redirected automatically, follow <a href='{{site.baseurl}}/misc/cv.pdf' target='_blank'>this link</a> for my CV.
+<object class="cv-frame" data="{{site.baseurl}}/misc/cv.pdf#toolbar=0&navpanes=0&view=FitH" type="application/pdf" aria-label="Curriculum vitae (PDF)">
+  <div class="cv-fallback">
+    <p>Your browser can't display PDFs inline, but you can open or save it directly.</p>
+    <a class="pub-link" href="{{site.baseurl}}/misc/cv.pdf" target="_blank" rel="noopener noreferrer">Open / download the CV (PDF)</a>
+  </div>
+</object>

@@ -41,8 +41,17 @@ url: "https://www.awebb.info" # the base hostname & protocol for your site, e.g.
 baseurl: "" # the subpath of your site, e.g. "/blog".
 #baseurl: "/fastpages-website" # the subpath of your site, e.g. "/blog".
 
+# Pages to show in the header nav, in order. The "Blog" link (home page) and
+# the search icon (-> /search/) are hardcoded in _includes/header.html.
+header_pages:
+  - _pages/about.md
+  - _pages/cv.html
+  - _pages/publications.html
+  - _pages/qcircuits.html
+
 # Github and twitter are optional:
 minima:
+  skin: dark
   social_links:
     twitter: AndrewM_Webb
     github: grey-area
@@ -99,7 +108,7 @@ plugins:
 
 # See https://jekyllrb.com/docs/pagination/
 # For pagination to work, you cannot have index.md at the root of your repo, instead you must rename this file to index.html
-paginate: 7
+paginate: 10
 paginate_path: /page:num/
 
 remote_theme: jekyll/minima@868b90fcdfac6b975609e2741eb9471bf0f7bac9
