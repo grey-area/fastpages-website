@@ -11,19 +11,18 @@ server-detached: .FORCE
 	docker-compose down || true;
 	docker-compose up -d
 
-# build or rebuild the services WITHOUT cache
+# build or rebuild the services WITHOUT cache (notebook converter image only;
+# the jekyll build now uses ruby:3.2 + bundle install from Gemfile.lock)
 build: .FORCE
 	chmod 777 Gemfile.lock
 	docker-compose stop || true; docker-compose rm || true;
 	docker build --no-cache -t hamelsmu/fastpages-nbdev -f _action_files/fastpages-nbdev.Dockerfile .
-	docker build --no-cache -t hamelsmu/fastpages-jekyll -f _action_files/fastpages-jekyll.Dockerfile .
 	docker-compose build --force-rm --no-cache
 
 # rebuild the services WITH cache
 quick-build: .FORCE
 	docker-compose stop || true;
 	docker build -t hamelsmu/fastpages-nbdev -f _action_files/fastpages-nbdev.Dockerfile .
-	docker build -t hamelsmu/fastpages-jekyll -f _action_files/fastpages-jekyll.Dockerfile .
 	docker-compose build 
 
 # convert word & nb without Jekyll services

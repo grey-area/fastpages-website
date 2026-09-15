@@ -27,13 +27,14 @@ services:
 
   jekyll:
     working_dir: /data
-    image: hamelsmu/fastpages-jekyll
+    image: ruby:3.2
     restart: unless-stopped
     ports:
       - "4000:4000"
     volumes:
       - .:/data/
     command: >
-     bash -c "gem install bundler -v 2.4.22
-     && jekyll serve --trace --strict_front_matter"
+     bash -c "gem update --system 3.4.22
+     && bundle install
+     && bundle exec jekyll serve --trace --strict_front_matter --host 0.0.0.0"
 

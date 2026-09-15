@@ -25,10 +25,14 @@ jobs:
         rm -rf _site
         sudo chmod -R 777 .
 
-    - name: Jekyll build
-      uses: docker://hamelsmu/fastpages-jekyll
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
       with:
-        args: bash -c "gem install bundler -v 2.4.22 && jekyll build -V --strict_front_matter --trace"
+        ruby-version-file: .ruby-version
+        bundler-cache: true
+
+    - name: Jekyll build
+      run: bundle exec jekyll build -V --strict_front_matter --trace
       env:
         JEKYLL_ENV: 'production'
         
