@@ -23,7 +23,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2017-05-18T00:00:00+00:00","datePublished":"2017-05-18T00:00:00+00:00","description":"Ironing out some confusion I had about the relationship between cross entropy and negative log-likelihood.","headline":"Cross Entropy and Log Likelihood","image":"https://www.awebb.info/images/blog_posts/cross_entropy_log_likelihood.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.awebb.info/probability/2017/05/18/cross-entropy-and-log-likelihood.html"},"url":"https://www.awebb.info/probability/2017/05/18/cross-entropy-and-log-likelihood.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/css/style.css?v=1789467888"><link type="application/atom+xml" rel="alternate" href="https://www.awebb.info/feed.xml" title="Andrew M. Webb" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="stylesheet" href="/assets/css/style.css?v=1789469676"><link type="application/atom+xml" rel="alternate" href="https://www.awebb.info/feed.xml" title="Andrew M. Webb" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
@@ -37,6 +37,18 @@
         delimiters: [
             {left: "$$", right: "$$", display: true},
             {left: "[%", right: "%]", display: true},
+            // LaTeX environments written bare, with no $$ around them. MathJax
+            // picked these up natively; KaTeX's auto-render only looks at the
+            // delimiters it is given, so without these the block is left as raw
+            // source on the page. The environment delimiters are kept in the
+            // string passed to KaTeX, so alignment still works.
+            {left: "\\begin{align}", right: "\\end{align}", display: true},
+            {left: "\\begin{align*}", right: "\\end{align*}", display: true},
+            {left: "\\begin{equation}", right: "\\end{equation}", display: true},
+            {left: "\\begin{equation*}", right: "\\end{equation*}", display: true},
+            {left: "\\begin{gather}", right: "\\end{gather}", display: true},
+            {left: "\\begin{gather*}", right: "\\end{gather*}", display: true},
+            // $ last: it would otherwise swallow the opening of a $$ block
             {left: "$", right: "$", display: false}
         ]}
         );
