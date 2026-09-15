@@ -133,11 +133,24 @@ the other, leaving new markup against a four-hour-old stylesheet. The stylesheet
 link carries `?v={{ site.time }}` to defeat this — keep it. If a style change
 looks ignored, check `last-modified` on the CSS before suspecting the selector.
 
+**KaTeX renders in the browser, and only at the delimiters it is given.** The
+list lives in `custom-head.html`: `$$`, `$`, `[%`, and the bare LaTeX
+environments `align`, `align*`, `equation`, `equation*`, `gather`, `gather*`.
+A `\begin{...}` written bare, with no `$$` around it, is left on the page as raw
+source unless its environment is in that list — MathJax used to pick these up
+natively and was removed, so this is a standing gap, not a one-off. Add the
+environment to the delimiters (and to the `has_math` gate) rather than editing
+the author's maths.
+
 **KaTeX 0.16 is stricter than the 0.11 it replaced.** `_` inside `\text{}` must
 be `\_`, and multi-token subscripts need braces (`\mathbb{E}_{\hat{\eta}}`).
 There is no MathJax fallback any more, so a bad expression renders as raw source.
-After touching maths, render every `$…$` and `$$…$$` in `_notebooks` and `_posts`
-through the exact KaTeX build the site loads.
+
+Because rendering is client-side, `curl` cannot check any of this — the fetched
+HTML still has the raw `$…$`. Load the page in a browser and count `.katex`,
+`.katex-error`, and leftover `\begin{`/`\frac` in `innerText` with `pre`, `code`
+and `annotation` stripped (KaTeX puts the original TeX in an `<annotation>`, so
+leaving those in makes every correctly-rendered post look broken).
 
 **KaTeX only loads on pages that contain maths** (`custom-head.html` checks the
 page content). It is ~195 KB; don't make it unconditional.
