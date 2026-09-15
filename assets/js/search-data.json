@@ -178,18 +178,20 @@
   
 
   
-  
-
-  
 
   
   
 
   
+
+  
   
 
   
-      ,"page9": {
+  
+
+  
+      ,"page10": {
           "title": "",
           "content": "",
           "url": "https://www.awebb.info/blog/observing_functions",
@@ -200,7 +202,7 @@
   
 
   
-      ,"page10": {
+      ,"page11": {
           "title": "",
           "content": "",
           "url": "https://www.awebb.info/blog/multiview_object",
@@ -211,7 +213,7 @@
   
 
   
-      ,"page11": {
+      ,"page12": {
           "title": "",
           "content": "",
           "url": "https://www.awebb.info/blog/MCMC_and",
@@ -222,7 +224,7 @@
   
 
   
-      ,"page12": {
+      ,"page13": {
           "title": "",
           "content": "",
           "url": "https://www.awebb.info/blog/quantiles_of",
@@ -233,7 +235,7 @@
   
 
   
-      ,"page13": {
+      ,"page14": {
           "title": "",
           "content": "",
           "url": "https://www.awebb.info/blog/cross_entropy",
@@ -244,7 +246,7 @@
   
 
   
-      ,"page14": {
+      ,"page15": {
           "title": "",
           "content": "",
           "url": "https://www.awebb.info/blog/distributed_multinomial",
@@ -255,7 +257,7 @@
   
 
   
-      ,"page15": {
+      ,"page16": {
           "title": "",
           "content": "",
           "url": "https://www.awebb.info/blog/who_needs",
@@ -266,7 +268,7 @@
   
 
   
-      ,"page16": {
+      ,"page17": {
           "title": "",
           "content": "",
           "url": "https://www.awebb.info/blog/arm_research",
@@ -277,7 +279,7 @@
   
 
   
-      ,"page17": {
+      ,"page18": {
           "title": "",
           "content": "",
           "url": "https://www.awebb.info/blog/distributed_joint",
@@ -288,7 +290,7 @@
   
 
   
-      ,"page18": {
+      ,"page19": {
           "title": "",
           "content": "",
           "url": "https://www.awebb.info/blog/cool_softplus",
@@ -299,7 +301,7 @@
   
 
   
-      ,"page19": {
+      ,"page20": {
           "title": "",
           "content": "",
           "url": "https://www.awebb.info/blog/iterated_mark",
@@ -310,7 +312,7 @@
   
 
   
-      ,"page20": {
+      ,"page21": {
           "title": "",
           "content": "{“/blog/observing_functions”:”https://www.awebb.info/probability/inference/mcmc/2017/02/22/observing-functions-of-random-variables-in-pymc.html”,”/blog/multiview_object”:”https://www.awebb.info/slam/deep%20learning/2017/02/28/orb-slam-demo.html”,”/blog/MCMC_and”:”https://www.awebb.info/probability/mcmc/dimensionality/2017/03/21/MCMC-and-the-typical-set.html”,”/blog/quantiles_of”:”https://www.awebb.info/probability/2017/05/12/quantiles-of-mixture-distributions.html”,”/blog/cross_entropy”:”https://www.awebb.info/probability/2017/05/18/cross-entropy-and-log-likelihood.html”,”/blog/distributed_multinomial”:”https://www.awebb.info/probability/sampling/distributed/2018/01/30/distributed-multinomial-sampling.html”,”/blog/who_needs”:”https://www.awebb.info/deep%20learning/pytorch/2018/05/24/who-needs-loss-functions.html”,”/blog/arm_research”:”https://www.awebb.info/presentation/deep%20learning/2018/09/19/arm-research-summit.html”,”/blog/distributed_joint”:”https://www.awebb.info/deep%20learning/distributed/2019/02/25/distributed-joint-training.html”,”/blog/cool_softplus”:”https://www.awebb.info/probability/2019/03/22/cool-softplus-function-properties.html”,”/blog/iterated_mark”:”https://www.awebb.info/probability/bayesian/simulation/2020/01/02/iterated-mark-and-recapture.html”} .",
           "url": "https://www.awebb.info/redirects.json",
@@ -321,8 +323,6 @@
   
 
   
-  
-
   
 
   
