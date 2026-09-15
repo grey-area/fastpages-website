@@ -11,21 +11,13 @@ server-detached: .FORCE
 	docker-compose down || true;
 	docker-compose up -d
 
-# build or rebuild the services WITHOUT cache (notebook converter image only;
-# the jekyll build now uses ruby:3.2 + bundle install from Gemfile.lock)
+# rebuild the services from scratch. Both services now run stock images
+# (python:3.12-slim and ruby:3.2), so there is nothing of ours to build.
 build: .FORCE
-	chmod 777 Gemfile.lock
 	docker-compose stop || true; docker-compose rm || true;
-	docker build --no-cache -t hamelsmu/fastpages-nbdev -f _action_files/fastpages-nbdev.Dockerfile .
-	docker-compose build --force-rm --no-cache
+	docker-compose pull
 
-# rebuild the services WITH cache
-quick-build: .FORCE
-	docker-compose stop || true;
-	docker build -t hamelsmu/fastpages-nbdev -f _action_files/fastpages-nbdev.Dockerfile .
-	docker-compose build 
-
-# convert word & nb without Jekyll services
+# convert notebooks to posts without starting Jekyll
 convert: .FORCE
 	docker-compose up converter
 
@@ -41,6 +33,11 @@ remove: .FORCE
 # get shell inside the notebook converter service (Must already be running)
 bash-nb: .FORCE
 	docker-compose exec watcher /bin/bash
+
+# run the converter directly, no Docker (needs the pins in requirements.txt)
+convert-local: .FORCE
+	python3 -m pip install -r _action_files/requirements.txt
+	python3 _action_files/nb2post.py
 
 # get shell inside jekyll service (Must already be running)
 bash-jekyll: .FORCE

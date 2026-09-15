@@ -17,8 +17,17 @@ jobs:
       with:
         persist-credentials: false
 
-    - name: convert notebooks and word docs to posts
-      uses: ./_action_files
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: pip
+        cache-dependency-path: _action_files/requirements.txt
+
+    - name: convert notebooks to posts
+      run: |
+        pip install -r _action_files/requirements.txt
+        python _action_files/nb2post.py
 
     - name: setup directories for Jekyll build
       run: |
